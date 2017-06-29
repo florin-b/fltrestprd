@@ -1,6 +1,6 @@
 package flota.service.beans;
 
-import java.util.LinkedHashSet;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,10 +13,11 @@ public class BeanDelegatieAprobare {
 	private String dataPlecare;
 	private String oraPlecare;
 	private String dataSosire;
-	private LinkedHashSet<String> listOpriri;
-	private double distantaCalculata;
-	private double distantaEfectuata;
-	private double distantaAprobata;
+	private List<PunctTraseuLite> listOpriri;
+	private int distantaCalculata;
+	private int distantaEfectuata;
+	private int distantaRespinsa;
+	private String statusCode;
 
 	public String getId() {
 		return id;
@@ -58,11 +59,11 @@ public class BeanDelegatieAprobare {
 		this.oraPlecare = oraPlecare;
 	}
 
-	public LinkedHashSet<String> getListOpriri() {
+	public List<PunctTraseuLite> getListOpriri() {
 		return listOpriri;
 	}
 
-	public void setListOpriri(LinkedHashSet<String> listOpriri) {
+	public void setListOpriri(List<PunctTraseuLite> listOpriri) {
 		this.listOpriri = listOpriri;
 	}
 
@@ -70,7 +71,7 @@ public class BeanDelegatieAprobare {
 		return distantaCalculata;
 	}
 
-	public void setDistantaCalculata(double distantaCalculata) {
+	public void setDistantaCalculata(int distantaCalculata) {
 		this.distantaCalculata = distantaCalculata;
 	}
 
@@ -78,16 +79,16 @@ public class BeanDelegatieAprobare {
 		return distantaEfectuata;
 	}
 
-	public void setDistantaEfectuata(double distantaEfectuata) {
+	public void setDistantaEfectuata(int distantaEfectuata) {
 		this.distantaEfectuata = distantaEfectuata;
 	}
 
-	public double getDistantaAprobata() {
-		return distantaAprobata;
+	public int getDistantaRespinsa() {
+		return distantaRespinsa;
 	}
 
-	public void setDistantaAprobata(double distantaAprobata) {
-		this.distantaAprobata = distantaAprobata;
+	public void setDistantaRespinsa(int distantaRespinsa) {
+		this.distantaRespinsa = distantaRespinsa;
 	}
 
 	public String getDataSosire() {
@@ -98,11 +99,12 @@ public class BeanDelegatieAprobare {
 		this.dataSosire = dataSosire;
 	}
 
-	@Override
-	public String toString() {
-		return "BeanDelegatieAprobare [id=" + id + ", codAngajat=" + codAngajat + ", numeAngajat=" + numeAngajat + ", dataPlecare=" + dataPlecare + ", oraPlecare=" + oraPlecare
-				+ ", dataSosire=" + dataSosire + ", listOpriri=" + listOpriri + ", distantaCalculata=" + distantaCalculata + ", distantaEfectuata=" + distantaEfectuata
-				+ ", distantaAprobata=" + distantaAprobata + "]";
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

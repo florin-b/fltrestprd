@@ -52,10 +52,10 @@ public class MainService {
 	@Path("aprobaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String aprobaDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat, @FormParam("kmAprobati") String kmAprobati,
+	public String aprobaDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat, @FormParam("kmRespinsi") String kmRespinsi,
 			@FormParam("codAngajat") String codAngajat) {
 
-		new OperatiiDelegatii().aprobaDelegatie(idDelegatie, tipAngajat, kmAprobati, codAngajat);
+		new OperatiiDelegatii().aprobaDelegatie(idDelegatie, tipAngajat, kmRespinsi, codAngajat);
 		return "!";
 
 	}
@@ -74,8 +74,9 @@ public class MainService {
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<BeanDelegatieAprobare> afiseazaDelegatii(@QueryParam("codAngajat") String codAngajat) {
-		return new OperatiiDelegatii().afiseazaDelegatii(codAngajat);
+	public List<BeanDelegatieAprobare> afiseazaDelegatii(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart,
+			@QueryParam("dataStop") String dataStop) {
+		return new OperatiiDelegatii().afiseazaDelegatii(codAngajat, dataStart, dataStop);
 
 	}
 
@@ -83,8 +84,8 @@ public class MainService {
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getCoordonateTraseu(@QueryParam("codMasina") String codMasina, @QueryParam("dataStart") String dataStart, @QueryParam("dataStop") String dataStop) {
-		return new OperatiiTraseu().getCoordonateTraseu(codMasina, dataStart, dataStop).toString();
+	public String getCoordonateTraseu(@QueryParam("idDelegatie") String idDelegatie) {
+		return new OperatiiTraseu().getCoordonateTraseu(idDelegatie).toString();
 	}
 
 }

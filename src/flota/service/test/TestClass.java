@@ -1,19 +1,23 @@
 package flota.service.test;
 
-import java.util.List;
-
-import flota.service.model.OperatiiTraseu;
+import flota.service.model.OperatiiDelegatii;
 
 public class TestClass {
 
-	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+
 		
-		List<String> coords = new OperatiiTraseu().getCoordonateTraseu("90033028", "08-06-2017 06:50", "08-06-2017 07:02");
-		System.out.println(coords);
+		 //new OperatiiTraseu().getCoordonateTraseu("15256796182");
+		 
+		// new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10");
+		 
+		 // OperatiiTraseu.getDateSosireTraseu("15329086653");
 		
+		
+		new OperatiiDelegatii().verificaDelegatiiTerminate("SD", "GL10");
+		
+		
+
 	}
-	
-	
+
 }
