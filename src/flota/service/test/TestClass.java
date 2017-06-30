@@ -1,6 +1,6 @@
 package flota.service.test;
 
-import flota.service.model.OperatiiDelegatii;
+import flota.service.model.OperatiiAdresa;
 
 public class TestClass {
 
@@ -14,7 +14,7 @@ public class TestClass {
 		 // OperatiiTraseu.getDateSosireTraseu("15329086653");
 		
 		
-		new OperatiiDelegatii().verificaDelegatiiTerminate("SD", "GL10");
+		System.out.println(new OperatiiAdresa().getListLocalitati("tecuci"));
 		
 		
 

@@ -1,12 +1,11 @@
 package flota.service.utils;
 
-import java.util.concurrent.TimeUnit;
-
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
+import flota.service.beans.GoogleContext;
 import flota.service.beans.StandardAddress;
 
 public class MapUtils {
@@ -62,8 +61,8 @@ public class MapUtils {
 
 			strAddress.append(address.getCountry());
 
-			GeoApiContext context = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY);
-			context.setRetryTimeout(0, TimeUnit.SECONDS);
+			GeoApiContext context = GoogleContext.getContext();
+
 			GeocodingResult[] results;
 
 			results = GeocodingApi.geocode(context, strAddress.toString()).await();

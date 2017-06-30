@@ -88,4 +88,12 @@ public class MainService {
 		return new OperatiiTraseu().getCoordonateTraseu(idDelegatie).toString();
 	}
 
+	@Path("cautaLocalitati")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getListLocalitati(@QueryParam("numeLoc") String numeLoc) {
+		return new OperatiiAdresa().getListLocalitati(numeLoc);
+	}
+
 }

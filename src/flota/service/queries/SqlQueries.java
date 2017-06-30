@@ -8,6 +8,14 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String getListLocalitati() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append("select upper(localitate) localitate, bland from sapprd.zlocalitati where lower(localitate) like '?%' order by localitate");
+
+		return sqlString.toString();
+	}
+
 	public static String adaugaAntetDelegatie() {
 		StringBuilder sqlString = new StringBuilder();
 
