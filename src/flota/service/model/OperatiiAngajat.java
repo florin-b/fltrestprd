@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
+import flota.service.utils.DateUtils;
 import flota.service.utils.Utils;
 
 public class OperatiiAngajat {
@@ -28,8 +29,8 @@ public class OperatiiAngajat {
 		try (Connection conn = DBManager.getTestInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getKmCota());) {
 
 			stmt.setString(1, codAngajat);
-			stmt.setString(2, dataStart);
-			stmt.setString(3, dataStart);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+			stmt.setString(3, DateUtils.formatDateSap(dataStart));
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();

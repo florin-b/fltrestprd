@@ -14,7 +14,6 @@ import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.BeanDelegatieCauta;
 import flota.service.beans.PunctTraseuLite;
 import flota.service.database.DBManager;
-import flota.service.enums.EnumJudete;
 import flota.service.enums.EnumTipAprob;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
@@ -56,8 +55,8 @@ public class OperatiiDelegatii {
 				String[] arrayAdresa = arrayOpriri[i].trim().split("/");
 				stmt1.setString(1, idDelegatieNoua);
 				stmt1.setString(2, String.valueOf(i + 1));
-				stmt1.setString(3, arrayAdresa[0].trim());
-				stmt1.setString(4, arrayAdresa[1].trim());
+				stmt1.setString(3, arrayAdresa[1].trim());
+				stmt1.setString(4, arrayAdresa[0].trim());
 
 				stmt1.executeQuery();
 
@@ -78,7 +77,7 @@ public class OperatiiDelegatii {
 
 	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog) {
 
-		 verificaDelegatiiTerminate(tipAngajat, unitLog);
+		verificaDelegatiiTerminate(tipAngajat, unitLog);
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
@@ -183,7 +182,7 @@ public class OperatiiDelegatii {
 
 			while (rs.next()) {
 
-				listLocalitati.add(EnumJudete.getNumeJudet(Integer.valueOf(rs.getString("codjudet"))) + " / " + rs.getString("localitate"));
+				listLocalitati.add(rs.getString("judet") + " / " + rs.getString("localitate"));
 			}
 
 			rs.close();
@@ -212,7 +211,7 @@ public class OperatiiDelegatii {
 			while (rs.next()) {
 
 				PunctTraseuLite punct = new PunctTraseuLite();
-				punct.setAdresa(EnumJudete.getNumeJudet(Integer.valueOf(rs.getString("codjudet"))) + " / " + rs.getString("localitate"));
+				punct.setAdresa(rs.getString("judet") + " / " + rs.getString("localitate"));
 				punct.setVizitat(rs.getString("vizitat").equals("1") ? true : false);
 
 				listOpriri.add(punct);

@@ -28,7 +28,7 @@ public class SqlQueries {
 	public static String adaugaOpririDelegatie() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" insert into sapprd.zdelegatieruta(mandt, id, poz, codjudet, localitate, vizitat) ");
+		sqlString.append(" insert into sapprd.zdelegatieruta(mandt, id, poz, judet, localitate, vizitat) ");
 		sqlString.append(" values ('900',?,?,?,?,'0') ");
 
 		return sqlString.toString();
@@ -78,7 +78,7 @@ public class SqlQueries {
 
 	public static String getDelegatiiAprobareRuta() {
 		StringBuilder sqlString = new StringBuilder();
-		sqlString.append(" select r.codjudet, r.localitate, r.vizitat from sapprd.zdelegatieruta r where r.id = ?  order by r.poz  ");
+		sqlString.append(" select r.judet, r.localitate, r.vizitat from sapprd.zdelegatieruta r where r.id = ?  order by r.poz  ");
 		return sqlString.toString();
 	}
 
@@ -146,7 +146,7 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select cotakm from sapprd.pa9001 where mandt='900' ");
-		sqlString.append(" and pernr =? and begda <=? and endda >=? ");
+		sqlString.append(" and pernr =? and to_date(begda,'yyyymmdd') <=to_date(?,'yyyymmdd') and to_date(endda,'yyyymmdd') >=to_date(?,'yyyymmdd') ");
 
 		return sqlString.toString();
 	}
