@@ -12,6 +12,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import flota.service.beans.BeanDelegatieAprobare;
+import flota.service.beans.DelegatieModifAntet;
+import flota.service.beans.DelegatieModifDetalii;
 import flota.service.model.OperatiiAdresa;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiTraseu;
@@ -39,13 +41,28 @@ public class MainService {
 		return success ? "1" : "0";
 	}
 
+	@Path("modificaDelegatie")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	public String modificaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat, @FormParam("dataP") String dataPlecare,
+			@FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire, @FormParam("distcalc") String distCalc, @FormParam("stops") String stops,
+			@FormParam("nrAuto") String nrAuto, @FormParam("idDelegatie") String idDelegatie) {
+
+		OperatiiDelegatii opDelegatii = new OperatiiDelegatii();
+		opDelegatii.respingeDelegatie(idDelegatie, tipAngajat, codAngajat);
+
+		boolean success = opDelegatii.adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
+		return success ? "1" : "0";
+	}
+
 	@Path("afisDelegatiiAprob")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<BeanDelegatieAprobare> afiseazaDelegatiiAprobare(@QueryParam("tipAngajat") String tipAngajat, @QueryParam("unitLog") String unitLog) {
+	public List<BeanDelegatieAprobare> afiseazaDelegatiiAprobare(@QueryParam("tipAngajat") String tipAngajat, @QueryParam("unitLog") String unitLog,
+			@QueryParam("codDepart") String codDepart) {
 
-		return new OperatiiDelegatii().getDelegatiiAprobari(tipAngajat, unitLog);
+		return new OperatiiDelegatii().getDelegatiiAprobari(tipAngajat, unitLog, codDepart);
 
 	}
 
@@ -94,6 +111,22 @@ public class MainService {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getListLocalitati(@QueryParam("numeLoc") String numeLoc) {
 		return new OperatiiAdresa().getListLocalitati(numeLoc);
+	}
+
+	@Path("afisListDelModif")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<DelegatieModifAntet> getListDelegatiiModif(@QueryParam("codAngajat") String codAngajat) {
+		return new OperatiiDelegatii().getDelegatiiModificare(codAngajat);
+	}
+
+	@Path("afisDelegatieModif")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public DelegatieModifDetalii getDelegatieModif(@QueryParam("idDelegatie") String idDelegatie) {
+		return new OperatiiDelegatii().getDelegatieModif(idDelegatie);
 	}
 
 }

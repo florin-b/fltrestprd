@@ -21,4 +21,9 @@ public class PunctTraseuLite {
 		this.vizitat = vizitat;
 	}
 
+	@Override
+	public String toString() {
+		return "PunctTraseuLite [adresa=" + adresa + ", vizitat=" + vizitat + "]";
+	}
+
 }

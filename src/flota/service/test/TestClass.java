@@ -1,7 +1,7 @@
 package flota.service.test;
 
-import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
+import flota.service.model.OperatiiTraseu;
 
 public class TestClass {
 
@@ -15,7 +15,11 @@ public class TestClass {
 		 // OperatiiTraseu.getDateSosireTraseu("15329086653");
 		
 		
-		System.out.println(new OperatiiAngajat().getKmCota("00083215", "04-07-2017", "14-07-2017"));
+		
+		
+		System.out.println(new OperatiiTraseu().getDateSosireTraseu("16194720104"));
+		
+		new OperatiiDelegatii().aprobaAutomatDelegatie("16194720104");
 		
 		
 

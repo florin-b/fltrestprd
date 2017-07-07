@@ -10,14 +10,21 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.maps.model.LatLng;
+
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.BeanDelegatieCauta;
+import flota.service.beans.DelegatieModifAntet;
+import flota.service.beans.DelegatieModifDetalii;
+import flota.service.beans.PunctTraseu;
 import flota.service.beans.PunctTraseuLite;
 import flota.service.database.DBManager;
 import flota.service.enums.EnumTipAprob;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
+import flota.service.utils.MapUtils;
 import flota.service.utils.Utils;
+import flota.service.utils.UtilsAddress;
 
 public class OperatiiDelegatii {
 
@@ -75,17 +82,28 @@ public class OperatiiDelegatii {
 
 	}
 
-	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog) {
+	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog, String codDepart) {
 
 		verificaDelegatiiTerminate(tipAngajat, unitLog);
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
+		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
+
+		String sqlString = "";
+
+		if (isPersVanzari)
+			sqlString = SqlQueries.getDelegatiiAprobareHeaderVanzari();
+
 		try (Connection conn = DBManager.getTestInstance().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatiiAprobareHeader(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, tipAngajat);
 			stmt.setString(2, unitLog);
+
+			if (isPersVanzari)
+				stmt.setString(3, codDepart);
+
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();
@@ -101,7 +119,7 @@ public class OperatiiDelegatii {
 				delegatie.setNumeAngajat(rs.getString("nume"));
 				delegatie.setListOpriri(getOpriri(conn, delegatie.getId()));
 
-				int kmCota = opAngajat.getKmCota(rs.getString("codAngajat"), delegatie.getDataPlecare(), delegatie.getDataSosire());
+				int kmCota = opAngajat.getKmCota(conn, rs.getString("codAngajat"), delegatie.getDataPlecare(), delegatie.getDataSosire());
 
 				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc") + kmCota);
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
@@ -141,6 +159,21 @@ public class OperatiiDelegatii {
 
 				stmt1.close();
 			}
+
+		} catch (Exception ex) {
+			logger.error(Utils.getStackTrace(ex));
+		}
+
+	}
+
+	public void aprobaAutomatDelegatie(String idDelegatie) {
+		try (Connection conn = DBManager.getTestInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.aprobaAutomatDelegatie());) {
+
+			stmt.setString(1, idDelegatie);
+			stmt.setString(2, DateUtils.getCurrentDate());
+			stmt.setString(3, DateUtils.getCurrentTime());
+
+			stmt.executeQuery();
 
 		} catch (Exception ex) {
 			logger.error(Utils.getStackTrace(ex));
@@ -193,6 +226,70 @@ public class OperatiiDelegatii {
 		}
 
 		return listLocalitati;
+	}
+
+	public List<PunctTraseu> getPuncteTraseu(Connection conn, String idDelegatie) {
+		List<PunctTraseu> listLocalitati = new ArrayList<>();
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(SqlQueries.getPuncteTraseu());
+
+			stmt.setString(1, idDelegatie);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				PunctTraseu punct = new PunctTraseu();
+				punct.setStrAdresa(rs.getString("judet") + " / " + rs.getString("localitate"));
+
+				if (!rs.getString("lat").equals("-1")) {
+					punct.setCoordonate(new LatLng(Double.valueOf(rs.getString("lat")), Double.valueOf(rs.getString("lon"))));
+				} else {
+
+					LatLng coordPunct = MapUtils.geocodeAddress(UtilsAddress.getAddress(punct.getStrAdresa()));
+					punct.setCoordonate(new LatLng(coordPunct.lat, coordPunct.lng));
+					salveazaCoordonatePunct(conn, punct.getStrAdresa(), coordPunct);
+
+				}
+
+				listLocalitati.add(punct);
+
+			}
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return listLocalitati;
+	}
+
+	private void salveazaCoordonatePunct(Connection conn, String adresa, LatLng coordonate) {
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaCoordonate());
+
+			stmt.setString(1, adresa.split("/")[0]);
+			stmt.setString(2, adresa.split("/")[1]);
+			stmt.setString(3, String.valueOf(coordonate.lat));
+			stmt.setString(4, String.valueOf(coordonate.lng));
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.executeQuery();
+
+			rs.close();
+			stmt.close();
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
 	}
 
 	public List<PunctTraseuLite> getOpriri(Connection conn, String idDelegatie) {
@@ -281,6 +378,8 @@ public class OperatiiDelegatii {
 				delegatie.setDataPlecare(rs.getString("data_plecare"));
 				delegatie.setOraPlecare(rs.getString("ora_plecare"));
 				delegatie.setDataSosire(rs.getString("data_sosire"));
+				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc"));
+				delegatie.setAngajatId(rs.getString("codangajat"));
 			}
 
 		}
@@ -322,6 +421,120 @@ public class OperatiiDelegatii {
 		}
 
 		return;
+
+	}
+
+	public List<DelegatieModifAntet> getDelegatiiModificare(String codAngajat) {
+
+		List<DelegatieModifAntet> listDelegatii = new ArrayList<>();
+
+		try (Connection conn = DBManager.getTestInstance().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelModifHeader(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+
+			stmt.setString(1, codAngajat);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				DelegatieModifAntet delegatie = new DelegatieModifAntet();
+
+				delegatie.setId(rs.getString("id"));
+				delegatie.setDataPlecare(rs.getString("data_plecare"));
+				delegatie.setDataSosire(rs.getString("data_sosire"));
+
+				String startStopD = getStartStopDelegatie(conn, delegatie.getId());
+
+				delegatie.setLocalitateStart(startStopD.split("#")[0]);
+				delegatie.setLocalitateStop(startStopD.split("#")[1]);
+				listDelegatii.add(delegatie);
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return listDelegatii;
+
+	}
+
+	private String getStartStopDelegatie(Connection conn, String idDelegatie) {
+
+		String startLoc = "";
+		String stopLoc = "";
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelModifStartStop());) {
+
+			stmt.setString(1, idDelegatie);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			int i = 0;
+			while (rs.next()) {
+
+				if (i == 0)
+					startLoc = rs.getString("punct");
+
+				stopLoc = rs.getString("punct");
+
+				i++;
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return startLoc + "#" + stopLoc;
+
+	}
+
+	public DelegatieModifDetalii getDelegatieModif(String delegatieId) {
+
+		DelegatieModifDetalii delegatie = new DelegatieModifDetalii();
+
+		try (Connection conn = DBManager.getTestInstance().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatieModif(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+
+			stmt.setString(1, delegatieId);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				delegatie.setNrAuto(rs.getString("nrauto"));
+				delegatie.setDataPlecare(rs.getString("data_plecare"));
+				delegatie.setOraPlecare(rs.getString("ora_plecare"));
+				delegatie.setDataSosire(rs.getString("data_sosire"));
+
+				List<PunctTraseuLite> ruta = getOpriri(conn, delegatieId);
+
+				delegatie.setLocPlecare(ruta.get(0).getAdresa());
+				delegatie.setLocSosire(ruta.get(ruta.size() - 1).getAdresa());
+
+				ruta.remove(0);
+				ruta.remove(ruta.size() - 1);
+
+				List<String> puncte = new ArrayList<>();
+
+				for (PunctTraseuLite punct : ruta)
+					puncte.add(punct.getAdresa());
+
+				delegatie.setRuta(puncte);
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return delegatie;
 
 	}
 

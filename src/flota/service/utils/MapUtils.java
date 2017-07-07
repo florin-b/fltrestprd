@@ -34,6 +34,8 @@ public class MapUtils {
 
 	public static LatLng geocodeAddress(StandardAddress address) {
 		LatLng coordonateGps = new LatLng(0, 0);
+		
+		
 
 		try {
 

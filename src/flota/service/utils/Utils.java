@@ -107,4 +107,26 @@ public class Utils {
 
 	}
 	
+	public static boolean isAngajatVanzari(String tipAngajat) {
+
+		boolean isVanzari;
+
+		switch (tipAngajat) {
+		case "AV":
+		case "SD":
+		case "KA":
+		case "CV":
+		case "DV":
+		case "DD":
+			isVanzari = true;
+			break;
+		default:
+			isVanzari = false;
+			break;
+		}
+
+		return isVanzari;
+
+	}
+	
 }

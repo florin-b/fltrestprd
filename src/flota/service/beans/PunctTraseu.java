@@ -7,6 +7,7 @@ public class PunctTraseu {
 	private int pozitie;
 	private LatLng coordonate;
 	private StandardAddress adresa;
+	private String strAdresa;
 	private boolean vizitat;
 
 	public int getPozitie() {
@@ -41,11 +42,17 @@ public class PunctTraseu {
 		this.vizitat = vizitat;
 	}
 
+	public String getStrAdresa() {
+		return strAdresa;
+	}
+
+	public void setStrAdresa(String strAdresa) {
+		this.strAdresa = strAdresa;
+	}
+
 	@Override
 	public String toString() {
-		return "PunctTraseu [pozitie=" + pozitie + ", coordonate=" + coordonate + ", adresa=" + adresa + ", vizitat=" + vizitat + "]";
+		return "PunctTraseu [pozitie=" + pozitie + ", coordonate=" + coordonate + ", adresa=" + adresa + ", strAdresa=" + strAdresa + ", vizitat=" + vizitat + "]";
 	}
-	
-	
 
 }

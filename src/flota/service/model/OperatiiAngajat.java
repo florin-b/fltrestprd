@@ -7,13 +7,11 @@ import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import flota.service.database.DBManager;
+
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
 import flota.service.utils.Utils;
@@ -22,11 +20,11 @@ public class OperatiiAngajat {
 
 	private static final Logger logger = LogManager.getLogger(OperatiiAngajat.class);
 
-	public int getKmCota(String codAngajat, String dataStart, String dataStop) {
+	public int getKmCota(Connection conn, String codAngajat, String dataStart, String dataStop) {
 
 		int kmCota = 0;
 
-		try (Connection conn = DBManager.getTestInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getKmCota());) {
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getKmCota());) {
 
 			stmt.setString(1, codAngajat);
 			stmt.setString(2, DateUtils.formatDateSap(dataStart));

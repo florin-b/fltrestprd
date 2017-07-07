@@ -2,9 +2,28 @@ package flota.service.beans;
 
 public class BeanDelegatieCauta {
 
+	private String id;
+	private String angajatId;
 	private String dataPlecare;
 	private String oraPlecare;
 	private String dataSosire;
+	private int distantaCalculata;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getAngajatId() {
+		return angajatId;
+	}
+
+	public void setAngajatId(String angajatId) {
+		this.angajatId = angajatId;
+	}
 
 	public String getDataPlecare() {
 		return dataPlecare;
@@ -30,9 +49,20 @@ public class BeanDelegatieCauta {
 		this.dataSosire = dataSosire;
 	}
 
+	public int getDistantaCalculata() {
+		return distantaCalculata;
+	}
+
+	public void setDistantaCalculata(int distantaCalculata) {
+		this.distantaCalculata = distantaCalculata;
+	}
+
 	@Override
 	public String toString() {
-		return "BeanDelegatieCauta [dataPlecare=" + dataPlecare + ", oraPlecare=" + oraPlecare + ", dataSosire=" + dataSosire + "]";
+		return "BeanDelegatieCauta [id=" + id + ", angajatId=" + angajatId + ", dataPlecare=" + dataPlecare + ", oraPlecare=" + oraPlecare + ", dataSosire=" + dataSosire
+				+ ", distantaCalculata=" + distantaCalculata + "]";
 	}
+
+	
 
 }
