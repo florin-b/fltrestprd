@@ -1,12 +1,22 @@
 package flota.service.utils;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
+import com.google.maps.errors.OverQueryLimitException;
+import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import com.google.maps.model.TravelMode;
 
 import flota.service.beans.GoogleContext;
 import flota.service.beans.StandardAddress;
+import flota.service.enums.EnumJudete;
 
 public class MapUtils {
 
@@ -34,8 +44,6 @@ public class MapUtils {
 
 	public static LatLng geocodeAddress(StandardAddress address) {
 		LatLng coordonateGps = new LatLng(0, 0);
-		
-		
 
 		try {
 
@@ -80,6 +88,77 @@ public class MapUtils {
 		}
 
 		return coordonateGps;
+	}
+
+	public static int getDistantaTraseu(List<LatLng> listCoords) {
+
+		int distanta = 0;
+		DirectionsRoute[] routes = null;
+
+		try {
+
+			List<String> strList = new ArrayList<>();
+
+			for (LatLng coord : listCoords)
+				strList.add(coord.lat + " , " + coord.lng);
+
+			String[] arrayPoints = strList.toArray(new String[strList.size()]);
+
+			GeoApiContext context = GoogleContext.getContext();
+
+			LatLng start = new LatLng(listCoords.get(0).lat, listCoords.get(0).lng);
+
+			LatLng stop = new LatLng(listCoords.get(listCoords.size() - 1).lat, listCoords.get(listCoords.size() - 1).lng);
+
+			routes = DirectionsApi.newRequest(context).mode(TravelMode.DRIVING).origin(start).destination(stop).waypoints(arrayPoints).mode(TravelMode.DRIVING)
+					.optimizeWaypoints(false).await();
+
+			for (int i = 0; i < routes[0].legs.length; i++) {
+				distanta += routes[0].legs[i].distance.inMeters;
+
+			}
+
+		} catch (OverQueryLimitException q) {
+			MailOperations.sendMail("traseuBorderou: " + q.toString());
+		} catch (Exception ex) {
+			MailOperations.sendMail("traseuBorderou: " + ex.toString());
+		}
+
+		return distanta / 1000;
+
+	}
+
+	public static List<String> getAdreseCoordonate(List<LatLng> coords) {
+
+		Set<String> setAdrese = new LinkedHashSet<>();
+
+		GeoApiContext context = GoogleContext.getContext();
+
+		for (LatLng coord : coords) {
+			try {
+				GeocodingResult[] results = GeocodingApi.reverseGeocode(context, coord).await();
+
+				String localitate = Utils.flattenToAscii(results[0].addressComponents[2].shortName);
+				String judet = Utils.flattenToAscii(results[0].addressComponents[4].shortName);
+
+				if (judet.equalsIgnoreCase("RO"))
+					judet = Utils.flattenToAscii(results[0].addressComponents[3].shortName);
+
+				judet = EnumJudete.getNumeJudet(judet);
+
+				if (!judet.isEmpty())
+					setAdrese.add(localitate + " / " + judet);
+
+			} catch (Exception e) {
+				MailOperations.sendMail(e.toString());
+			}
+		}
+
+		List<String> arr = new ArrayList<>();
+
+		arr.addAll(setAdrese);
+
+		return arr;
 	}
 
 }

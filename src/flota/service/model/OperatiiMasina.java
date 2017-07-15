@@ -16,16 +16,17 @@ public class OperatiiMasina {
 
 	private static final Logger logger = LogManager.getLogger(OperatiiMasina.class);
 
-	public String getCodDispGps(String nrDelegatie) {
+	public String getCodDispGps(Connection conn, String nrDelegatie) {
 
 		String codDisp = null;
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGps(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGps(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			String nrAuto = getNrAuto(nrDelegatie).replace("-", "").replace(" ", "");
+			// String nrAuto = getNrAuto(nrDelegatie).replace("-", "").replace("
+			// ", "");
 
-			stmt.setString(1, nrAuto);
+			// stmt.setString(1, nrAuto);
+			stmt.setString(1, nrDelegatie);
 
 			stmt.executeQuery();
 			ResultSet rs = stmt.getResultSet();

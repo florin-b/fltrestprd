@@ -1,5 +1,6 @@
 package flota.service.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,7 +26,6 @@ public class MainService {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String localitati(@QueryParam("codJudet") String codJudet) {
-
 		return new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
 
 	}
@@ -33,9 +33,9 @@ public class MainService {
 	@Path("adaugaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String adaugaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat, @FormParam("dataP") String dataPlecare,
-			@FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire, @FormParam("distcalc") String distCalc, @FormParam("stops") String stops,
-			@FormParam("nrAuto") String nrAuto) {
+	public String adaugaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
+			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
+			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto) {
 
 		boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
 		return success ? "1" : "0";
@@ -44,9 +44,10 @@ public class MainService {
 	@Path("modificaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String modificaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat, @FormParam("dataP") String dataPlecare,
-			@FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire, @FormParam("distcalc") String distCalc, @FormParam("stops") String stops,
-			@FormParam("nrAuto") String nrAuto, @FormParam("idDelegatie") String idDelegatie) {
+	public String modificaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
+			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
+			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto,
+			@FormParam("idDelegatie") String idDelegatie) {
 
 		OperatiiDelegatii opDelegatii = new OperatiiDelegatii();
 		opDelegatii.respingeDelegatie(idDelegatie, tipAngajat, codAngajat);
@@ -69,8 +70,8 @@ public class MainService {
 	@Path("aprobaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String aprobaDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat, @FormParam("kmRespinsi") String kmRespinsi,
-			@FormParam("codAngajat") String codAngajat) {
+	public String aprobaDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat,
+			@FormParam("kmRespinsi") String kmRespinsi, @FormParam("codAngajat") String codAngajat) {
 
 		new OperatiiDelegatii().aprobaDelegatie(idDelegatie, tipAngajat, kmRespinsi, codAngajat);
 		return "!";
@@ -80,7 +81,8 @@ public class MainService {
 	@Path("respingeDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String respingeDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat, @FormParam("codAngajat") String codAngajat) {
+	public String respingeDelegatie(@FormParam("idDelegatie") String idDelegatie, @FormParam("tipAngajat") String tipAngajat,
+			@FormParam("codAngajat") String codAngajat) {
 
 		new OperatiiDelegatii().respingeDelegatie(idDelegatie, tipAngajat, codAngajat);
 		return "!";
@@ -92,8 +94,15 @@ public class MainService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<BeanDelegatieAprobare> afiseazaDelegatii(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart,
-			@QueryParam("dataStop") String dataStop) {
-		return new OperatiiDelegatii().afiseazaDelegatii(codAngajat, dataStart, dataStop);
+			@QueryParam("dataStop") String dataStop, @QueryParam("tipAngajat") String tipAngajat, @QueryParam("unitLog") String unitLog,
+			@QueryParam("codDepart") String codDepart, @QueryParam("tipAfis") String tipAfis) {
+
+		if (tipAfis != null && tipAfis.equalsIgnoreCase("P"))
+			return new OperatiiDelegatii().afiseazaDelegatiiProprii(codAngajat, dataStart, dataStop);
+		else if (tipAfis != null && tipAfis.equalsIgnoreCase("S"))
+			return new OperatiiDelegatii().afiseazaDelegatiiSubord(dataStart, dataStop, tipAngajat, unitLog, codDepart);
+
+		return new ArrayList<>();
 
 	}
 

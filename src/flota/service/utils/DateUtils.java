@@ -38,8 +38,7 @@ public class DateUtils {
 		return formatted;
 
 	}
-	
-	
+
 	public static String formatDateSap(String strDate) {
 
 		String formatted = "";
@@ -59,7 +58,27 @@ public class DateUtils {
 		return formatted;
 
 	}
-	
+
+	public static String formatDateFromSap(String strDate) {
+
+		String formatted = "";
+
+		try {
+
+			String pattern = "yyyymmdd";
+			SimpleDateFormat formatInit = new SimpleDateFormat(pattern, new Locale("ro"));
+			Date date = formatInit.parse(strDate);
+
+			SimpleDateFormat formatFinal = new SimpleDateFormat("dd-mm-yyyy");
+
+			formatted = formatFinal.format(date);
+		} catch (ParseException p) {
+			MailOperations.sendMail(p.toString());
+		}
+
+		return formatted;
+
+	}
 
 	public static String formatTime(String strTime) {
 		return strTime.substring(0, 2) + ":" + strTime.substring(2, 4);

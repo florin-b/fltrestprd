@@ -18,6 +18,7 @@ public class BeanDelegatieAprobare {
 	private int distantaEfectuata;
 	private int distantaRespinsa;
 	private String statusCode;
+	private String msgAtentionare;
 
 	public String getId() {
 		return id;
@@ -106,5 +107,22 @@ public class BeanDelegatieAprobare {
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
 	}
+
+	public String getMsgAtentionare() {
+		return msgAtentionare;
+	}
+
+	public void setMsgAtentionare(String msgAtentionare) {
+		this.msgAtentionare = msgAtentionare;
+	}
+
+	@Override
+	public String toString() {
+		return "BeanDelegatieAprobare [id=" + id + ", codAngajat=" + codAngajat + ", numeAngajat=" + numeAngajat + ", dataPlecare=" + dataPlecare + ", oraPlecare=" + oraPlecare
+				+ ", dataSosire=" + dataSosire + ", listOpriri=" + listOpriri + ", distantaCalculata=" + distantaCalculata + ", distantaEfectuata=" + distantaEfectuata
+				+ ", distantaRespinsa=" + distantaRespinsa + ", statusCode=" + statusCode + ", msgAtentionare=" + msgAtentionare + "]";
+	}
+	
+	
 
 }

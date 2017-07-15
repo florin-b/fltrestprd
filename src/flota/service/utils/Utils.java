@@ -2,6 +2,7 @@ package flota.service.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +34,6 @@ public class Utils {
 		return (String.valueOf(millis));
 	}
 
-	
 	public static String getUnitLog(String numeFiliala) {
 		String fl = "NN10";
 
@@ -106,7 +106,7 @@ public class Utils {
 		return fl;
 
 	}
-	
+
 	public static boolean isAngajatVanzari(String tipAngajat) {
 
 		boolean isVanzari;
@@ -128,5 +128,15 @@ public class Utils {
 		return isVanzari;
 
 	}
-	
+
+	public static String flattenToAscii(String string) {
+		StringBuilder sb = new StringBuilder(string.length());
+		String localString = Normalizer.normalize(string, Normalizer.Form.NFD);
+		for (char c : localString.toCharArray()) {
+			if (c <= '\u007F')
+				sb.append(c);
+		}
+		return sb.toString();
+	}
+
 }

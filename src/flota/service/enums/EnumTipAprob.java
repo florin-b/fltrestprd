@@ -1,7 +1,7 @@
 package flota.service.enums;
 
 public enum EnumTipAprob {
-	AV(1);
+	AV(100), ATR(1), DAG(3);
 
 	private int cod;
 
@@ -21,8 +21,7 @@ public enum EnumTipAprob {
 
 		return -1;
 	}
-	
-	
+
 	public static int getCodAprob(String tipAngajat) {
 		for (EnumTipAprob tipAprob : EnumTipAprob.values()) {
 			if (tipAngajat.equals(tipAprob.toString()))
