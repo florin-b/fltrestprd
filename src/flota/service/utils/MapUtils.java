@@ -128,6 +128,47 @@ public class MapUtils {
 
 	}
 
+	public static int getDistantaTraseuAdrese(List<String> listAdrese) {
+
+		int distanta = 0;
+		DirectionsRoute[] routes = null;
+
+		try {
+
+			List<String> strList = new ArrayList<>();
+
+			for (String adresa : listAdrese)
+				strList.add("Romania, " + adresa.split("/")[1] + " , " + adresa.split("/")[0]);
+
+			String[] arrayPoints = strList.toArray(new String[strList.size()]);
+
+			GeoApiContext context = GoogleContext.getContext();
+
+			String start = "Romania, " + listAdrese.get(0).split("/")[1] + " , " + listAdrese.get(0).split("/")[0];
+
+			String stop = "Romania, " + listAdrese.get(listAdrese.size() - 1).split("/")[1] + " , " + listAdrese.get(listAdrese.size() - 1).split("/")[0];
+
+			// LatLng stop = new LatLng(listCoords.get(listCoords.size() -
+			// 1).lat, listCoords.get(listCoords.size() - 1).lng);
+
+			routes = DirectionsApi.newRequest(context).mode(TravelMode.DRIVING).origin(start).destination(stop).waypoints(arrayPoints).mode(TravelMode.DRIVING)
+					.optimizeWaypoints(false).await();
+
+			for (int i = 0; i < routes[0].legs.length; i++) {
+				distanta += routes[0].legs[i].distance.inMeters;
+
+			}
+
+		} catch (OverQueryLimitException q) {
+			MailOperations.sendMail("traseuBorderou: " + q.toString());
+		} catch (Exception ex) {
+			MailOperations.sendMail("traseuBorderou: " + ex.toString());
+		}
+
+		return distanta / 1000;
+
+	}
+
 	public static List<String> getAdreseCoordonate(List<LatLng> coords) {
 
 		Set<String> setAdrese = new LinkedHashSet<>();

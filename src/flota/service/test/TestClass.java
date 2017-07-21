@@ -18,9 +18,9 @@ public class TestClass {
 
 		// new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10");
 
-		 new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "16818168023");
+		// new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "17337040814");
 
-		//System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10", "02"));
+		System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10", "02"));
 
 		// System.out.println(new
 		// OperatiiDelegatii().afiseazaDelegatiiProprii("00002415", "01-07-2017"
@@ -36,6 +36,11 @@ public class TestClass {
 
 		//int dist = MapUtils.getDistantaTraseu(listCoords);
 		//System.out.println("dist = " + dist);
+		
+		
+		
+		new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "17152547389");
+																									
 
 	}
 

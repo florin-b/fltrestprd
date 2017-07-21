@@ -113,8 +113,6 @@ public class OperatiiTraseu {
 				}
 
 				double distSosire = MapUtils.distanceXtoY(coordStop.lat, coordStop.lng, rs.getDouble("lat"), rs.getDouble("lon"), "K");
-				
-				System.out.println(distSosire);
 
 				if (distSosire > razaKmSosire)
 					startDel = true;
@@ -191,18 +189,18 @@ public class OperatiiTraseu {
 
 			int kmCota = new OperatiiAngajat().getKmCota(conn, delegatie.getAngajatId(), delegatie.getDataPlecare(), delegatie.getDataSosire());
 
-			boolean aprobAutomat = verificaAprobareAutomataAnte(conn, delegatie, distReal, puncte, kmCota);
+			boolean aprobAutomat = verificaAprobareAutomata(conn, delegatie, distReal, puncte, kmCota);
 
 			if (!aprobAutomat)
 				recalculeazaTraseuTeoretic(conn, delegatie, puncte);
 
-			verificaAprobareAutomataPost(conn, delegatie, distReal, puncte, kmCota);
+			verificaAprobareAutomata(conn, delegatie, distReal, puncte, kmCota);
 
 		}
 
 	}
 
-	public static boolean verificaAprobareAutomataAnte(Connection conn, BeanDelegatieCauta delegatie, double distReal, List<PunctTraseu> puncte, int kmCota) {
+	public static boolean verificaAprobareAutomata(Connection conn, BeanDelegatieCauta delegatie, double distReal, List<PunctTraseu> puncte, int kmCota) {
 
 		if (distReal > (delegatie.getDistantaCalculata() + kmCota))
 			return false;
@@ -217,27 +215,16 @@ public class OperatiiTraseu {
 
 	}
 
-	public static boolean verificaAprobareAutomataPost(Connection conn, BeanDelegatieCauta delegatie, double distReal, List<PunctTraseu> puncte, int kmCota) {
-
-		if (distReal > (delegatie.getDistantaCalculata() + kmCota))
-			return false;
-
-		new OperatiiDelegatii().aprobaAutomatDelegatie(conn, delegatie.getId());
-
-		return true;
-
-	}
-
 	public void recalculeazaTraseuTeoretic(Connection conn, BeanDelegatieCauta delegatie, List<PunctTraseu> puncte) {
 
 		List<LatLng> coordonateOpriri = getCoordOpriri(codDisp, dataPlecare, dataSosire);
 		coordonateOpriri.add(0, coordonatePlecare);
 		coordonateOpriri.add(coordonateSosire);
-		int distantaTeoretica = MapUtils.getDistantaTraseu(coordonateOpriri);
-
-		delegatie.setDistantaCalculata(distantaTeoretica);
 
 		List<String> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
+
+		int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
+		delegatie.setDistantaCalculata(distantaTeoretica);
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.updateDistantaCalculata());) {
 
@@ -248,11 +235,9 @@ public class OperatiiTraseu {
 
 			if (!adreseOpriri.isEmpty()) {
 
-				stergePuncteTraseu(conn, delegatie.getId());
-
 				PreparedStatement stmt1 = null;
 
-				int contorOpriri = 2;
+				int contorOpriri = 100 - adreseOpriri.size();
 
 				for (String adresa : adreseOpriri) {
 

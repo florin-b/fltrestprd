@@ -98,7 +98,7 @@ public class OperatiiDelegatii {
 
 		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
 
-		verificaDelegatiiTerminate(tipAngajat, unitLog, codDepart, isPersVanzari);
+		//verificaDelegatiiTerminate(tipAngajat, unitLog, codDepart, isPersVanzari);
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
@@ -113,9 +113,9 @@ public class OperatiiDelegatii {
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, tipAngajat);
+			stmt.setString(2, unitLog);
 
 			if (isPersVanzari) {
-				stmt.setString(2, unitLog);
 				stmt.setString(3, codDepart);
 			}
 
@@ -411,8 +411,9 @@ public class OperatiiDelegatii {
 				stmt.setString(4, DateUtils.formatDateSap(dataStop));
 			} else {
 				stmt.setString(1, tipAngajat);
-				stmt.setString(2, DateUtils.formatDateSap(dataStart));
-				stmt.setString(3, DateUtils.formatDateSap(dataStop));
+				stmt.setString(2, unitLog);
+				stmt.setString(3, DateUtils.formatDateSap(dataStart));
+				stmt.setString(4, DateUtils.formatDateSap(dataStop));
 			}
 
 			stmt.executeQuery();
@@ -495,11 +496,13 @@ public class OperatiiDelegatii {
 		try (Connection conn = DBManager.getProdInstance().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			stmt.setString(1, tipAngajat);
-
 			if (isPersVanzari) {
+				stmt.setString(1, tipAngajat);
 				stmt.setString(2, unitLog);
 				stmt.setString(3, depart);
+			} else {
+				stmt.setString(1, tipAngajat);
+				stmt.setString(2, unitLog);
 			}
 
 			stmt.executeQuery();

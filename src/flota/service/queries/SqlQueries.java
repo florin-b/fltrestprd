@@ -40,11 +40,11 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag, sapprd.zdelstataprob b where ");
 		sqlString.append(" h.idaprob = (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and ag.divizie = ? and h.codangajat = ag.cod ");
-		sqlString.append(" and (not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('1','2','6')) ");
-		sqlString.append("  ) ");
+		sqlString.append(" and b.iddelegatie(+) = h.id  ");
+		sqlString.append(" and nvl(status,'-1')!='6' and (nvl(status,'-1')='-1' or (nvl(status,'-1')='1' and h.distreal != 0)) ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -54,11 +54,11 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag, sapprd.zdelstataprob b where ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and h.codangajat = ag.cod ");
-		sqlString.append(" and (not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('1','2','6')) ");
-		sqlString.append("  ) ");
+		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
+		sqlString.append(" and b.iddelegatie(+) = h.id  ");
+		sqlString.append(" and nvl(status,'-1')!='6' and (nvl(status,'-1')='-1' or (nvl(status,'-1')='1' and h.distreal != 0)) ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -85,10 +85,11 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id ");
-		sqlString.append(" from sapprd.zdelegatiehead h where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
-		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0  ");
+		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0   ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -125,7 +126,7 @@ public class SqlQueries {
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, ");
 		sqlString.append(" nvl((select status from sapprd.zdelstataprob where iddelegatie = h.id and rownum=1),'-1') status ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod and ");
-		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)   and h.datac between ? and ? ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)  and ag.filiala =?  and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();

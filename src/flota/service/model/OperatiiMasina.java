@@ -47,7 +47,7 @@ public class OperatiiMasina {
 
 		String nrAuto = null;
 
-		try (Connection conn = DBManager.getTestInstance().getConnection();
+		try (Connection conn = DBManager.getProdInstance().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getNrAuto(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, nrDelegatie);
