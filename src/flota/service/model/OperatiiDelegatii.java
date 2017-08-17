@@ -98,11 +98,11 @@ public class OperatiiDelegatii {
 
 		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
 
-		//verificaDelegatiiTerminate(tipAngajat, unitLog, codDepart, isPersVanzari);
+		verificaDelegatiiTerminate(tipAngajat, unitLog, codDepart, isPersVanzari);
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
-		String sqlString = "";
+		String sqlString;
 
 		if (isPersVanzari)
 			sqlString = SqlQueries.getDelegatiiAprobareHeaderVanzari();
@@ -126,6 +126,21 @@ public class OperatiiDelegatii {
 			OperatiiAngajat opAngajat = new OperatiiAngajat();
 
 			while (rs.next()) {
+
+				double distReal = rs.getDouble("distreal");
+				String statusDel = HelperDelegatie.getStatusDelegatie(conn, rs.getString("id"));
+
+				if (statusDel.equals("6"))
+					continue;
+
+				if (distReal == 0) {
+					if (statusDel.equals("1"))
+						continue;
+				} else {
+					if (statusDel.equals("2"))
+						continue;
+				}
+
 				BeanDelegatieAprobare delegatie = new BeanDelegatieAprobare();
 				delegatie.setId(rs.getString("id"));
 				delegatie.setDataPlecare(DateUtils.formatDateFromSap(rs.getString("data_plecare")));
@@ -152,7 +167,7 @@ public class OperatiiDelegatii {
 
 	}
 
-	public void aprobaDelegatie(String idDelegatie, String tipAngajat, String kmRespinsi, String codAngajat) {
+	public void aprobaDelegatie(String idDelegatie, String tipAngajat, String kmRespinsi, String codAngajat, String tipAprobare) {
 		try (Connection conn = DBManager.getProdInstance().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.opereazaDelegatie(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
@@ -161,7 +176,7 @@ public class OperatiiDelegatii {
 
 			stmt.setString(1, idDelegatie);
 			stmt.setString(2, tipAngajat);
-			stmt.setString(3, getCodAprobare(kmRespinsi));
+			stmt.setString(3, getCodAprobare(tipAprobare));
 			stmt.setString(4, DateUtils.getCurrentDate());
 			stmt.setString(5, DateUtils.getCurrentTime());
 			stmt.setString(6, codAngajat);
@@ -215,6 +230,7 @@ public class OperatiiDelegatii {
 			stmt.executeQuery();
 
 		} catch (Exception ex) {
+			System.out.println(ex.toString());
 			logger.error(Utils.getStackTrace(ex));
 		}
 
@@ -436,7 +452,8 @@ public class OperatiiDelegatii {
 
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
-				delegatie.setStatusCode(rs.getString("status"));
+				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
+
 				listDelegatii.add(delegatie);
 			}
 
@@ -477,8 +494,8 @@ public class OperatiiDelegatii {
 
 	}
 
-	private static String getCodAprobare(String kmAprobati) {
-		if (kmAprobati.equals("0"))
+	private static String getCodAprobare(String codAprobare) {
+		if (codAprobare.equals("0"))
 			return "1";
 
 		return "2";
@@ -613,9 +630,9 @@ public class OperatiiDelegatii {
 			while (rs.next()) {
 
 				delegatie.setNrAuto(rs.getString("nrauto"));
-				delegatie.setDataPlecare(rs.getString("data_plecare"));
+				delegatie.setDataPlecare(DateUtils.formatDateFromSap(rs.getString("data_plecare")));
 				delegatie.setOraPlecare(rs.getString("ora_plecare"));
-				delegatie.setDataSosire(rs.getString("data_sosire"));
+				delegatie.setDataSosire(DateUtils.formatDateFromSap(rs.getString("data_sosire")));
 
 				List<PunctTraseuLite> ruta = getOpriri(conn, delegatieId);
 

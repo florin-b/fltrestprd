@@ -84,4 +84,65 @@ public class DateUtils {
 		return strTime.substring(0, 2) + ":" + strTime.substring(2, 4);
 	}
 
+	public static Date getDate(String stringDate) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+		Date date = new Date();
+
+		try {
+			date = dateFormat.parse(stringDate);
+		} catch (ParseException e) {
+			MailOperations.sendMail(e.toString());
+		}
+
+		return date;
+	}
+	
+	public static String dateDiff(Date dateStart, Date dateStop) {
+
+		StringBuilder result = new StringBuilder();
+
+		if (dateStart == null || dateStop == null)
+			return result.toString();
+
+		try {
+
+			long diff = dateStop.getTime() - dateStart.getTime();
+
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			long diffDays = diff / (24 * 60 * 60 * 1000);
+
+			if (diffDays > 0) {
+				result.append(diffDays);
+				result.append(" zile ");
+			}
+
+			if (diffHours > 0) {
+				result.append(diffHours);
+				result.append(" ore ");
+			}
+
+			if (diffMinutes > 0) {
+				result.append(diffMinutes);
+
+				result.append(" min");
+
+			} else {
+				if (diffMinutes != 0) {
+					diffMinutes = 60 - Math.abs(diffMinutes);
+					result.append(diffMinutes);
+
+					result.append(" min");
+
+				}
+			}
+
+		} catch (Exception e) {
+			MailOperations.sendMail(e.toString());
+		}
+
+		return result.toString();
+
+	}
+
 }

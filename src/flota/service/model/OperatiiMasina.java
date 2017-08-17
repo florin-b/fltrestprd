@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
+import flota.service.utils.DateUtils;
 import flota.service.utils.Utils;
 
 public class OperatiiMasina {
@@ -43,6 +46,29 @@ public class OperatiiMasina {
 
 	}
 
+	public List<String> getCodDispGps(String codAngajat, String dataStart) {
+
+		List<String> listDisp = new ArrayList<>();
+
+		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGpsData())) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				listDisp.add(rs.getString("vcode"));
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+		return listDisp;
+
+	}
+
 	public String getNrAuto(String nrDelegatie) {
 
 		String nrAuto = null;
@@ -57,6 +83,32 @@ public class OperatiiMasina {
 
 			while (rs.next()) {
 				nrAuto = rs.getString("nrauto");
+			}
+
+		}
+
+		catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return nrAuto;
+
+	}
+
+	public List<String> getMasiniAngajat(String codAngajat, String dataStart) {
+
+		List<String> nrAuto = new ArrayList<>();
+
+		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajat());) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				nrAuto.add(rs.getString("ktext"));
 			}
 
 		}

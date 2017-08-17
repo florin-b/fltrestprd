@@ -1,14 +1,9 @@
 package flota.service.test;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import com.google.maps.model.LatLng;
 
 import flota.service.database.DBManager;
-import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiTraseu;
-import flota.service.utils.MapUtils;
 
 public class TestClass {
 
@@ -18,9 +13,11 @@ public class TestClass {
 
 		// new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10");
 
-		// new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "17337040814");
+		 
+		 
+		 new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "19662236306");
 
-		System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10", "02"));
+		//System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "GL10", "02"));
 
 		// System.out.println(new
 		// OperatiiDelegatii().afiseazaDelegatiiProprii("00002415", "01-07-2017"
@@ -39,8 +36,16 @@ public class TestClass {
 		
 		
 		
-		new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "17152547389");
-																									
+		//new OperatiiTraseu().determinaSfarsitDelegatie(DBManager.getProdInstance().getConnection(), "17400880129");
+					
+		
+		//System.out.println(new OperatiiMasina().getMasiniAngajat( "00083307", "14-08-2017"));
+		
+		
+		//System.out.println(new OperatiiTraseu().getTraseu("00083045", "13-08-2017", "13-08-2017"));
+		
+		
+		
 
 	}
 

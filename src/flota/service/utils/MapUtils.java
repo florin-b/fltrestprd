@@ -9,6 +9,8 @@ import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.OverQueryLimitException;
+import com.google.maps.model.AddressComponent;
+import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
@@ -148,9 +150,6 @@ public class MapUtils {
 
 			String stop = "Romania, " + listAdrese.get(listAdrese.size() - 1).split("/")[1] + " , " + listAdrese.get(listAdrese.size() - 1).split("/")[0];
 
-			// LatLng stop = new LatLng(listCoords.get(listCoords.size() -
-			// 1).lat, listCoords.get(listCoords.size() - 1).lng);
-
 			routes = DirectionsApi.newRequest(context).mode(TravelMode.DRIVING).origin(start).destination(stop).waypoints(arrayPoints).mode(TravelMode.DRIVING)
 					.optimizeWaypoints(false).await();
 
@@ -174,21 +173,57 @@ public class MapUtils {
 		Set<String> setAdrese = new LinkedHashSet<>();
 
 		GeoApiContext context = GoogleContext.getContext();
+		String adresaStart = "";
+		String adresaStop = "";
 
-		for (LatLng coord : coords) {
+		String localitate;
+		String judet;
+
+		for (int i = 0; i < coords.size(); i++) {
+
 			try {
-				GeocodingResult[] results = GeocodingApi.reverseGeocode(context, coord).await();
+				GeocodingResult[] results = GeocodingApi.reverseGeocode(context, coords.get(i)).await();
 
-				String localitate = Utils.flattenToAscii(results[0].addressComponents[2].shortName);
-				String judet = Utils.flattenToAscii(results[0].addressComponents[4].shortName);
+				localitate = "";
+				judet = "";
 
-				if (judet.equalsIgnoreCase("RO"))
-					judet = Utils.flattenToAscii(results[0].addressComponents[3].shortName);
+				for (int j = 0; j < results[0].addressComponents.length; j++) {
 
-				judet = EnumJudete.getNumeJudet(judet);
+					AddressComponentType[] adrComponentType = results[0].addressComponents[j].types;
 
-				if (!judet.isEmpty())
-					setAdrese.add(localitate + " / " + judet);
+					for (int k = 0; k < adrComponentType.length; k++) {
+						if (adrComponentType[k] == AddressComponentType.LOCALITY) {
+							localitate = Utils.flattenToAscii(results[0].addressComponents[j].shortName);
+							break;
+						}
+
+						if (adrComponentType[k] == AddressComponentType.ADMINISTRATIVE_AREA_LEVEL_1) {
+							judet = Utils.flattenToAscii(results[0].addressComponents[j].shortName);
+							break;
+						}
+
+					}
+
+					if (!localitate.isEmpty() && !judet.isEmpty()) {
+
+						judet = EnumJudete.getNumeJudet(judet);
+
+						if (!judet.isEmpty() && i > 0 && i < coords.size() - 1) {
+							setAdrese.add(localitate + " / " + judet);
+
+						}
+
+						if (i == 0)
+							adresaStart = localitate + " / " + judet;
+
+						if (i == coords.size() - 1)
+							adresaStop = localitate + " / " + judet;
+
+						localitate = "";
+						judet = "";
+					}
+
+				}
 
 			} catch (Exception e) {
 				MailOperations.sendMail(e.toString());
@@ -198,8 +233,37 @@ public class MapUtils {
 		List<String> arr = new ArrayList<>();
 
 		arr.addAll(setAdrese);
+		arr.add(0, adresaStart);
+		arr.add(arr.size(), adresaStop);
 
 		return arr;
+	}
+
+	public static String getAdresaCoordonate(double lat, double lng) {
+
+		String adresa = "";
+
+		GeoApiContext context = GoogleContext.getContext();
+
+		try {
+			GeocodingResult[] results = GeocodingApi.reverseGeocode(context, new LatLng(lat, lng)).await();
+
+			String localitate = Utils.flattenToAscii(results[0].addressComponents[2].shortName);
+			String judet = Utils.flattenToAscii(results[0].addressComponents[4].shortName);
+
+			if (judet.equalsIgnoreCase("RO"))
+				judet = Utils.flattenToAscii(results[0].addressComponents[3].shortName);
+
+			judet = EnumJudete.getNumeJudet(judet);
+
+			if (!judet.isEmpty())
+				adresa = localitate + " / " + judet;
+
+		} catch (Exception e) {
+			MailOperations.sendMail(e.toString());
+		}
+
+		return adresa;
 	}
 
 }

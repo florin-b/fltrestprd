@@ -9,6 +9,7 @@ public class PunctTraseu {
 	private StandardAddress adresa;
 	private String strAdresa;
 	private boolean vizitat;
+	private boolean parasit;
 
 	public int getPozitie() {
 		return pozitie;
@@ -50,9 +51,42 @@ public class PunctTraseu {
 		this.strAdresa = strAdresa;
 	}
 
-	@Override
-	public String toString() {
-		return "PunctTraseu [pozitie=" + pozitie + ", coordonate=" + coordonate + ", adresa=" + adresa + ", strAdresa=" + strAdresa + ", vizitat=" + vizitat + "]";
+	public boolean isParasit() {
+		return parasit;
 	}
 
+	public void setParasit(boolean parasit) {
+		this.parasit = parasit;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((strAdresa == null) ? 0 : strAdresa.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PunctTraseu other = (PunctTraseu) obj;
+		if (strAdresa == null) {
+			if (other.strAdresa != null)
+				return false;
+		} else if (!strAdresa.equals(other.strAdresa))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PunctTraseu [pozitie=" + pozitie + ", coordonate=" + coordonate + ", adresa=" + adresa + ", strAdresa=" + strAdresa + ", vizitat=" + vizitat
+				+ "]";
+	}
 }

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,10 +14,13 @@ import org.apache.logging.log4j.Logger;
 import com.google.maps.model.LatLng;
 
 import flota.service.beans.BeanDelegatieCauta;
+import flota.service.beans.Oprire;
+import flota.service.beans.PozitieGps;
 import flota.service.beans.PunctTraseu;
+import flota.service.beans.Traseu;
 import flota.service.database.DBManager;
-
 import flota.service.queries.SqlQueries;
+import flota.service.utils.DateUtils;
 import flota.service.utils.MailOperations;
 import flota.service.utils.MapUtils;
 import flota.service.utils.Utils;
@@ -119,25 +123,30 @@ public class OperatiiTraseu {
 
 				for (int jj = 1; jj < objPuncte.size() - 1; jj++) {
 
-					if (!objPuncte.get(jj).isVizitat()) {
+					double distPunct = MapUtils.distanceXtoY(objPuncte.get(jj).getCoordonate().lat, objPuncte.get(jj).getCoordonate().lng, rs.getDouble("lat"),
+							rs.getDouble("lon"), "K");
 
-						double distPunct = MapUtils.distanceXtoY(objPuncte.get(jj).getCoordonate().lat, objPuncte.get(jj).getCoordonate().lng,
-								rs.getDouble("lat"), rs.getDouble("lon"), "K");
+					if (!objPuncte.get(jj).isVizitat()) {
 
 						if (distPunct < razaKmSosire) {
 							objPuncte.get(jj).setVizitat(true);
 							break;
 						}
+					} else {
+						if (distPunct > razaKmSosire) {
+							objPuncte.get(jj).setParasit(true);
+
+						}
 					}
 
 				}
 
-				if (distSosire < razaKmSosire && startDel) {
+				if (distSosire < razaKmSosire && startDel && isPunctIntermediarParasit(objPuncte)) {
 					stopKm = rs.getDouble("km");
 					oraSosire = rs.getString("gtime").replace(":", "");
 					objPuncte.get(objPuncte.size() - 1).setVizitat(true);
 					coordonateSosire = new LatLng(rs.getDouble("lat"), rs.getDouble("lon"));
-					break;
+
 				} else {
 					i++;
 				}
@@ -156,6 +165,25 @@ public class OperatiiTraseu {
 			}
 
 		return " ";
+	}
+
+	private static boolean isPunctIntermediarParasit(List<PunctTraseu> puncteTraseu) {
+		PunctTraseu punctSosire = puncteTraseu.get(puncteTraseu.size() - 1);
+
+		List<PunctTraseu> puncteIntermed = puncteTraseu.subList(0, puncteTraseu.size() - 1);
+
+		if (puncteIntermed.contains(punctSosire)) {
+
+			PunctTraseu punct = puncteIntermed.get(puncteIntermed.indexOf(punctSosire));
+
+			if (punct.isVizitat()) {
+				return punct.isParasit();
+			} else
+				return true;
+
+		} else
+			return true;
+
 	}
 
 	public void actualizeazaSfarsitDelegatie(Connection conn, BeanDelegatieCauta delegatie, String oraSosire, double distReal, List<PunctTraseu> puncte)
@@ -194,7 +222,8 @@ public class OperatiiTraseu {
 			if (!aprobAutomat)
 				recalculeazaTraseuTeoretic(conn, delegatie, puncte);
 
-			verificaAprobareAutomata(conn, delegatie, distReal, puncte, kmCota);
+			// verificaAprobareAutomata(conn, delegatie, distReal, puncte,
+			// kmCota);
 
 		}
 
@@ -215,6 +244,8 @@ public class OperatiiTraseu {
 
 	}
 
+	
+
 	public void recalculeazaTraseuTeoretic(Connection conn, BeanDelegatieCauta delegatie, List<PunctTraseu> puncte) {
 
 		List<LatLng> coordonateOpriri = getCoordOpriri(codDisp, dataPlecare, dataSosire);
@@ -223,15 +254,15 @@ public class OperatiiTraseu {
 
 		List<String> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
 
-		int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
-		delegatie.setDistantaCalculata(distantaTeoretica);
+		//int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
+		//delegatie.setDistantaCalculata(distantaTeoretica);
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.updateDistantaCalculata());) {
 
-			stmt.setDouble(1, distantaTeoretica);
-			stmt.setString(2, delegatie.getId());
+			//stmt.setDouble(1, distantaTeoretica);
+			//stmt.setString(2, delegatie.getId());
 
-			stmt.executeUpdate();
+			//stmt.executeUpdate();
 
 			if (!adreseOpriri.isEmpty()) {
 
@@ -317,6 +348,109 @@ public class OperatiiTraseu {
 		}
 
 		return listCoords;
+	}
+
+	public Traseu getTraseu(String codAngajat, String dataStart, String dataStop, String nrMasina) {
+
+		Traseu traseu = new Traseu();
+
+		List<String> listDisp = new OperatiiMasina().getCodDispGps(codAngajat, dataStart);
+
+		if (listDisp.isEmpty())
+			return traseu;
+
+		String qDisp = generateQsForDisps(listDisp);
+
+		List<LatLng> coordonateTraseu = new ArrayList<>();
+
+		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta(qDisp));) {
+
+			stmt.setString(1, nrMasina);
+			stmt.setString(2, dataStart);
+			stmt.setString(3, dataStop);
+
+			stmt.executeQuery();
+
+			int kmStart = 0, kmStop = 0, speed = 0, avgSpeed = 0, distanta = 0, maxSpeed = 0;
+			int i = 0;
+			int instantSpeed = 0;
+
+			List<Oprire> listOpriri = new ArrayList<Oprire>();
+			Oprire oprire = null;
+
+			Date dataStartOprire = null, dataStopOprire = null, ultimaInreg = null;
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				if (i == 0)
+					kmStart = rs.getInt("km");
+
+				kmStop = rs.getInt("km");
+
+				instantSpeed = rs.getInt("speed");
+
+				if (instantSpeed > maxSpeed)
+					maxSpeed = rs.getInt("speed");
+
+				if (0 == instantSpeed) {
+					if (oprire == null) {
+						oprire = new Oprire();
+						oprire.setPozitieGps(new PozitieGps(null, rs.getDouble("lat"), rs.getDouble("lon")));
+						dataStartOprire = DateUtils.getDate(rs.getString("gtime"));
+
+						oprire.setData(rs.getString("gtime"));
+
+					}
+
+				} else {
+					if (dataStartOprire != null) {
+						dataStopOprire = DateUtils.getDate(rs.getString("gtime"));
+
+						String durataOprire = DateUtils.dateDiff(dataStartOprire, dataStopOprire);
+
+						if (!durataOprire.trim().isEmpty()) {
+							oprire.setDurata(DateUtils.dateDiff(dataStartOprire, dataStopOprire));
+							listOpriri.add(oprire);
+						}
+
+						oprire = null;
+						dataStartOprire = null;
+					}
+				}
+
+				i++;
+
+				coordonateTraseu.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
+
+			}
+
+			if (dataStartOprire != null) {
+				oprire.setDurata(DateUtils.dateDiff(dataStartOprire, ultimaInreg));
+				listOpriri.add(oprire);
+			}
+
+			traseu.setCoordonate(coordonateTraseu);
+			traseu.setOpriri(listOpriri);
+
+		} catch (SQLException ex) {
+			logger.error(Utils.getStackTrace(ex));
+			MailOperations.sendMail(ex.toString());
+		}
+
+		return traseu;
+
+	}
+
+	private static String generateQsForDisps(List<String> listDisp) {
+		StringBuilder items = new StringBuilder();
+		for (int i = 0; i < listDisp.size(); i++) {
+			if (i != 0)
+				items.append(", ");
+			items.append("?");
+		}
+		return items.toString();
 	}
 
 }
