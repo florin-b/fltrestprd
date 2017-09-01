@@ -139,4 +139,13 @@ public class Utils {
 		return sb.toString();
 	}
 
+	public static String getTipSubordonat(String tipSuperior) {
+
+		if (tipSuperior.equals("SDKA"))
+			return "KA";
+
+		return tipSuperior;
+
+	}
+
 }

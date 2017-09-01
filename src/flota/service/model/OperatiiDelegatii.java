@@ -68,13 +68,12 @@ public class OperatiiDelegatii {
 				stmt1.setString(1, idDelegatieNoua);
 
 				ord++;
-				if (i == arrayOpriri.length - 1)
-					ord = 100;
 
 				stmt1.setString(2, String.valueOf(ord));
 				stmt1.setString(3, arrayAdresa[1].trim());
 				stmt1.setString(4, arrayAdresa[0].trim());
 				stmt1.setString(5, "0");
+				stmt1.setString(6, "1");
 
 				stmt1.executeQuery();
 
@@ -151,7 +150,22 @@ public class OperatiiDelegatii {
 
 				int kmCota = opAngajat.getKmCota(conn, rs.getString("codAngajat"), delegatie.getDataPlecare(), delegatie.getDataSosire());
 
-				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc") + kmCota);
+				int kmCalc = (int) rs.getDouble("distcalc");
+				int kmRecalc = (int) rs.getDouble("distrecalc");
+				
+				int distCalc = kmCalc + kmCota;
+				int distRecalc = kmRecalc + kmCota;
+				
+				if (kmCalc== 0)
+					distCalc = 0;
+				
+				if (kmRecalc == 0)
+					distRecalc = 0;
+					
+				
+				delegatie.setDistantaCalculata(distCalc);
+				delegatie.setDistantaRecalculata(distRecalc);
+
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 
@@ -161,6 +175,7 @@ public class OperatiiDelegatii {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return listDelegatii;
@@ -195,6 +210,7 @@ public class OperatiiDelegatii {
 
 		} catch (Exception ex) {
 			logger.error(Utils.getStackTrace(ex));
+			MailOperations.sendMail(ex.toString());
 		}
 
 	}
@@ -210,6 +226,7 @@ public class OperatiiDelegatii {
 
 		} catch (Exception ex) {
 			logger.error(Utils.getStackTrace(ex));
+			MailOperations.sendMail(ex.toString());
 		}
 
 	}
@@ -230,7 +247,7 @@ public class OperatiiDelegatii {
 			stmt.executeQuery();
 
 		} catch (Exception ex) {
-			System.out.println(ex.toString());
+			MailOperations.sendMail(ex.toString());
 			logger.error(Utils.getStackTrace(ex));
 		}
 
@@ -258,6 +275,7 @@ public class OperatiiDelegatii {
 			stmt.close();
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -300,6 +318,7 @@ public class OperatiiDelegatii {
 			stmt.close();
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -321,6 +340,7 @@ public class OperatiiDelegatii {
 			stmt.close();
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -345,6 +365,7 @@ public class OperatiiDelegatii {
 				PunctTraseuLite punct = new PunctTraseuLite();
 				punct.setAdresa(rs.getString("judet") + " / " + rs.getString("localitate"));
 				punct.setVizitat(rs.getString("vizitat").equals("1") ? true : false);
+				punct.setInit(rs.getString("init").equals("1") ? true : false);
 
 				listOpriri.add(punct);
 
@@ -354,6 +375,7 @@ public class OperatiiDelegatii {
 			stmt.close();
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -397,6 +419,7 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -421,10 +444,11 @@ public class OperatiiDelegatii {
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			if (isPersVanzari) {
-				stmt.setString(1, unitLog);
-				stmt.setString(2, codDepart);
-				stmt.setString(3, DateUtils.formatDateSap(dataStart));
-				stmt.setString(4, DateUtils.formatDateSap(dataStop));
+				stmt.setString(1, tipAngajat);
+				stmt.setString(2, unitLog);
+				stmt.setString(3, codDepart);
+				stmt.setString(4, DateUtils.formatDateSap(dataStart));
+				stmt.setString(5, DateUtils.formatDateSap(dataStop));
 			} else {
 				stmt.setString(1, tipAngajat);
 				stmt.setString(2, unitLog);
@@ -458,6 +482,7 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -487,6 +512,7 @@ public class OperatiiDelegatii {
 		}
 
 		catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -573,6 +599,7 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -606,6 +633,7 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 
@@ -651,6 +679,7 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
 		}
 

@@ -1,5 +1,6 @@
 package flota.service.main;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,17 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.PathSegment;
 
 import flota.service.beans.Angajat;
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.DelegatieModifAntet;
 import flota.service.beans.DelegatieModifDetalii;
+import flota.service.beans.TestObject;
 import flota.service.beans.Traseu;
 import flota.service.model.OperatiiAdresa;
 import flota.service.model.OperatiiAngajat;
@@ -115,6 +119,7 @@ public class MainService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getCoordonateTraseu(@QueryParam("idDelegatie") String idDelegatie) {
+		
 		return new OperatiiTraseu().getCoordonateTraseu(idDelegatie).toString();
 	}
 
@@ -166,6 +171,36 @@ public class MainService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getMasiniAngajat(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart) {
 		return new OperatiiMasina().getMasiniAngajat(codAngajat, dataStart);
+	}
+
+	@Path("getObject")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String getMasiniAngajat1(TestObject testObject) {
+
+		System.out.println("prop1: " + testObject);
+
+		return testObject.toString();
+
+	}
+
+	@Path("customers/{id:.+}")
+	@GET
+	public String testParam(@PathParam("id") int id) {
+		return "id=" + id;
+
+	}
+
+	@GET
+	@Path("{id : .+}/address")
+	public String getCustomer(@PathParam("id") String id) {
+		return "id=" + id;
+	}
+
+	@GET
+	@Path("{first}-{last}")
+	public String testPath(@PathParam("first") String firstName, @PathParam("last") PathSegment lastName) {
+		return firstName + " - " + lastName;
 	}
 
 }

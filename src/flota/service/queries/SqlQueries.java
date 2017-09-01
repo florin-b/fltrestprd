@@ -30,8 +30,8 @@ public class SqlQueries {
 	public static String adaugaOpririDelegatie() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" insert into sapprd.zdelegatieruta(mandt, id, poz, judet, localitate, vizitat) ");
-		sqlString.append(" values ('900',?,?,?,?,?) ");
+		sqlString.append(" insert into sapprd.zdelegatieruta(mandt, id, poz, judet, localitate, vizitat, init) ");
+		sqlString.append(" values ('900',?,?,?,?,?,?) ");
 
 		return sqlString.toString();
 	}
@@ -39,10 +39,11 @@ public class SqlQueries {
 	public static String getDelegatiiAprobareHeaderVanzari() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where ");
-		sqlString.append(" h.idaprob = (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and ag.divizie = ? and h.codangajat = ag.cod ");
+		sqlString.append(
+				" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) = ? and h.codangajat = ag.cod ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -51,7 +52,8 @@ public class SqlQueries {
 	public static String getDelegatiiAprobareHeaderNONVanzari() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
+		sqlString.append(
+				" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
@@ -67,7 +69,7 @@ public class SqlQueries {
 		sqlString.append(" select h.id ");
 		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and ag.divizie=? and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.filiala =? and substr(ag.divizie,0,2)=? and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
 		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0  ");
 		sqlString.append(" order by h.id ");
@@ -108,8 +110,9 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod  ");
-		sqlString.append(" and ag.filiala =? and ag.departament =?  and h.datac between ? and ? ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod  and ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) =?  and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -138,7 +141,7 @@ public class SqlQueries {
 
 	public static String getDelegatiiAprobareRuta() {
 		StringBuilder sqlString = new StringBuilder();
-		sqlString.append(" select r.judet, r.localitate, r.vizitat from sapprd.zdelegatieruta r where r.id = ?  order by to_number(r.poz)  ");
+		sqlString.append(" select r.judet, r.localitate, r.vizitat, r.init from sapprd.zdelegatieruta r where r.id = ?  order by to_number(r.poz)  ");
 		return sqlString.toString();
 	}
 
@@ -183,7 +186,7 @@ public class SqlQueries {
 		sqlString.append(" select x.* from (select rownum idt, to_char(gtime,'HH24:mi') gtime, lat, lon, speed, km from nexus_gps_data ");
 		sqlString.append(" where vcode=? and ");
 		sqlString.append(
-				" gtime between to_date(?,'dd-mm-yyyy HH24:mi') and to_date(?,'dd-mm-yyyy HH24:mi') and speed > 0 ) x where remainder(x.idt,2) = 0 order by x.gtime ");
+				" gtime between to_date(?,'dd-mm-yyyy HH24:mi') and to_date(?,'dd-mm-yyyy HH24:mi') and speed > 0 ) x where remainder(x.idt,2) = 0 order by x.km ");
 
 		return sqlString.toString();
 	}
@@ -305,14 +308,14 @@ public class SqlQueries {
 		sqlString.append(" select  min(lat) lat, min(lon) lon, km from nexus_gps_data where ");
 		sqlString.append(" vcode =? and gtime BETWEEN to_date(?, 'dd-mm-yyyy hh24:mi:ss') and ");
 		sqlString.append(" to_date(?, 'dd-mm-yyyy hh24:mi:ss')  and speed = 0 ");
-		sqlString.append(" group by km having count(speed) > 3 order by km ");
+		sqlString.append(" group by km having count(speed) > 2 order by km ");
 
 		return sqlString.toString();
 	}
 
-	public static String updateDistantaCalculata() {
+	public static String updateDistantaRecalculata() {
 		StringBuilder sqlString = new StringBuilder();
-		sqlString.append(" update sapprd.zdelegatiehead set  distcalc=? where id=? ");
+		sqlString.append(" update sapprd.zdelegatiehead set  distrecalc=? where id=? ");
 		return sqlString.toString();
 	}
 

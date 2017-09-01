@@ -139,8 +139,10 @@ public class MapUtils {
 
 			List<String> strList = new ArrayList<>();
 
-			for (String adresa : listAdrese)
+			for (String adresa : listAdrese) {
+
 				strList.add("Romania, " + adresa.split("/")[1] + " , " + adresa.split("/")[0]);
+			}
 
 			String[] arrayPoints = strList.toArray(new String[strList.size()]);
 
@@ -233,8 +235,15 @@ public class MapUtils {
 		List<String> arr = new ArrayList<>();
 
 		arr.addAll(setAdrese);
-		arr.add(0, adresaStart);
-		arr.add(arr.size(), adresaStop);
+
+		if (!adresaStart.isEmpty())
+			arr.add(0, adresaStart);
+
+		if (!adresaStop.isEmpty())
+			arr.add(arr.size(), adresaStop);
+		
+		
+		System.out.println(arr);
 
 		return arr;
 	}

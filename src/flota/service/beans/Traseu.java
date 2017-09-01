@@ -8,6 +8,7 @@ public class Traseu {
 
 	private List<LatLng> coordonate;
 	private List<Oprire> opriri;
+	private int distanta;
 
 	public List<LatLng> getCoordonate() {
 		return coordonate;
@@ -23,6 +24,14 @@ public class Traseu {
 
 	public void setOpriri(List<Oprire> opriri) {
 		this.opriri = opriri;
+	}
+
+	public int getDistanta() {
+		return distanta;
+	}
+
+	public void setDistanta(int distanta) {
+		this.distanta = distanta;
 	}
 
 }

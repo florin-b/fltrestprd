@@ -15,6 +15,7 @@ public class BeanDelegatieAprobare {
 	private String dataSosire;
 	private List<PunctTraseuLite> listOpriri;
 	private int distantaCalculata;
+	private int distantaRecalculata;
 	private int distantaEfectuata;
 	private int distantaRespinsa;
 	private String statusCode;
@@ -116,13 +117,20 @@ public class BeanDelegatieAprobare {
 		this.msgAtentionare = msgAtentionare;
 	}
 
+	public int getDistantaRecalculata() {
+		return distantaRecalculata;
+	}
+
+	public void setDistantaRecalculata(int distantaRecalculata) {
+		this.distantaRecalculata = distantaRecalculata;
+	}
+
 	@Override
 	public String toString() {
-		return "BeanDelegatieAprobare [id=" + id + ", codAngajat=" + codAngajat + ", numeAngajat=" + numeAngajat + ", dataPlecare=" + dataPlecare + ", oraPlecare=" + oraPlecare
-				+ ", dataSosire=" + dataSosire + ", listOpriri=" + listOpriri + ", distantaCalculata=" + distantaCalculata + ", distantaEfectuata=" + distantaEfectuata
-				+ ", distantaRespinsa=" + distantaRespinsa + ", statusCode=" + statusCode + ", msgAtentionare=" + msgAtentionare + "]";
+		return "BeanDelegatieAprobare [id=" + id + ", codAngajat=" + codAngajat + ", numeAngajat=" + numeAngajat + ", dataPlecare=" + dataPlecare
+				+ ", oraPlecare=" + oraPlecare + ", dataSosire=" + dataSosire + ", listOpriri=" + listOpriri + ", distantaCalculata=" + distantaCalculata
+				+ ", distantaEfectuata=" + distantaEfectuata + ", distantaRespinsa=" + distantaRespinsa + ", statusCode=" + statusCode + ", msgAtentionare="
+				+ msgAtentionare + "]";
 	}
-	
-	
 
 }

@@ -4,6 +4,7 @@ public class PunctTraseuLite {
 
 	private String adresa;
 	private boolean vizitat;
+	private boolean init;
 
 	public String getAdresa() {
 		return adresa;
@@ -19,6 +20,14 @@ public class PunctTraseuLite {
 
 	public void setVizitat(boolean vizitat) {
 		this.vizitat = vizitat;
+	}
+
+	public boolean isInit() {
+		return init;
+	}
+
+	public void setInit(boolean init) {
+		this.init = init;
 	}
 
 	@Override

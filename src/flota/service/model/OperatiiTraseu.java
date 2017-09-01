@@ -69,6 +69,7 @@ public class OperatiiTraseu {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return listCoords;
@@ -155,6 +156,7 @@ public class OperatiiTraseu {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		if ((stopKm - startKm) > 0)
@@ -222,9 +224,6 @@ public class OperatiiTraseu {
 			if (!aprobAutomat)
 				recalculeazaTraseuTeoretic(conn, delegatie, puncte);
 
-			// verificaAprobareAutomata(conn, delegatie, distReal, puncte,
-			// kmCota);
-
 		}
 
 	}
@@ -244,8 +243,6 @@ public class OperatiiTraseu {
 
 	}
 
-	
-
 	public void recalculeazaTraseuTeoretic(Connection conn, BeanDelegatieCauta delegatie, List<PunctTraseu> puncte) {
 
 		List<LatLng> coordonateOpriri = getCoordOpriri(codDisp, dataPlecare, dataSosire);
@@ -254,21 +251,20 @@ public class OperatiiTraseu {
 
 		List<String> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
 
-		//int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
-		//delegatie.setDistantaCalculata(distantaTeoretica);
+		int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
 
-		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.updateDistantaCalculata());) {
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.updateDistantaRecalculata());) {
 
-			//stmt.setDouble(1, distantaTeoretica);
-			//stmt.setString(2, delegatie.getId());
+			stmt.setDouble(1, distantaTeoretica);
+			stmt.setString(2, delegatie.getId());
 
-			//stmt.executeUpdate();
+			stmt.executeUpdate();
 
 			if (!adreseOpriri.isEmpty()) {
 
 				PreparedStatement stmt1 = null;
 
-				int contorOpriri = 100 - adreseOpriri.size();
+				int contorOpriri = puncte.size() + 1;
 
 				for (String adresa : adreseOpriri) {
 
@@ -278,13 +274,17 @@ public class OperatiiTraseu {
 					stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie());
 
 					String[] arrayAdresa = adresa.trim().split("/");
-					stmt1.setString(1, delegatie.getId());
-					stmt1.setString(2, String.valueOf(contorOpriri++));
-					stmt1.setString(3, arrayAdresa[1].trim().toUpperCase());
-					stmt1.setString(4, arrayAdresa[0].trim().toUpperCase());
-					stmt1.setString(5, "1");
 
-					stmt1.executeQuery();
+					if (arrayAdresa.length == 2) {
+						stmt1.setString(1, delegatie.getId());
+						stmt1.setString(2, String.valueOf(contorOpriri++));
+						stmt1.setString(3, arrayAdresa[1].trim().toUpperCase());
+						stmt1.setString(4, arrayAdresa[0].trim().toUpperCase());
+						stmt1.setString(5, "1");
+						stmt1.setString(6, "0");
+
+						stmt1.executeQuery();
+					}
 
 				}
 
@@ -371,7 +371,12 @@ public class OperatiiTraseu {
 
 			stmt.executeQuery();
 
-			int kmStart = 0, kmStop = 0, speed = 0, avgSpeed = 0, distanta = 0, maxSpeed = 0;
+			int kmStart = 0;
+			int kmStop = 0;
+			int speed = 0;
+			int avgSpeed = 0;
+			int distanta = 0;
+			int maxSpeed = 0;
 			int i = 0;
 			int instantSpeed = 0;
 
@@ -433,6 +438,7 @@ public class OperatiiTraseu {
 
 			traseu.setCoordonate(coordonateTraseu);
 			traseu.setOpriri(listOpriri);
+			traseu.setDistanta(kmStop - kmStart);
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));

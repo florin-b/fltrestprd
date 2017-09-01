@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
+import flota.service.utils.MailOperations;
 import flota.service.utils.Utils;
 
 public class OperatiiMasina {
@@ -40,6 +41,7 @@ public class OperatiiMasina {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return codDisp;
@@ -64,6 +66,7 @@ public class OperatiiMasina {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 		return listDisp;
 
@@ -89,6 +92,7 @@ public class OperatiiMasina {
 
 		catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return nrAuto;
@@ -115,6 +119,7 @@ public class OperatiiMasina {
 
 		catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return nrAuto;

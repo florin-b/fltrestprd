@@ -17,6 +17,7 @@ import flota.service.beans.Angajat;
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
+import flota.service.utils.MailOperations;
 import flota.service.utils.Utils;
 
 public class OperatiiAngajat {
@@ -45,6 +46,7 @@ public class OperatiiAngajat {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return kmCota;
@@ -79,19 +81,22 @@ public class OperatiiAngajat {
 
 		String sqlString;
 
-		if (isPersVanzari)
+		if (isPersVanzari) {
 			sqlString = SqlQueries.getSubordVanzari();
-		else
+
+		} else
 			sqlString = SqlQueries.getSubordNonVanzari();
 
 		try (Connection conn = DBManager.getProdInstance().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			stmt.setString(1, tipAngajat);
-			stmt.setString(2, unitLog);
+			int idx = 1;
+
+			stmt.setString(idx++, tipAngajat);
+			stmt.setString(idx++, unitLog);
 
 			if (isPersVanzari) {
-				stmt.setString(3, codDepart);
+				stmt.setString(idx++, codDepart);
 			}
 
 			stmt.executeQuery();
@@ -109,6 +114,7 @@ public class OperatiiAngajat {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
 		}
 
 		return listAngajati;
