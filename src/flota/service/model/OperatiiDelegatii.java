@@ -19,7 +19,7 @@ import flota.service.beans.DelegatieModifDetalii;
 import flota.service.beans.PunctTraseu;
 import flota.service.beans.PunctTraseuLite;
 import flota.service.database.DBManager;
-
+import flota.service.helpers.HelperAprobare;
 import flota.service.helpers.HelperDelegatie;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
@@ -32,14 +32,13 @@ public class OperatiiDelegatii {
 
 	private static final Logger logger = LogManager.getLogger(OperatiiDelegatii.class);
 
-	public boolean adaugaDelegatie(String codAngajat, String tipAngajat, String dataPlecare, String oraPlecare, String distanta, String opriri,
+	public synchronized boolean adaugaDelegatie(String codAngajat, String tipAngajat, String dataPlecare, String oraPlecare, String distanta, String opriri,
 			String dataSosire, String nrAuto) {
 
 		boolean success = true;
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaAntetDelegatie(), ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaAntetDelegatie())) {
 
 			String idDelegatieNoua = Utils.getId();
 
@@ -50,7 +49,7 @@ public class OperatiiDelegatii {
 			stmt.setString(5, DateUtils.formatDateSap(dataPlecare));
 			stmt.setString(6, oraPlecare);
 			stmt.setDouble(7, (int) Double.parseDouble(distanta));
-			stmt.setString(8, codAngajat);
+			stmt.setString(8, HelperAprobare.getCodAprobare(conn, codAngajat, tipAngajat));
 			stmt.setString(9, DateUtils.formatDateSap(dataSosire));
 			stmt.setString(10, nrAuto);
 
@@ -62,7 +61,7 @@ public class OperatiiDelegatii {
 			int ord = 0;
 
 			for (int i = 0; i < arrayOpriri.length; i++) {
-				stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie());
 
 				String[] arrayAdresa = arrayOpriri[i].trim().split("/");
 				stmt1.setString(1, idDelegatieNoua);
@@ -108,7 +107,7 @@ public class OperatiiDelegatii {
 		else
 			sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, tipAngajat);
@@ -152,17 +151,16 @@ public class OperatiiDelegatii {
 
 				int kmCalc = (int) rs.getDouble("distcalc");
 				int kmRecalc = (int) rs.getDouble("distrecalc");
-				
+
 				int distCalc = kmCalc + kmCota;
 				int distRecalc = kmRecalc + kmCota;
-				
-				if (kmCalc== 0)
+
+				if (kmCalc == 0)
 					distCalc = 0;
-				
+
 				if (kmRecalc == 0)
 					distRecalc = 0;
-					
-				
+
 				delegatie.setDistantaCalculata(distCalc);
 				delegatie.setDistantaRecalculata(distRecalc);
 
@@ -183,7 +181,7 @@ public class OperatiiDelegatii {
 	}
 
 	public void aprobaDelegatie(String idDelegatie, String tipAngajat, String kmRespinsi, String codAngajat, String tipAprobare) {
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.opereazaDelegatie(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
 
@@ -233,7 +231,7 @@ public class OperatiiDelegatii {
 
 	public void respingeDelegatie(String idDelegatie, String tipAngajat, String codAngajat) {
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.opereazaDelegatie(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
 
@@ -386,7 +384,7 @@ public class OperatiiDelegatii {
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.afiseazaDelegatiiProprii(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
 
@@ -440,7 +438,7 @@ public class OperatiiDelegatii {
 		else
 			sqlString = SqlQueries.afiseazaDelegatiiSubordNONVanzari();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			if (isPersVanzari) {
@@ -536,7 +534,7 @@ public class OperatiiDelegatii {
 		else
 			sqlString = SqlQueries.getDelegatiiTerminateNONVanzari();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			if (isPersVanzari) {
@@ -572,7 +570,7 @@ public class OperatiiDelegatii {
 
 		List<DelegatieModifAntet> listDelegatii = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelModifHeader(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
 
@@ -645,7 +643,7 @@ public class OperatiiDelegatii {
 
 		DelegatieModifDetalii delegatie = new DelegatieModifDetalii();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatieModif(), ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);) {
 

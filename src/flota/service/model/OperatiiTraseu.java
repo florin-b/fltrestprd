@@ -41,9 +41,8 @@ public class OperatiiTraseu {
 
 		List<String> listCoords = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu(), ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu());) {
 
 			String codDisp = new OperatiiMasina().getCodDispGps(conn, idDelegatie);
 			BeanDelegatieCauta delegatie = new OperatiiDelegatii().getDelegatie(conn, idDelegatie);
@@ -327,7 +326,8 @@ public class OperatiiTraseu {
 
 		List<LatLng> listCoords = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri());) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri());) {
 
 			stmt.setString(1, codDisp);
 			stmt.setString(2, dataStart);
@@ -363,7 +363,8 @@ public class OperatiiTraseu {
 
 		List<LatLng> coordonateTraseu = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta(qDisp));) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta(qDisp));) {
 
 			stmt.setString(1, nrMasina);
 			stmt.setString(2, dataStart);

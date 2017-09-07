@@ -19,10 +19,9 @@ public class SqlQueries {
 	public static String adaugaAntetDelegatie() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(
-				" insert into sapprd.zdelegatiehead(mandt, id, codangajat, datac, orac, data_plecare, ora_plecare, distcalc, distrespins, idaprob, data_sosire, nrAuto) ");
-		sqlString.append(
-				" values ('900',?,?,?,?,?,?,?,0,(select nvl(f.fid,'-1') from personal p, functii_non_vanzari f where p.cod =? and p.functie = f.cod),?,?) ");
+		sqlString.append(" insert into sapprd.zdelegatiehead(mandt, id, codangajat, datac, orac, data_plecare, ora_plecare, ");
+		sqlString.append(" distcalc, distrespins, idaprob, data_sosire, nrAuto) ");
+		sqlString.append(" values ('900',?,?,?,?,?,?,?,0,?,?,?) ");
 
 		return sqlString.toString();
 	}
@@ -185,8 +184,8 @@ public class SqlQueries {
 
 		sqlString.append(" select x.* from (select rownum idt, to_char(gtime,'HH24:mi') gtime, lat, lon, speed, km from nexus_gps_data ");
 		sqlString.append(" where vcode=? and ");
-		sqlString.append(
-				" gtime between to_date(?,'dd-mm-yyyy HH24:mi') and to_date(?,'dd-mm-yyyy HH24:mi') and speed > 0 ) x where remainder(x.idt,2) = 0 order by x.km ");
+		sqlString.append(" gtime between to_date(?,'dd-mm-yyyy HH24:mi') ");
+		sqlString.append(" and to_date(?,'dd-mm-yyyy HH24:mi') and speed > 0 ) x where remainder(x.idt,2) = 0 order by x.km ");
 
 		return sqlString.toString();
 	}
@@ -361,6 +360,23 @@ public class SqlQueries {
 
 		return sqlString.toString();
 
+	}
+
+	public static String getCodAprobare() {
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append(" select f.fid, f.aprobat from personal p, functii_non_vanzari f where p.cod =? and p.functie = f.cod ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareExceptie() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select f.fid from personal p, functii_non_vanzari f where ");
+		sqlString.append(" p.filiala =(select filiala from personal where cod=?) and p.functie=? and f.cod=? ");
+		sqlString.append(" and p.functie = f.aprobat ");
+
+		return sqlString.toString();
 	}
 
 }

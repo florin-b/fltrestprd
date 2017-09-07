@@ -16,7 +16,7 @@ public class Utils {
 		return errors.toString();
 	}
 
-	public static String getId() {
+	public static synchronized String getId() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 		String dateInString = "01-01-2017";
 		Date date;

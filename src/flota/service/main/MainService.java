@@ -1,6 +1,5 @@
 package flota.service.main;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +14,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import flota.service.beans.Angajat;
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.DelegatieModifAntet;
@@ -26,9 +28,13 @@ import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiMasina;
 import flota.service.model.OperatiiTraseu;
+import flota.service.utils.MapUtils;
+import flota.service.utils.Utils;
 
 @Path("delegatii")
 public class MainService {
+
+	
 
 	@Path("localitati")
 	@GET
@@ -45,8 +51,11 @@ public class MainService {
 			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
 			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto) {
 
-		boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
-		return success ? "1" : "0";
+		synchronized (MainService.class) {
+
+			boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
+			return success ? "1" : "0";
+		}
 	}
 
 	@Path("modificaDelegatie")
@@ -119,7 +128,7 @@ public class MainService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getCoordonateTraseu(@QueryParam("idDelegatie") String idDelegatie) {
-		
+
 		return new OperatiiTraseu().getCoordonateTraseu(idDelegatie).toString();
 	}
 

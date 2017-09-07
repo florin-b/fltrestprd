@@ -87,7 +87,7 @@ public class OperatiiAngajat {
 		} else
 			sqlString = SqlQueries.getSubordNonVanzari();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			int idx = 1;

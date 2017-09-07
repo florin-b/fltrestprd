@@ -52,7 +52,7 @@ public class OperatiiMasina {
 
 		List<String> listDisp = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGpsData())) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGpsData())) {
 
 			stmt.setString(1, codAngajat);
 			stmt.setString(2, DateUtils.formatDateSap(dataStart));
@@ -76,7 +76,7 @@ public class OperatiiMasina {
 
 		String nrAuto = null;
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getNrAuto(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, nrDelegatie);
@@ -103,7 +103,7 @@ public class OperatiiMasina {
 
 		List<String> nrAuto = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajat());) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajat());) {
 
 			stmt.setString(1, codAngajat);
 			stmt.setString(2, DateUtils.formatDateSap(dataStart));

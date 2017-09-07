@@ -23,7 +23,7 @@ public class OperatiiAdresa {
 
 		List<String> listLocalitati = new ArrayList<>();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getLocalitatiJudet(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, codJudet);
@@ -47,7 +47,7 @@ public class OperatiiAdresa {
 
 		StringBuilder listLocalitati = new StringBuilder();
 
-		try (Connection conn = DBManager.getProdInstance().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(
 						"select upper(localitate) localitate, bland from sapprd.zlocalitati where lower(localitate) like lower('" + numeLoc + "%') order by bland, localitate",
 						ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {

@@ -5,6 +5,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.maps.DirectionsApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -19,8 +22,11 @@ import com.google.maps.model.TravelMode;
 import flota.service.beans.GoogleContext;
 import flota.service.beans.StandardAddress;
 import flota.service.enums.EnumJudete;
+import flota.service.model.OperatiiTraseu;
 
 public class MapUtils {
+
+	private static final Logger logger = LogManager.getLogger(MapUtils.class);
 
 	public static double distanceXtoY(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;
@@ -87,6 +93,9 @@ public class MapUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString() + " , " + address.toString());
+
 		}
 
 		return coordonateGps;
@@ -121,9 +130,11 @@ public class MapUtils {
 			}
 
 		} catch (OverQueryLimitException q) {
-			MailOperations.sendMail("traseuBorderou: " + q.toString());
+			MailOperations.sendMail("traseu delegatie: " + q.toString());
+			logger.error(Utils.getStackTrace(q));
 		} catch (Exception ex) {
-			MailOperations.sendMail("traseuBorderou: " + ex.toString());
+			MailOperations.sendMail("traseu delegatie: " + ex.toString());
+			logger.error(Utils.getStackTrace(ex));
 		}
 
 		return distanta / 1000;
@@ -161,9 +172,11 @@ public class MapUtils {
 			}
 
 		} catch (OverQueryLimitException q) {
-			MailOperations.sendMail("traseuBorderou: " + q.toString());
+			MailOperations.sendMail(q.toString());
+			logger.error(Utils.getStackTrace(q));
 		} catch (Exception ex) {
-			MailOperations.sendMail("traseuBorderou: " + ex.toString());
+			MailOperations.sendMail(ex.toString());
+			logger.error(Utils.getStackTrace(ex));
 		}
 
 		return distanta / 1000;
@@ -229,6 +242,7 @@ public class MapUtils {
 
 			} catch (Exception e) {
 				MailOperations.sendMail(e.toString());
+				logger.error(Utils.getStackTrace(e));
 			}
 		}
 
@@ -241,8 +255,7 @@ public class MapUtils {
 
 		if (!adresaStop.isEmpty())
 			arr.add(arr.size(), adresaStop);
-		
-		
+
 		System.out.println(arr);
 
 		return arr;
@@ -270,6 +283,7 @@ public class MapUtils {
 
 		} catch (Exception e) {
 			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
 		}
 
 		return adresa;
