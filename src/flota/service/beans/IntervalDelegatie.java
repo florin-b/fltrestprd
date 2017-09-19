@@ -23,4 +23,11 @@ public class IntervalDelegatie {
 		this.endDate = endDate;
 	}
 
+	@Override
+	public String toString() {
+		return "IntervalDelegatie [startDate=" + startDate + ", endDate=" + endDate + "]";
+	}
+	
+	
+
 }
