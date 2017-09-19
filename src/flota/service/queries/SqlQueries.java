@@ -38,9 +38,9 @@ public class SqlQueries {
 	public static String getDelegatiiAprobareHeaderVanzari() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(
-				" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
+		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
+		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) = ? and h.codangajat = ag.cod ");
 		sqlString.append(" order by h.id ");
@@ -53,7 +53,7 @@ public class SqlQueries {
 
 		sqlString.append(
 				" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
 		sqlString.append(" order by h.id ");
@@ -66,7 +66,7 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id ");
-		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and substr(ag.divizie,0,2)=? and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
@@ -82,11 +82,25 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and  ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
 		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0   ");
+		sqlString.append(" order by h.id ");
+
+		return sqlString.toString();
+
+	}
+
+	public static String getDelegatiiTerminateCompanie() {
+
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select h.id ");
+		sqlString.append(" from sapprd.zdelegatiehead h where h.mandt='900' and ");
+		sqlString.append(" not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
+		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0  ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -98,7 +112,7 @@ public class SqlQueries {
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, h.distcalc, h.distrespins, h.data_sosire, h.distreal, ");
 		sqlString.append(" nvl((select status from sapprd.zdelstataprob where iddelegatie = h.id and rownum=1),'-1') status ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod and ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod and ");
 		sqlString.append(" h.codangajat = ? and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
@@ -109,7 +123,7 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod  and ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod  and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) =?  and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
@@ -121,7 +135,7 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
-		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.codangajat = ag.cod and ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)  and ag.filiala =?  and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
@@ -348,7 +362,7 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
-	public static String getMasiniAngajat() {
+	public static String getMasiniAngajatData() {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select distinct c.ktext,a.adatu ");
@@ -356,6 +370,20 @@ public class SqlQueries {
 		sqlString.append(" join sapprd.aufk c on c.aufnr = a.caufn and c.mandt=a.mandt ");
 		sqlString.append(" where a.pernr =? ");
 		sqlString.append(" and a.bdatu >= ? and b.deakt = '00000000' and a.mandt='900' ");
+		sqlString.append(" order by a.adatu desc ");
+
+		return sqlString.toString();
+
+	}
+
+	public static String getMasiniAngajat() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select distinct c.ktext,a.adatu ");
+		sqlString.append(" from sapprd.anlz a join sapprd.anla b on b.anln1 = a.anln1 and b.anln2 = a.anln2 and b.mandt=a.mandt ");
+		sqlString.append(" join sapprd.aufk c on c.aufnr = a.caufn and c.mandt=a.mandt ");
+		sqlString.append(" where a.pernr =? ");
+		sqlString.append(" and a.bdatu >= (select to_char(sysdate-5,'YYYYMMDD') from dual) and b.deakt = '00000000' and a.mandt='900' ");
 		sqlString.append(" order by a.adatu desc ");
 
 		return sqlString.toString();
@@ -375,6 +403,24 @@ public class SqlQueries {
 		sqlString.append(" select f.fid from personal p, functii_non_vanzari f where ");
 		sqlString.append(" p.filiala =(select filiala from personal where cod=?) and p.functie=? and f.cod=? ");
 		sqlString.append(" and p.functie = f.aprobat ");
+
+		return sqlString.toString();
+	}
+
+	public static String getIntervalDelegatie() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select to_char(to_date(data_plecare,'yyyymmdd')) plecare, ");
+		sqlString.append(" to_char(to_date(data_sosire,'yyyymmdd')) sosire from sapprd.zdelegatiehead where mandt='900' and id=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getMailDZFiliala() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select mail from personal where functie='DZ' and filiala = ");
+		sqlString.append(" (select filiala from personal where cod=(select codangajat from sapprd.zdelegatiehead where mandt='900' and id=?)) ");
 
 		return sqlString.toString();
 	}

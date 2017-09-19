@@ -5,20 +5,25 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import flota.service.model.OperatiiDelegatii;
+import flota.service.database.DBManager;
+import flota.service.model.AlertaMail;
+import flota.service.model.OperatiiTraseu;
 
 public class TestClass {
 
 	private static final Logger logger = LogManager.getLogger(TestClass.class);
-	
+
 	public static void main(String[] args) throws SQLException {
 
 		// System.out.println(new
 		// OperatiiTraseu().getCoordonateTraseu("17651549879"));
 
-		// new OperatiiDelegatii().getDelegatiiAprobari("DD", "BU90","06");
+		// System.out.println(new
+		// OperatiiDelegatii().getDelegatiiAprobari("DMK", "BU90", "00"));
 
-		//new OperatiiTraseu().determinaSfarsitDelegatie(new DBManager().getProdDataSource().getConnection(), "21308287787");
+		new OperatiiTraseu().determinaSfarsitDelegatie(new DBManager().getProdDataSource().getConnection(), "21973794516");
+
+		// new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 
 		// System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD",
 		// "NT10", "04"));
@@ -53,15 +58,14 @@ public class TestClass {
 		// System.out.println(new OperatiiAngajat().getAngajati("DZ", "DJ10",
 		// "01"));
 
-		 System.out.println(new
-		 OperatiiDelegatii().afiseazaDelegatiiSubord("01-08-2017",
-		 "01-09-2017", "SD", "BV10", "02"));
+		// System.out.println(new
+		// OperatiiDelegatii().afiseazaDelegatiiSubord("01-08-2017",
+		// "01-09-2017", "SD", "BV10", "02"));
 
 		// System.out.println(HelperAprobare.getCodAprobare(new
 		// DBManager().getProdDataSource().getConnection(),"00086230", "KA1"));
-		
-		
-		//logger.error("Afiseaza");
+
+		new AlertaMail().verificaAlertWeekend("22147680545");
 
 	}
 

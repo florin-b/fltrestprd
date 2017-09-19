@@ -1,6 +1,10 @@
 package flota.service.main;
 
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,19 +33,36 @@ import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiMasina;
 import flota.service.model.OperatiiTraseu;
-import flota.service.utils.MapUtils;
-import flota.service.utils.Utils;
+import flota.service.utils.MailOperations;
 
 @Path("delegatii")
 public class MainService {
 
-	
+	private static final Logger logger = LogManager.getLogger(MainService.class);
 
 	@Path("localitati")
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String localitati(@QueryParam("codJudet") String codJudet) {
-		return new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
+	public Response localitati(@QueryParam("codJudet") String codJudet) {
+		String listLocs = new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
+
+		return Response.status(200).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Max-Age", "1209600").entity(listLocs)
+				.build();
+
+	}
+
+	@Path("localitatiPost")
+	@POST
+	public Response localitatiPost(@FormParam("codJudet") String codJudet) {
+		String listLocs = new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
+
+		MailOperations.sendMail("codJudet: " + codJudet);
+
+		return Response.status(200).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Max-Age", "1209600").entity(listLocs)
+				.build();
 
 	}
 
@@ -182,6 +204,25 @@ public class MainService {
 		return new OperatiiMasina().getMasiniAngajat(codAngajat, dataStart);
 	}
 
+	@Path("calculeazaDelegatii")
+	@GET
+	public String calculeazaDelegatii() {
+		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
+		return "Done!";
+
+	}
+
+	@Path("testMail")
+	@GET
+
+	public void testMail(@QueryParam("body") String body) {
+		try {
+			MailOperations.sendMail(body);
+		} catch (Exception ex) {
+			logger.error(ex.toString());
+		}
+	}
+
 	@Path("getObject")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -190,6 +231,22 @@ public class MainService {
 		System.out.println("prop1: " + testObject);
 
 		return testObject.toString();
+
+	}
+
+	@Path("getObjectRemote")
+	@POST
+	public Response localitati123(@FormParam("codJudet") String codJudet) {
+
+		Gson gson = new GsonBuilder().create();
+		TestObject testObject = gson.fromJson(codJudet, TestObject.class);
+
+		MailOperations.sendMailName("Deserialized: " + testObject.toString());
+
+		return Response.status(200).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Max-Age", "1209600").entity(codJudet)
+				.build();
 
 	}
 

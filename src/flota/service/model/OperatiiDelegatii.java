@@ -40,6 +40,12 @@ public class OperatiiDelegatii {
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaAntetDelegatie())) {
 
+			List<String> listAuto = new OperatiiMasina().getMasiniAngajat(conn, codAngajat);
+
+			if (listAuto.isEmpty() || !listAuto.contains(nrAuto)) {
+				return false;
+			}
+
 			String idDelegatieNoua = Utils.getId();
 
 			stmt.setString(1, idDelegatieNoua);
@@ -61,6 +67,7 @@ public class OperatiiDelegatii {
 			int ord = 0;
 
 			for (int i = 0; i < arrayOpriri.length; i++) {
+
 				stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie());
 
 				String[] arrayAdresa = arrayOpriri[i].trim().split("/");
@@ -171,6 +178,8 @@ public class OperatiiDelegatii {
 				listDelegatii.add(delegatie);
 			}
 
+			rs.close();
+
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
 			MailOperations.sendMail(e.toString());
@@ -197,19 +206,23 @@ public class OperatiiDelegatii {
 			stmt.executeQuery();
 
 			if (dKmRespinsi > 0) {
-				PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.setKmRespinsi(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				stmt1.setDouble(1, (int) dKmRespinsi);
-				stmt1.setString(2, idDelegatie);
 
-				stmt1.executeQuery();
+				try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.setKmRespinsi());) {
+					stmt1.setDouble(1, (int) dKmRespinsi);
+					stmt1.setString(2, idDelegatie);
 
-				stmt1.close();
+					stmt1.executeQuery();
+
+				}
+
 			}
 
 		} catch (Exception ex) {
 			logger.error(Utils.getStackTrace(ex));
 			MailOperations.sendMail(ex.toString());
 		}
+
+		new AlertaMail().verificaAlertWeekend(idDelegatie);
 
 	}
 
@@ -254,9 +267,7 @@ public class OperatiiDelegatii {
 	public List<String> getLocOpriri(Connection conn, String idDelegatie) {
 		List<String> listLocalitati = new ArrayList<>();
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatiiAprobareRuta(), ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatiiAprobareRuta());) {
 
 			stmt.setString(1, idDelegatie);
 
@@ -270,7 +281,6 @@ public class OperatiiDelegatii {
 			}
 
 			rs.close();
-			stmt.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -283,8 +293,7 @@ public class OperatiiDelegatii {
 	public List<PunctTraseu> getPuncteTraseu(Connection conn, String idDelegatie) {
 		List<PunctTraseu> listLocalitati = new ArrayList<>();
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(SqlQueries.getPuncteTraseu());
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getPuncteTraseu());) {
 
 			stmt.setString(1, idDelegatie);
 
@@ -304,7 +313,9 @@ public class OperatiiDelegatii {
 
 					LatLng coordPunct = MapUtils.geocodeAddress(UtilsAddress.getAddress(punct.getStrAdresa()));
 					punct.setCoordonate(new LatLng(coordPunct.lat, coordPunct.lng));
-					salveazaCoordonatePunct(conn, punct.getStrAdresa(), coordPunct);
+
+					if (coordPunct.lat > 0)
+						salveazaCoordonatePunct(conn, punct.getStrAdresa(), coordPunct);
 
 				}
 
@@ -313,7 +324,6 @@ public class OperatiiDelegatii {
 			}
 
 			rs.close();
-			stmt.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -325,8 +335,7 @@ public class OperatiiDelegatii {
 
 	private void salveazaCoordonatePunct(Connection conn, String adresa, LatLng coordonate) {
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaCoordonate());
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaCoordonate());) {
 
 			stmt.setString(1, adresa.split("/")[0]);
 			stmt.setString(2, adresa.split("/")[1]);
@@ -334,8 +343,6 @@ public class OperatiiDelegatii {
 			stmt.setString(4, String.valueOf(coordonate.lng));
 
 			stmt.executeQuery();
-
-			stmt.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -348,9 +355,7 @@ public class OperatiiDelegatii {
 
 		List<PunctTraseuLite> listOpriri = new ArrayList<>();
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatiiAprobareRuta(), ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDelegatiiAprobareRuta());) {
 
 			stmt.setString(1, idDelegatie);
 
@@ -370,7 +375,6 @@ public class OperatiiDelegatii {
 			}
 
 			rs.close();
-			stmt.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -415,6 +419,8 @@ public class OperatiiDelegatii {
 				delegatie.setStatusCode(rs.getString("status"));
 				listDelegatii.add(delegatie);
 			}
+
+			rs.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -479,6 +485,8 @@ public class OperatiiDelegatii {
 				listDelegatii.add(delegatie);
 			}
 
+			rs.close();
+
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
@@ -506,6 +514,8 @@ public class OperatiiDelegatii {
 				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc"));
 				delegatie.setAngajatId(rs.getString("codangajat"));
 			}
+
+			rs.close();
 
 		}
 
@@ -557,6 +567,39 @@ public class OperatiiDelegatii {
 
 			}
 
+			rs.close();
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(Utils.getStackTrace(e));
+		}
+
+		return;
+
+	}
+
+	public void verificaDelegatiiTerminateCompanie() {
+
+		String sqlString;
+
+		sqlString = SqlQueries.getDelegatiiTerminateCompanie();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			OperatiiTraseu opTraseu = new OperatiiTraseu();
+
+			while (rs.next()) {
+				opTraseu.determinaSfarsitDelegatie(conn, rs.getString("id"));
+
+			}
+
+			rs.close();
+
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
 			MailOperations.sendMail(Utils.getStackTrace(e));
@@ -596,6 +639,8 @@ public class OperatiiDelegatii {
 
 			}
 
+			rs.close();
+
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
 			logger.error(Utils.getStackTrace(e));
@@ -629,6 +674,8 @@ public class OperatiiDelegatii {
 				i++;
 
 			}
+
+			rs.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -675,6 +722,8 @@ public class OperatiiDelegatii {
 
 				delegatie.setRuta(puncte);
 			}
+
+			rs.close();
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());

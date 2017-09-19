@@ -1,12 +1,23 @@
 package flota.service.utils;
 
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
+import flota.service.beans.IntervalDelegatie;
+
 public class DateUtils {
+
+	private enum WeekendDays {
+		SATURDAY, SUNDAY
+	}
 
 	public static String getCurrentDate() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -96,7 +107,7 @@ public class DateUtils {
 
 		return date;
 	}
-	
+
 	public static String dateDiff(Date dateStart, Date dateStop) {
 
 		StringBuilder result = new StringBuilder();
@@ -143,6 +154,36 @@ public class DateUtils {
 
 		return result.toString();
 
+	}
+
+	public static boolean intervalHasWeekendDays(IntervalDelegatie intervalDelegatie) {
+
+		String[] weekdays = new DateFormatSymbols(Locale.ENGLISH).getWeekdays();
+
+		List<Date> datesInRange = new ArrayList<>();
+		
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(intervalDelegatie.getStartDate());
+
+		Calendar endCalendar = new GregorianCalendar();
+		endCalendar.setTime(intervalDelegatie.getEndDate());
+
+		while (calendar.before(endCalendar)) {
+			Date result = calendar.getTime();
+			datesInRange.add(result);
+
+			if (weekdays[calendar.get(Calendar.DAY_OF_WEEK)].equalsIgnoreCase(WeekendDays.SATURDAY.toString())
+					|| weekdays[calendar.get(Calendar.DAY_OF_WEEK)].equalsIgnoreCase(WeekendDays.SUNDAY.toString())) {
+
+				return true;
+
+			}
+
+			calendar.add(Calendar.DATE, 1);
+
+		}
+
+		return false;
 	}
 
 }

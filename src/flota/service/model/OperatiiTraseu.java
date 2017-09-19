@@ -19,6 +19,7 @@ import flota.service.beans.PozitieGps;
 import flota.service.beans.PunctTraseu;
 import flota.service.beans.Traseu;
 import flota.service.database.DBManager;
+import flota.service.helpers.HelperDelegatie;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
 import flota.service.utils.MailOperations;
@@ -65,6 +66,8 @@ public class OperatiiTraseu {
 				listCoords.add(rs.getString("lat") + ":" + rs.getString("lon"));
 
 			}
+			
+			rs.close();
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
@@ -84,13 +87,15 @@ public class OperatiiTraseu {
 		List<PunctTraseu> objPuncte = null;
 		BeanDelegatieCauta delegatie = null;
 
-		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu());) {
 
 			codDisp = new OperatiiMasina().getCodDispGps(conn, idDelegatie);
 			delegatie = new OperatiiDelegatii().getDelegatie(conn, idDelegatie);
 			delegatie.setId(idDelegatie);
 
-			dataPlecare = delegatie.getDataPlecare() + " " + delegatie.getOraPlecare().substring(0, 2) + ":" + delegatie.getOraPlecare().substring(2, 4);
+			//dataPlecare = delegatie.getDataPlecare() + " " + delegatie.getOraPlecare().substring(0, 2) + ":" + delegatie.getOraPlecare().substring(2, 4);
+			
+			dataPlecare = delegatie.getDataPlecare() + " " + "00:00";
 
 			dataSosire = delegatie.getDataSosire() + " " + "23:59";
 
@@ -152,6 +157,8 @@ public class OperatiiTraseu {
 				}
 
 			}
+			
+			rs.close();
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
@@ -236,9 +243,13 @@ public class OperatiiTraseu {
 			if (!puncte.get(i).isVizitat())
 				return false;
 
-		new OperatiiDelegatii().aprobaAutomatDelegatie(conn, delegatie.getId());
+		String statusDel = HelperDelegatie.getStatusDelegatie(conn, delegatie.getId());
 
-		return true;
+		if (statusDel.equals("1")) {
+			new OperatiiDelegatii().aprobaAutomatDelegatie(conn, delegatie.getId());
+			return true;
+		} else
+			return false;
 
 	}
 
@@ -341,6 +352,8 @@ public class OperatiiTraseu {
 				listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
 
 			}
+			
+			rs.close();
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));
@@ -440,6 +453,8 @@ public class OperatiiTraseu {
 			traseu.setCoordonate(coordonateTraseu);
 			traseu.setOpriri(listOpriri);
 			traseu.setDistanta(kmStop - kmStart);
+			
+			rs.close();
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));

@@ -52,7 +52,8 @@ public class OperatiiMasina {
 
 		List<String> listDisp = new ArrayList<>();
 
-		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGpsData())) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGpsData())) {
 
 			stmt.setString(1, codAngajat);
 			stmt.setString(2, DateUtils.formatDateSap(dataStart));
@@ -103,10 +104,37 @@ public class OperatiiMasina {
 
 		List<String> nrAuto = new ArrayList<>();
 
-		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajat());) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajatData());) {
 
 			stmt.setString(1, codAngajat);
 			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				nrAuto.add(rs.getString("ktext"));
+			}
+
+		}
+
+		catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
+		}
+
+		return nrAuto;
+
+	}
+
+	public List<String> getMasiniAngajat(Connection conn, String codAngajat) {
+
+		List<String> nrAuto = new ArrayList<>();
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAngajat());) {
+
+			stmt.setString(1, codAngajat);
 
 			stmt.executeQuery();
 			ResultSet rs = stmt.getResultSet();

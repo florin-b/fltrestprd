@@ -68,6 +68,12 @@ public enum EnumJudete {
 	}
 
 	public static String getNumeJudet(String abr) {
+
+		if (abr.toUpperCase().contains("BUCURESTI")) {
+			return "BUCURESTI";
+
+		}
+
 		for (EnumJudete enumJ : EnumJudete.values()) {
 			if (enumJ.abr.equals(abr))
 				return enumJ.nume;
