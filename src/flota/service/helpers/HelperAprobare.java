@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.MailOperations;
 import flota.service.utils.Utils;
@@ -19,33 +18,34 @@ public class HelperAprobare {
 
 	public static String getCodAprobare(Connection conn, String codAngajat, String tipAngajat) {
 
+		String codAprobare;
+
+		if (tipAngajat.toUpperCase().startsWith("KA"))
+			codAprobare = getCodAprobareKA(conn, codAngajat, tipAngajat);
+		else if (tipAngajat.toUpperCase().startsWith("CAG") || tipAngajat.toUpperCase().startsWith("CONS"))
+			codAprobare = getCodAprobareConsilieri(conn, codAngajat, tipAngajat);
+		else
+			codAprobare = getCodAprobareGeneral(conn, codAngajat);
+
+		return codAprobare;
+
+	}
+
+	public static String getCodAprobareGeneral(Connection conn, String codAngajat) {
+
 		String codAprobare = "-1";
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobare());) {
 
 			stmt.setString(1, codAngajat);
-
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();
 
-			String codAprobareSDKA = "";
-			String codAprobareSDCVA = "";
-
 			while (rs.next()) {
-
-				if (tipAngajat.toUpperCase().startsWith("KA"))
-					codAprobareSDKA = getCodAprobareExceptie(conn, codAngajat, "SDKA", tipAngajat);
-
-				if (tipAngajat.toUpperCase().startsWith("CAG"))
-					codAprobareSDCVA = getCodAprobareExceptie(conn, codAngajat, "SDCVA", tipAngajat);
-
-				if (!rs.getString("aprobat").equalsIgnoreCase("SDKA") && !rs.getString("aprobat").equalsIgnoreCase("SDCVA"))
-					codAprobare = rs.getString("fid");
+				codAprobare = rs.getString("fid");
 
 			}
-
-			codAprobare = codAprobareSDKA.isEmpty() ? (codAprobareSDCVA.isEmpty() ? codAprobare : codAprobareSDCVA) : codAprobareSDKA;
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
@@ -57,26 +57,41 @@ public class HelperAprobare {
 
 	}
 
-	public static String getCodAprobareExceptie(Connection conn, String codAngajat, String tipAprobare, String tipAngajat) {
-		String codAprobare = "";
+	public static String getCodAprobareConsilieri(Connection conn, String codConsilier, String tipConsilier) {
 
-		try {
-			PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareExceptie());
+		String codAprobare = null;
+		String codSM = null;
+		String codSDCVA = null;
+		String codDZ = null;
 
-			stmt.setString(1, codAngajat);
-			stmt.setString(2, tipAprobare);
-			stmt.setString(3, tipAngajat);
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareConsilieri());) {
+
+			stmt.setString(1, codConsilier);
+			stmt.setString(2, tipConsilier);
 
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();
 
 			while (rs.next()) {
-				codAprobare = rs.getString("fid");
+
+				if (rs.getString("aprobat").equalsIgnoreCase("SM"))
+					codSM = rs.getString("fid");
+				else if (rs.getString("aprobat").equalsIgnoreCase("SDCVA"))
+					codSDCVA = rs.getString("fid");
+				else if (rs.getString("aprobat").equalsIgnoreCase("DZ"))
+					codDZ = rs.getString("fid");
+
 			}
 
-			rs.close();
-			stmt.close();
+			if (codSM != null)
+				codAprobare = codSM;
+
+			if (codSDCVA != null)
+				codAprobare = codSDCVA;
+
+			if (codSM == null && codSDCVA == null)
+				codAprobare = codDZ;
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -84,6 +99,101 @@ public class HelperAprobare {
 		}
 
 		return codAprobare;
+
+	}
+
+	public static String getCodAprobareKA(Connection conn, String codAngajat, String tipKA) {
+
+		String codAprobare = null;
+		String codSDKA = null;
+		String codDZ = null;
+
+		if (tipKA.equals("KA08"))
+			return getCodAprobareKA08(conn);
+
+		if (tipKA.equals("KA05"))
+			return getCodAprobareKA05(conn);
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareKA());) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, tipKA);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				if (rs.getString("aprobat").equalsIgnoreCase("SDKA"))
+					codSDKA = rs.getString("fid");
+				else if (rs.getString("aprobat").equalsIgnoreCase("DZ"))
+					codDZ = rs.getString("fid");
+
+			}
+
+			if (codSDKA != null)
+				codAprobare = codSDKA;
+			else
+				codAprobare = codDZ;
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+
+	}
+
+	public static String getCodAprobareKA08(Connection conn) {
+
+		String codAprobare = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareKA08());) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				codAprobare = rs.getString("fid");
+
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+
+	}
+
+	public static String getCodAprobareKA05(Connection conn) {
+
+		String codAprobare = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareKA05());) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				codAprobare = rs.getString("fid");
+
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+
 	}
 
 }

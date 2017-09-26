@@ -78,7 +78,7 @@ public class BeanDelegatieAprobare {
 	}
 
 	public double getDistantaEfectuata() {
-		return distantaEfectuata;
+		return distantaEfectuata == -1 ? 0 : distantaEfectuata;
 	}
 
 	public void setDistantaEfectuata(int distantaEfectuata) {

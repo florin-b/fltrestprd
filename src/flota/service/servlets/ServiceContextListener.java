@@ -15,7 +15,7 @@ public class ServiceContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		GoogleContext.getContext();
+		
 
 	}
 

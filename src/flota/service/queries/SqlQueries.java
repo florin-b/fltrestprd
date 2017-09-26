@@ -307,6 +307,14 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String existaCoordonate() {
+
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append(" select 1 from sapprd.zcoordlocalitati where mandt='900' and judet=? and localitate =? ");
+		return sqlString.toString();
+
+	}
+
 	public static String adaugaCoordonate() {
 
 		StringBuilder sqlString = new StringBuilder();
@@ -397,15 +405,7 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
-	public static String getCodAprobareExceptie() {
-		StringBuilder sqlString = new StringBuilder();
-
-		sqlString.append(" select f.fid from personal p, functii_non_vanzari f where ");
-		sqlString.append(" p.filiala =(select filiala from personal where cod=?) and p.functie=? and f.cod=? ");
-		sqlString.append(" and p.functie = f.aprobat ");
-
-		return sqlString.toString();
-	}
+	
 
 	public static String getIntervalDelegatie() {
 		StringBuilder sqlString = new StringBuilder();
@@ -421,6 +421,50 @@ public class SqlQueries {
 
 		sqlString.append(" select mail from personal where functie='DZ' and filiala = ");
 		sqlString.append(" (select filiala from personal where cod=(select codangajat from sapprd.zdelegatiehead where mandt='900' and id=?)) ");
+
+		return sqlString.toString();
+	}
+
+	public static String setDelegatieNeterminata() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" update sapprd.zdelegatiehead set distreal=-1 where id=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareConsilieri() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select distinct f.fid, f.aprobat from personal p, functii_non_vanzari f ");
+		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
+		sqlString.append(" and p.functie in ('SM','SDCVA','DZ') and p.functie = f.aprobat and f.cod=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareKA() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select distinct f.fid, f.aprobat from personal p, functii_non_vanzari f ");
+		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
+		sqlString.append(" and p.functie in ('SDKA','DZ') and p.functie = f.aprobat and f.cod=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareKA08() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select fid from functii_non_vanzari where cod='KA08' and aprobat = 'SD' ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareKA05() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select fid from functii_non_vanzari where cod='KA05' and aprobat = 'SD' ");
 
 		return sqlString.toString();
 	}

@@ -100,4 +100,20 @@ public class HelperDelegatie {
 
 	}
 
+	public static void setDelegatieNeterm(String idDelegatie) {
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.setDelegatieNeterminata());) {
+
+			stmt.setString(1, idDelegatie);
+			stmt.executeQuery();
+
+		}
+
+		catch (SQLException e) {
+			logger.error(e.toString() + " , delegatie: " + idDelegatie);
+			MailOperations.sendMail(e.toString() + " , delegatie: " + idDelegatie);
+		}
+
+	}
+
 }

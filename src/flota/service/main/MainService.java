@@ -1,31 +1,30 @@
 package flota.service.main;
 
 import java.util.ArrayList;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import flota.service.beans.Angajat;
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.DelegatieModifAntet;
 import flota.service.beans.DelegatieModifDetalii;
+import flota.service.beans.TestBean;
 import flota.service.beans.TestObject;
 import flota.service.beans.Traseu;
 import flota.service.model.OperatiiAdresa;
@@ -250,23 +249,20 @@ public class MainService {
 
 	}
 
-	@Path("customers/{id:.+}")
-	@GET
-	public String testParam(@PathParam("id") int id) {
-		return "id=" + id;
+	@Path("testBean")
+	@POST
+	public Response testBean(@BeanParam TestBean testBean) {
+		String str = "Received 123 : " + testBean;
 
-	}
+		System.out.println("recv: " + str);
 
-	@GET
-	@Path("{id : .+}/address")
-	public String getCustomer(@PathParam("id") String id) {
-		return "id=" + id;
-	}
+	
+		
+		return Response.status(200).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Max-Age", "1209600").entity(str)
+				.build();
 
-	@GET
-	@Path("{first}-{last}")
-	public String testPath(@PathParam("first") String firstName, @PathParam("last") PathSegment lastName) {
-		return firstName + " - " + lastName;
 	}
 
 }

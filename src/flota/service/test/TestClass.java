@@ -6,7 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
+import flota.service.helpers.HelperAprobare;
+import flota.service.helpers.HelperDelegatie;
 import flota.service.model.AlertaMail;
+import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiTraseu;
 
 public class TestClass {
@@ -18,10 +21,10 @@ public class TestClass {
 		// System.out.println(new
 		// OperatiiTraseu().getCoordonateTraseu("17651549879"));
 
-		// System.out.println(new
-		// OperatiiDelegatii().getDelegatiiAprobari("DMK", "BU90", "00"));
+		//System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "TM10", "07"));
 
-		new OperatiiTraseu().determinaSfarsitDelegatie(new DBManager().getProdDataSource().getConnection(), "21973794516");
+		// new OperatiiTraseu().determinaSfarsitDelegatie(new
+		// DBManager().getProdDataSource().getConnection(), "22706496561");
 
 		// new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 
@@ -65,7 +68,13 @@ public class TestClass {
 		// System.out.println(HelperAprobare.getCodAprobare(new
 		// DBManager().getProdDataSource().getConnection(),"00086230", "KA1"));
 
-		new AlertaMail().verificaAlertWeekend("22147680545");
+		// new AlertaMail().verificaAlertWeekend("22147680545");
+
+		//System.out.println(HelperAprobare.getCodAprobareConsilieri(DBManager.getTestDataSource().getConnection(), "00074439", "CAG2"));
+		
+		
+		System.out.println(HelperAprobare.getCodAprobare(new DBManager().getProdDataSource().getConnection(), "00086258", "KA08"));
+		
 
 	}
 

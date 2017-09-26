@@ -66,7 +66,7 @@ public class OperatiiTraseu {
 				listCoords.add(rs.getString("lat") + ":" + rs.getString("lon"));
 
 			}
-			
+
 			rs.close();
 
 		} catch (SQLException e) {
@@ -93,8 +93,6 @@ public class OperatiiTraseu {
 			delegatie = new OperatiiDelegatii().getDelegatie(conn, idDelegatie);
 			delegatie.setId(idDelegatie);
 
-			//dataPlecare = delegatie.getDataPlecare() + " " + delegatie.getOraPlecare().substring(0, 2) + ":" + delegatie.getOraPlecare().substring(2, 4);
-			
 			dataPlecare = delegatie.getDataPlecare() + " " + "00:00";
 
 			dataSosire = delegatie.getDataSosire() + " " + "23:59";
@@ -157,7 +155,7 @@ public class OperatiiTraseu {
 				}
 
 			}
-			
+
 			rs.close();
 
 		} catch (SQLException e) {
@@ -165,12 +163,14 @@ public class OperatiiTraseu {
 			MailOperations.sendMail(e.toString());
 		}
 
-		if ((stopKm - startKm) > 0)
+		if ((stopKm - startKm) > 0) {
 			try {
 				actualizeazaSfarsitDelegatie(conn, delegatie, oraSosire, stopKm - startKm, objPuncte);
 			} catch (SQLException e) {
-				MailOperations.sendMail(e.toString());
+				MailOperations.sendMail(Utils.getStackTrace(e));
 			}
+		} else
+			HelperDelegatie.setDelegatieNeterm(delegatie.getId());
 
 		return " ";
 	}
@@ -205,22 +205,17 @@ public class OperatiiTraseu {
 
 			stmt.executeQuery();
 
-			PreparedStatement stmt1 = null;
+			try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.updatePuncte())) {
 
-			for (PunctTraseu punct : puncte) {
+				for (PunctTraseu punct : puncte) {
 
-				stmt1 = conn.prepareStatement(SqlQueries.updatePuncte());
-				stmt1.setString(1, punct.isVizitat() ? "1" : "0");
-				stmt1.setString(2, delegatie.getId());
-				stmt1.setString(3, String.valueOf(punct.getPozitie()));
+					stmt1.setString(1, punct.isVizitat() ? "1" : "0");
+					stmt1.setString(2, delegatie.getId());
+					stmt1.setString(3, String.valueOf(punct.getPozitie()));
 
-				stmt1.executeQuery();
+					stmt1.executeQuery();
 
-			}
-
-			if (stmt1 != null) {
-				stmt1.close();
-				stmt1 = null;
+				}
 			}
 
 			int kmCota = new OperatiiAngajat().getKmCota(conn, delegatie.getAngajatId(), delegatie.getDataPlecare(), delegatie.getDataSosire());
@@ -272,40 +267,37 @@ public class OperatiiTraseu {
 
 			if (!adreseOpriri.isEmpty()) {
 
-				PreparedStatement stmt1 = null;
-
 				int contorOpriri = puncte.size() + 1;
 
-				for (String adresa : adreseOpriri) {
+				try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie())) {
 
-					if (punctExista(adresa, puncte))
-						continue;
+					for (String adresa : adreseOpriri) {
 
-					stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie());
+						if (punctExista(adresa, puncte))
+							continue;
 
-					String[] arrayAdresa = adresa.trim().split("/");
+						String[] arrayAdresa = adresa.trim().split("/");
 
-					if (arrayAdresa.length == 2) {
-						stmt1.setString(1, delegatie.getId());
-						stmt1.setString(2, String.valueOf(contorOpriri++));
-						stmt1.setString(3, arrayAdresa[1].trim().toUpperCase());
-						stmt1.setString(4, arrayAdresa[0].trim().toUpperCase());
-						stmt1.setString(5, "1");
-						stmt1.setString(6, "0");
+						if (arrayAdresa.length == 2) {
+							stmt1.setString(1, delegatie.getId());
+							stmt1.setString(2, String.valueOf(contorOpriri++));
+							stmt1.setString(3, arrayAdresa[1].trim().toUpperCase());
+							stmt1.setString(4, arrayAdresa[0].trim().toUpperCase());
+							stmt1.setString(5, "1");
+							stmt1.setString(6, "0");
 
-						stmt1.executeQuery();
+							stmt1.executeQuery();
+						}
+
 					}
 
 				}
-
-				if (stmt1 != null)
-					stmt1.close();
 
 			}
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));
-			MailOperations.sendMail(ex.toString());
+			MailOperations.sendMail(Utils.getStackTrace(ex));
 		}
 
 	}
@@ -352,7 +344,7 @@ public class OperatiiTraseu {
 				listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
 
 			}
-			
+
 			rs.close();
 
 		} catch (SQLException ex) {
@@ -453,7 +445,7 @@ public class OperatiiTraseu {
 			traseu.setCoordonate(coordonateTraseu);
 			traseu.setOpriri(listOpriri);
 			traseu.setDistanta(kmStop - kmStart);
-			
+
 			rs.close();
 
 		} catch (SQLException ex) {

@@ -47,7 +47,8 @@ public class OperatiiDelegatii {
 			}
 
 			String idDelegatieNoua = Utils.getId();
-
+			
+			stmt.clearParameters();
 			stmt.setString(1, idDelegatieNoua);
 			stmt.setString(2, codAngajat);
 			stmt.setString(3, DateUtils.getCurrentDate());
@@ -63,30 +64,29 @@ public class OperatiiDelegatii {
 
 			String[] arrayOpriri = opriri.split(",");
 
-			PreparedStatement stmt1 = null;
 			int ord = 0;
 
-			for (int i = 0; i < arrayOpriri.length; i++) {
+			try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie())) {
 
-				stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie());
+				for (int i = 0; i < arrayOpriri.length; i++) {
 
-				String[] arrayAdresa = arrayOpriri[i].trim().split("/");
-				stmt1.setString(1, idDelegatieNoua);
+					String[] arrayAdresa = arrayOpriri[i].trim().split("/");
 
-				ord++;
+					stmt1.clearParameters();
+					stmt1.setString(1, idDelegatieNoua);
 
-				stmt1.setString(2, String.valueOf(ord));
-				stmt1.setString(3, arrayAdresa[1].trim());
-				stmt1.setString(4, arrayAdresa[0].trim());
-				stmt1.setString(5, "0");
-				stmt1.setString(6, "1");
+					ord++;
 
-				stmt1.executeQuery();
+					stmt1.setString(2, String.valueOf(ord));
+					stmt1.setString(3, arrayAdresa[1].trim());
+					stmt1.setString(4, arrayAdresa[0].trim());
+					stmt1.setString(5, "0");
+					stmt1.setString(6, "1");
 
+					stmt1.executeQuery();
+
+				}
 			}
-
-			if (stmt1 != null)
-				stmt1.close();
 
 		} catch (SQLException e) {
 			logger.error("Opriri: " + opriri + Utils.getStackTrace(e));
@@ -135,6 +135,10 @@ public class OperatiiDelegatii {
 				double distReal = rs.getDouble("distreal");
 				String statusDel = HelperDelegatie.getStatusDelegatie(conn, rs.getString("id"));
 
+				
+				if (distReal == -1)
+					continue;
+				
 				if (statusDel.equals("6"))
 					continue;
 
@@ -182,7 +186,7 @@ public class OperatiiDelegatii {
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
-			MailOperations.sendMail(e.toString());
+			MailOperations.sendMail(Utils.getStackTrace(e));
 		}
 
 		return listDelegatii;
@@ -218,8 +222,8 @@ public class OperatiiDelegatii {
 			}
 
 		} catch (Exception ex) {
-			logger.error(Utils.getStackTrace(ex));
-			MailOperations.sendMail(ex.toString());
+			logger.error(Utils.getStackTrace(ex) + " id: " + idDelegatie);
+			MailOperations.sendMail(Utils.getStackTrace(ex)+ " id: " + idDelegatie + " , tipAng = " + tipAngajat + " , codAprob=" + getCodAprobare(tipAprobare) + " , conAng =" + codAngajat);
 		}
 
 		new AlertaMail().verificaAlertWeekend(idDelegatie);
@@ -314,7 +318,7 @@ public class OperatiiDelegatii {
 					LatLng coordPunct = MapUtils.geocodeAddress(UtilsAddress.getAddress(punct.getStrAdresa()));
 					punct.setCoordonate(new LatLng(coordPunct.lat, coordPunct.lng));
 
-					if (coordPunct.lat > 0)
+					if (coordPunct.lat > 0 && !existaCoordonatePunct(conn, punct.getStrAdresa()))
 						salveazaCoordonatePunct(conn, punct.getStrAdresa(), coordPunct);
 
 				}
@@ -331,6 +335,32 @@ public class OperatiiDelegatii {
 		}
 
 		return listLocalitati;
+	}
+
+	private boolean existaCoordonatePunct(Connection conn, String adresa) {
+
+		boolean exista = false;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.existaCoordonate());) {
+
+			stmt.setString(1, adresa.split("/")[0]);
+			stmt.setString(2, adresa.split("/")[1]);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				exista = true;
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return exista;
+
 	}
 
 	private void salveazaCoordonatePunct(Connection conn, String adresa, LatLng coordonate) {
