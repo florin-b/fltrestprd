@@ -1,5 +1,7 @@
 package flota.service.queries;
 
+import flota.service.utils.Utils;
+
 public class SqlQueries {
 	public static String getLocalitatiJudet() {
 		StringBuilder sqlString = new StringBuilder();
@@ -35,40 +37,48 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
-	public static String getDelegatiiAprobareHeaderVanzari() {
+	public static String getDelegatiiAprobareHeaderVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
 		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) = ? and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and substr(ag.departament,0,2) in ");
+		sqlString.append(departQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
 	}
 
-	public static String getDelegatiiAprobareHeaderNONVanzari() {
+	public static String getDelegatiiAprobareHeaderNONVanzari(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(
-				" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
+		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
+		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
 	}
 
-	public static String getDelegatiiTerminateVanzari() {
+	public static String getDelegatiiTerminateVanzari(String unitLogQs) {
 
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id ");
 		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where h.mandt='900' and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and substr(ag.divizie,0,2)=? and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and substr(ag.divizie,0,2)=? and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
 		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0  ");
 		sqlString.append(" order by h.id ");
@@ -77,14 +87,16 @@ public class SqlQueries {
 
 	}
 
-	public static String getDelegatiiTerminateNONVanzari() {
+	public static String getDelegatiiTerminateNONVanzari(String unitLogQs) {
 
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and  ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
 		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
 		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0   ");
 		sqlString.append(" order by h.id ");
@@ -119,24 +131,30 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
-	public static String afiseazaDelegatiiSubordVanzari() {
+	public static String afiseazaDelegatiiSubordVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod  and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and ag.filiala =? and substr(ag.departament,0,2) =?  and h.datac between ? and ? ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and substr(ag.departament,0,2) in ");
+		sqlString.append(departQs);
+		sqlString.append(" and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
 	}
 
-	public static String afiseazaDelegatiiSubordNONVanzari() {
+	public static String afiseazaDelegatiiSubordNONVanzari(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod and ");
-		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)  and ag.filiala =?  and h.datac between ? and ? ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)  and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.datac between ? and ? ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -197,20 +215,22 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select x.* from (select rownum idt, to_char(gtime,'HH24:mi') gtime, lat, lon, speed, km from nexus_gps_data ");
-		sqlString.append(" where vcode=? and ");
-		sqlString.append(" gtime between to_date(?,'dd-mm-yyyy HH24:mi') ");
-		sqlString.append(" and to_date(?,'dd-mm-yyyy HH24:mi') and speed > 0 ) x where remainder(x.idt,2) = 0 order by x.km ");
+		sqlString.append(" where vcode in ");
+		sqlString.append(" (select vcode from our_vehicles n, sapprd.zdelegatiehead z where ");
+		sqlString.append(" trim(regexp_replace(n.car_number,'-| ','')) = trim(regexp_replace(z.nrauto,'-| ','')) and z.id =? )");
+		sqlString.append(" and gtime between to_date(?,'dd-mm-yyyy HH24:mi') ");
+		sqlString.append(" and to_date(?,'dd-mm-yyyy HH24:mi')  ) x where remainder(x.idt,2) = 0 order by x.km ");
 
 		return sqlString.toString();
 	}
 
-	public static String getCoordRuta(String codDisp) {
+	public static String getCoordRuta() {
 
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(
 				" select x.* from (select rownum idt, to_char(d.gtime,'dd-mm-yyyy HH24:mi') gtime, d.lat, d.lon, d.speed, d.km from nexus_gps_data d, ");
-		sqlString.append(" nexus_vehicles n ");
+		sqlString.append(" our_vehicles n ");
 		sqlString.append(" where d.vcode = n.vcode and ");
 		sqlString.append(" trim(regexp_replace(n.car_number,'-| ','')) = trim(regexp_replace(?,'-| ','')) and ");
 		sqlString.append(" trunc(d.gtime) between to_date(?,'dd-mm-yyyy HH24:mi') and ");
@@ -222,7 +242,7 @@ public class SqlQueries {
 
 	public static String getCodDispGps() {
 		StringBuilder sqlString = new StringBuilder();
-		sqlString.append(" select vcode from nexus_vehicles n, sapprd.zdelegatiehead z where ");
+		sqlString.append(" select vcode from our_vehicles n, sapprd.zdelegatiehead z where ");
 		sqlString.append(" trim(regexp_replace(n.car_number,'-| ','')) = trim(regexp_replace(z.nrauto,'-| ','')) and z.id =?  ");
 
 		return sqlString.toString();
@@ -233,7 +253,7 @@ public class SqlQueries {
 
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select distinct vcode from nexus_vehicles n where ");
+		sqlString.append(" select distinct vcode from our_vehicles n where ");
 		sqlString.append(" trim(regexp_replace(n.car_number,'-| ','')) in ");
 		sqlString.append(" ( select  trim(regexp_replace(c.ktext,'-| ','')) nrauto ");
 		sqlString.append(" from sapprd.anlz a join sapprd.anla b on b.anln1 = a.anln1 and b.anln2 = a.anln2 and b.mandt=a.mandt ");
@@ -326,10 +346,13 @@ public class SqlQueries {
 	public static String getCoordonateOpriri() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select  min(lat) lat, min(lon) lon, km from nexus_gps_data where ");
-		sqlString.append(" vcode =? and gtime BETWEEN to_date(?, 'dd-mm-yyyy hh24:mi:ss') and ");
+		sqlString.append(" select  lat, lon, km from nexus_gps_data where ");
+		sqlString.append(" vcode in ");
+		sqlString.append(" (select vcode from our_vehicles n, sapprd.zdelegatiehead z where ");
+		sqlString.append(" trim(regexp_replace(n.car_number,'-| ','')) = trim(regexp_replace(z.nrauto,'-| ','')) and z.id =? ) ");
+		sqlString.append(" and gtime BETWEEN to_date(?, 'dd-mm-yyyy hh24:mi:ss') and ");
 		sqlString.append(" to_date(?, 'dd-mm-yyyy hh24:mi:ss')  and speed = 0 ");
-		sqlString.append(" group by km having count(speed) > 2 order by km ");
+		sqlString.append(" order by km ");
 
 		return sqlString.toString();
 	}
@@ -350,22 +373,28 @@ public class SqlQueries {
 
 	}
 
-	public static String getSubordVanzari() {
+	public static String getSubordVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select cod, nume from personal where functie in ");
 		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and filiala=? and substr(departament,0,2)=? order by nume");
+		sqlString.append(" and filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and substr(departament,0,2) in ");
+		sqlString.append(departQs);
+		sqlString.append(" order by nume");
 
 		return sqlString.toString();
 	}
 
-	public static String getSubordNonVanzari() {
+	public static String getSubordNonVanzari(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select cod, nume from personal where functie in ");
 		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and filiala=? order by nume");
+		sqlString.append(" and filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" order by nume");
 
 		return sqlString.toString();
 	}
@@ -404,8 +433,6 @@ public class SqlQueries {
 
 		return sqlString.toString();
 	}
-
-	
 
 	public static String getIntervalDelegatie() {
 		StringBuilder sqlString = new StringBuilder();

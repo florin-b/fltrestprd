@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Utils {
 
@@ -146,6 +147,22 @@ public class Utils {
 
 		return tipSuperior;
 
+	}
+
+	public static String generateQs(String strValues) {
+		StringBuilder items = new StringBuilder("(");
+
+		String[] arrayValues = strValues.split(",");
+
+		for (int i = 0; i < arrayValues.length; i++) {
+			if (i != 0)
+				items.append(", ");
+			items.append("?");
+		}
+
+		items.append(")");
+
+		return items.toString();
 	}
 
 }

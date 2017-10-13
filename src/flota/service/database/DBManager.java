@@ -54,7 +54,7 @@ public class DBManager {
 			oracleDS.setUser("WEBSAP");
 			oracleDS.setPassword("2INTER7");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(Utils.getStackTrace(e));
 		}
 		return oracleDS;
 	}

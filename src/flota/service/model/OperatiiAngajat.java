@@ -81,22 +81,30 @@ public class OperatiiAngajat {
 
 		String sqlString;
 
-		if (isPersVanzari) {
-			sqlString = SqlQueries.getSubordVanzari();
+		String unitLogQs = Utils.generateQs(unitLog);
+		String departQs = Utils.generateQs(codDepart);
 
+		if (isPersVanzari) {
+			sqlString = SqlQueries.getSubordVanzari(unitLogQs, departQs);
 		} else
-			sqlString = SqlQueries.getSubordNonVanzari();
+			sqlString = SqlQueries.getSubordNonVanzari(unitLogQs);
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			int idx = 1;
+			int pos = 2;
+			String[] unitLogs = unitLog.split(",");
+			String[] departs = codDepart.split(",");
 
-			stmt.setString(idx++, tipAngajat);
-			stmt.setString(idx++, unitLog);
+			stmt.setString(1, tipAngajat);
+
+			for (int ii = 0; ii < unitLogs.length; ii++)
+				stmt.setString(pos++, unitLogs[ii]);
 
 			if (isPersVanzari) {
-				stmt.setString(idx++, codDepart);
+
+				for (int ii = 0; ii < departs.length; ii++)
+					stmt.setString(pos++, departs[ii]);
 			}
 
 			stmt.executeQuery();

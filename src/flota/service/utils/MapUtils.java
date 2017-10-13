@@ -273,6 +273,7 @@ public class MapUtils {
 			arr.add(arr.size(), adresaStop);
 
 		return arr;
+
 	}
 
 	private static String getAdresaCoordonate(double lat, double lng) {

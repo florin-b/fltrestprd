@@ -11,6 +11,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -192,6 +194,7 @@ public class MainService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Traseu getTraseu(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart, @QueryParam("dataStop") String dataStop,
 			@QueryParam("nrMasina") String nrMasina) {
+
 		return new OperatiiTraseu().getTraseu(codAngajat, dataStart, dataStop, nrMasina);
 	}
 
@@ -256,12 +259,33 @@ public class MainService {
 
 		System.out.println("recv: " + str);
 
-	
-		
 		return Response.status(200).header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization").header("Access-Control-Allow-Credentials", "true")
 				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD").header("Access-Control-Max-Age", "1209600").entity(str)
 				.build();
+
+	}
+
+	@Path("locs")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public void locs(@QueryParam("codJudet") String codJudet, @Suspended final AsyncResponse asyncResponse) {
+
+		new Thread() {
+			@Override
+			public void run() {
+
+				String listLocs = new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
+
+				Response resp = Response.status(200).header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+						.header("Access-Control-Allow-Credentials", "true").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+						.header("Access-Control-Max-Age", "1209600").entity(listLocs).build();
+
+				asyncResponse.resume(resp);
+
+			}
+		}.start();
 
 	}
 

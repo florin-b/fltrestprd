@@ -37,6 +37,7 @@ public class OperatiiMasina {
 
 			while (rs.next()) {
 				codDisp = rs.getString("vcode");
+				
 			}
 
 		} catch (SQLException e) {

@@ -31,10 +31,10 @@ public class OperatiiTraseu {
 	private static final Logger logger = LogManager.getLogger(OperatiiTraseu.class);
 
 	private static final double razaKmSosire = 5;
+	private static final int DIST_MIN_STOPS_KM = 4;
 
 	private LatLng coordonatePlecare;
 	private LatLng coordonateSosire;
-	private String codDisp;
 	private String dataPlecare;
 	private String dataSosire;
 
@@ -45,17 +45,16 @@ public class OperatiiTraseu {
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu());) {
 
-			String codDisp = new OperatiiMasina().getCodDispGps(conn, idDelegatie);
 			BeanDelegatieCauta delegatie = new OperatiiDelegatii().getDelegatie(conn, idDelegatie);
 
-			String dataPlecare = delegatie.getDataPlecare() + " " + delegatie.getOraPlecare().substring(0, 2) + ":" + delegatie.getOraPlecare().substring(2, 4);
+			String dataPlec = delegatie.getDataPlecare() + " " + delegatie.getOraPlecare().substring(0, 2) + ":" + delegatie.getOraPlecare().substring(2, 4);
 
-			String dataSosire = delegatie.getDataSosire() + " " + "23:59";
+			String dataSos = delegatie.getDataSosire() + " " + "23:59";
 
-			stmt.setString(1, codDisp);
+			stmt.setString(1, idDelegatie);
 
-			stmt.setString(2, dataPlecare);
-			stmt.setString(3, dataSosire);
+			stmt.setString(2, dataPlec);
+			stmt.setString(3, dataSos);
 
 			stmt.executeQuery();
 
@@ -84,12 +83,16 @@ public class OperatiiTraseu {
 		double stopKm = 0;
 		String oraSosire = null;
 
+		double lastRecKm = 0;
+		String lastRecOra = null;
+		double lastLat = 0;
+		double lastLon = 0;
+
 		List<PunctTraseu> objPuncte = null;
 		BeanDelegatieCauta delegatie = null;
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateTraseu());) {
 
-			codDisp = new OperatiiMasina().getCodDispGps(conn, idDelegatie);
 			delegatie = new OperatiiDelegatii().getDelegatie(conn, idDelegatie);
 			delegatie.setId(idDelegatie);
 
@@ -97,7 +100,7 @@ public class OperatiiTraseu {
 
 			dataSosire = delegatie.getDataSosire() + " " + "23:59";
 
-			stmt.setString(1, codDisp);
+			stmt.setString(1, idDelegatie);
 
 			stmt.setString(2, dataPlecare);
 			stmt.setString(3, dataSosire);
@@ -154,6 +157,11 @@ public class OperatiiTraseu {
 					i++;
 				}
 
+				lastRecKm = rs.getDouble("km");
+				lastRecOra = rs.getString("gtime").replace(":", "");
+				lastLat = rs.getDouble("lat");
+				lastLon = rs.getDouble("lon");
+
 			}
 
 			rs.close();
@@ -161,6 +169,13 @@ public class OperatiiTraseu {
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
 			MailOperations.sendMail(e.toString());
+		}
+
+		if (stopKm == 0) {
+			stopKm = lastRecKm;
+			oraSosire = lastRecOra;
+			coordonateSosire = new LatLng(lastLat, lastLon);
+
 		}
 
 		if ((stopKm - startKm) > 0) {
@@ -250,7 +265,7 @@ public class OperatiiTraseu {
 
 	public void recalculeazaTraseuTeoretic(Connection conn, BeanDelegatieCauta delegatie, List<PunctTraseu> puncte) {
 
-		List<LatLng> coordonateOpriri = getCoordOpriri(codDisp, dataPlecare, dataSosire);
+		List<LatLng> coordonateOpriri = getCoordOpriri(conn, delegatie.getId(), dataPlecare, dataSosire);
 		coordonateOpriri.add(0, coordonatePlecare);
 		coordonateOpriri.add(coordonateSosire);
 
@@ -312,27 +327,13 @@ public class OperatiiTraseu {
 
 	}
 
-	private static void stergePuncteTraseu(Connection conn, String idDelegatie) {
-		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.stergePuncteTraseu());) {
-
-			stmt.setString(1, idDelegatie);
-
-			stmt.executeQuery();
-
-		} catch (SQLException ex) {
-			logger.error(Utils.getStackTrace(ex));
-			MailOperations.sendMail(ex.toString());
-		}
-	}
-
-	public List<LatLng> getCoordOpriri(String codDisp, String dataStart, String dataStop) {
+	public List<LatLng> getCoordOpriri(Connection conn, String idDelegatie, String dataStart, String dataStop) {
 
 		List<LatLng> listCoords = new ArrayList<>();
 
-		try (Connection conn = new DBManager().getProdDataSource().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri());) {
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri());) {
 
-			stmt.setString(1, codDisp);
+			stmt.setString(1, idDelegatie);
 			stmt.setString(2, dataStart);
 			stmt.setString(3, dataStop);
 
@@ -340,8 +341,21 @@ public class OperatiiTraseu {
 
 			ResultSet rs = stmt.getResultSet();
 
+			double lastLat = 0;
+			double lastLon = 0;
+			double distPuncte = 0;
+
 			while (rs.next()) {
-				listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
+
+				if (lastLat != 0) {
+					distPuncte = MapUtils.distanceXtoY(rs.getDouble("lat"), rs.getDouble("lon"), lastLat, lastLon, "K");
+
+					if (distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
+						listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
+				}
+
+				lastLat = rs.getDouble("lat");
+				lastLon = rs.getDouble("lon");
 
 			}
 
@@ -359,17 +373,10 @@ public class OperatiiTraseu {
 
 		Traseu traseu = new Traseu();
 
-		List<String> listDisp = new OperatiiMasina().getCodDispGps(codAngajat, dataStart);
-
-		if (listDisp.isEmpty())
-			return traseu;
-
-		String qDisp = generateQsForDisps(listDisp);
-
 		List<LatLng> coordonateTraseu = new ArrayList<>();
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
-				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta(qDisp));) {
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta());) {
 
 			stmt.setString(1, nrMasina);
 			stmt.setString(2, dataStart);
@@ -455,16 +462,6 @@ public class OperatiiTraseu {
 
 		return traseu;
 
-	}
-
-	private static String generateQsForDisps(List<String> listDisp) {
-		StringBuilder items = new StringBuilder();
-		for (int i = 0; i < listDisp.size(); i++) {
-			if (i != 0)
-				items.append(", ");
-			items.append("?");
-		}
-		return items.toString();
 	}
 
 }

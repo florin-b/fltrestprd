@@ -6,10 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
-import flota.service.helpers.HelperAprobare;
-import flota.service.helpers.HelperDelegatie;
-import flota.service.model.AlertaMail;
-import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiTraseu;
 
 public class TestClass {
@@ -21,10 +17,10 @@ public class TestClass {
 		// System.out.println(new
 		// OperatiiTraseu().getCoordonateTraseu("17651549879"));
 
-		//System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD", "TM10", "07"));
+		// System.out.println(new
+		// OperatiiDelegatii().getDelegatiiAprobari("DIT", "BU90, GL90", "00"));
 
-		// new OperatiiTraseu().determinaSfarsitDelegatie(new
-		// DBManager().getProdDataSource().getConnection(), "22706496561");
+		new OperatiiTraseu().determinaSfarsitDelegatie(new DBManager().getProdDataSource().getConnection(), "24501061387");
 
 		// new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 
@@ -55,11 +51,8 @@ public class TestClass {
 		// System.out.println(new OperatiiMasina().getMasiniAngajat( "00083307",
 		// "14-08-2017"));
 
-		// System.out.println(new OperatiiTraseu().getTraseu("00083045",
-		// "13-08-2017", "13-08-2017"));
-
-		// System.out.println(new OperatiiAngajat().getAngajati("DZ", "DJ10",
-		// "01"));
+		// System.out.println(new OperatiiTraseu().getTraseu("00083315",
+		// "27-09-2017", "27-09-2017", "B-68-VIZ"));
 
 		// System.out.println(new
 		// OperatiiDelegatii().afiseazaDelegatiiSubord("01-08-2017",
@@ -70,11 +63,12 @@ public class TestClass {
 
 		// new AlertaMail().verificaAlertWeekend("22147680545");
 
-		//System.out.println(HelperAprobare.getCodAprobareConsilieri(DBManager.getTestDataSource().getConnection(), "00074439", "CAG2"));
-		
-		
-		System.out.println(HelperAprobare.getCodAprobare(new DBManager().getProdDataSource().getConnection(), "00086258", "KA08"));
-		
+		// System.out.println(HelperAprobare.getCodAprobareConsilieri(DBManager.getTestDataSource().getConnection(),
+		// "00074439", "CAG2"));
+
+		// System.out.println(HelperAprobare.getCodAprobare(new
+		// DBManager().getProdDataSource().getConnection(), "00086258",
+		// "KA08"));
 
 	}
 

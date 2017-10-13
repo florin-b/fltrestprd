@@ -47,7 +47,7 @@ public class OperatiiDelegatii {
 			}
 
 			String idDelegatieNoua = Utils.getId();
-			
+
 			stmt.clearParameters();
 			stmt.setString(1, idDelegatieNoua);
 			stmt.setString(2, codAngajat);
@@ -107,21 +107,35 @@ public class OperatiiDelegatii {
 
 		List<BeanDelegatieAprobare> listDelegatii = new ArrayList<>();
 
+		String unitLogQs = Utils.generateQs(unitLog);
+
+		String departQs = Utils.generateQs(codDepart);
+
 		String sqlString;
 
 		if (isPersVanzari)
-			sqlString = SqlQueries.getDelegatiiAprobareHeaderVanzari();
+			sqlString = SqlQueries.getDelegatiiAprobareHeaderVanzari(unitLogQs, departQs);
 		else
-			sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari();
+			sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari(unitLogQs);
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
 			stmt.setString(1, tipAngajat);
-			stmt.setString(2, unitLog);
+
+			int pos = 2;
+
+			String[] unitLogs = unitLog.split(",");
+
+			String[] departs = codDepart.split(",");
+
+			for (int ii = 0; ii < unitLogs.length; ii++)
+				stmt.setString(pos++, unitLogs[ii]);
 
 			if (isPersVanzari) {
-				stmt.setString(3, codDepart);
+
+				for (int ii = 0; ii < departs.length; ii++)
+					stmt.setString(pos++, departs[ii]);
 			}
 
 			stmt.executeQuery();
@@ -135,10 +149,9 @@ public class OperatiiDelegatii {
 				double distReal = rs.getDouble("distreal");
 				String statusDel = HelperDelegatie.getStatusDelegatie(conn, rs.getString("id"));
 
-				
 				if (distReal == -1)
 					continue;
-				
+
 				if (statusDel.equals("6"))
 					continue;
 
@@ -223,7 +236,8 @@ public class OperatiiDelegatii {
 
 		} catch (Exception ex) {
 			logger.error(Utils.getStackTrace(ex) + " id: " + idDelegatie);
-			MailOperations.sendMail(Utils.getStackTrace(ex)+ " id: " + idDelegatie + " , tipAng = " + tipAngajat + " , codAprob=" + getCodAprobare(tipAprobare) + " , conAng =" + codAngajat);
+			MailOperations.sendMail(Utils.getStackTrace(ex) + " id: " + idDelegatie + " , tipAng = " + tipAngajat + " , codAprob=" + getCodAprobare(tipAprobare)
+					+ " , conAng =" + codAngajat);
 		}
 
 		new AlertaMail().verificaAlertWeekend(idDelegatie);
@@ -469,25 +483,41 @@ public class OperatiiDelegatii {
 
 		String sqlString = "";
 
+		String unitLogQs = Utils.generateQs(unitLog);
+
+		String departQs = Utils.generateQs(codDepart);
+
 		if (isPersVanzari)
-			sqlString = SqlQueries.afiseazaDelegatiiSubordVanzari();
+			sqlString = SqlQueries.afiseazaDelegatiiSubordVanzari(unitLogQs, departQs);
 		else
-			sqlString = SqlQueries.afiseazaDelegatiiSubordNONVanzari();
+			sqlString = SqlQueries.afiseazaDelegatiiSubordNONVanzari(unitLogQs);
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
+			int pos = 2;
+			String[] unitLogs = unitLog.split(",");
+			String[] departs = codDepart.split(",");
+
 			if (isPersVanzari) {
 				stmt.setString(1, tipAngajat);
-				stmt.setString(2, unitLog);
-				stmt.setString(3, codDepart);
-				stmt.setString(4, DateUtils.formatDateSap(dataStart));
-				stmt.setString(5, DateUtils.formatDateSap(dataStop));
+
+				for (int ii = 0; ii < unitLogs.length; ii++)
+					stmt.setString(pos++, unitLogs[ii]);
+
+				for (int ii = 0; ii < departs.length; ii++)
+					stmt.setString(pos++, departs[ii]);
+
+				stmt.setString(pos++, DateUtils.formatDateSap(dataStart));
+				stmt.setString(pos++, DateUtils.formatDateSap(dataStop));
 			} else {
 				stmt.setString(1, tipAngajat);
-				stmt.setString(2, unitLog);
-				stmt.setString(3, DateUtils.formatDateSap(dataStart));
-				stmt.setString(4, DateUtils.formatDateSap(dataStop));
+
+				for (int ii = 0; ii < unitLogs.length; ii++)
+					stmt.setString(pos++, unitLogs[ii]);
+
+				stmt.setString(pos++, DateUtils.formatDateSap(dataStart));
+				stmt.setString(pos++, DateUtils.formatDateSap(dataStop));
 			}
 
 			stmt.executeQuery();
@@ -569,21 +599,32 @@ public class OperatiiDelegatii {
 
 		String sqlString;
 
+		String unitLogQs = Utils.generateQs(unitLog);
+
 		if (isPersVanzari)
-			sqlString = SqlQueries.getDelegatiiTerminateVanzari();
+			sqlString = SqlQueries.getDelegatiiTerminateVanzari(unitLogQs);
 		else
-			sqlString = SqlQueries.getDelegatiiTerminateNONVanzari();
+			sqlString = SqlQueries.getDelegatiiTerminateNONVanzari(unitLogQs);
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
+			int pos = 2;
+			String[] unitLogs = unitLog.split(",");
+
 			if (isPersVanzari) {
 				stmt.setString(1, tipAngajat);
-				stmt.setString(2, unitLog);
-				stmt.setString(3, depart);
+
+				for (int ii = 0; ii < unitLogs.length; ii++)
+					stmt.setString(pos++, unitLogs[ii]);
+
+				stmt.setString(pos++, depart);
 			} else {
 				stmt.setString(1, tipAngajat);
-				stmt.setString(2, unitLog);
+
+				for (int ii = 0; ii < unitLogs.length; ii++)
+					stmt.setString(pos++, unitLogs[ii]);
+
 			}
 
 			stmt.executeQuery();
@@ -623,11 +664,16 @@ public class OperatiiDelegatii {
 
 			OperatiiTraseu opTraseu = new OperatiiTraseu();
 
+			int nrDel = 0;
+			
 			while (rs.next()) {
 				opTraseu.determinaSfarsitDelegatie(conn, rs.getString("id"));
+				nrDel++;
 
 			}
 
+			MailOperations.sendMail("Delegatii Service", " Au fost verificate " + nrDel);
+			
 			rs.close();
 
 		} catch (SQLException e) {
