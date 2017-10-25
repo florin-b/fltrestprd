@@ -9,6 +9,7 @@ public class Traseu {
 	private List<LatLng> coordonate;
 	private List<Oprire> opriri;
 	private int distanta;
+	private String nrAuto;
 
 	public List<LatLng> getCoordonate() {
 		return coordonate;
@@ -32,6 +33,14 @@ public class Traseu {
 
 	public void setDistanta(int distanta) {
 		this.distanta = distanta;
+	}
+
+	public String getNrAuto() {
+		return nrAuto;
+	}
+
+	public void setNrAuto(String nrAuto) {
+		this.nrAuto = nrAuto;
 	}
 
 }

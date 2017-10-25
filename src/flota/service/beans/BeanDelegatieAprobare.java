@@ -20,6 +20,7 @@ public class BeanDelegatieAprobare {
 	private int distantaRespinsa;
 	private String statusCode;
 	private String msgAtentionare;
+	private boolean isWeekend;
 
 	public String getId() {
 		return id;
@@ -123,6 +124,14 @@ public class BeanDelegatieAprobare {
 
 	public void setDistantaRecalculata(int distantaRecalculata) {
 		this.distantaRecalculata = distantaRecalculata;
+	}
+
+	public boolean isWeekend() {
+		return isWeekend;
+	}
+
+	public void setWeekend(boolean isWeekend) {
+		this.isWeekend = isWeekend;
 	}
 
 	@Override

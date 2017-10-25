@@ -31,7 +31,7 @@ public class OperatiiTraseu {
 	private static final Logger logger = LogManager.getLogger(OperatiiTraseu.class);
 
 	private static final double razaKmSosire = 5;
-	private static final int DIST_MIN_STOPS_KM = 4;
+	private static final int DIST_MIN_STOPS_KM = 3;
 
 	private LatLng coordonatePlecare;
 	private LatLng coordonateSosire;
@@ -265,7 +265,7 @@ public class OperatiiTraseu {
 
 	public void recalculeazaTraseuTeoretic(Connection conn, BeanDelegatieCauta delegatie, List<PunctTraseu> puncte) {
 
-		List<LatLng> coordonateOpriri = getCoordOpriri(conn, delegatie.getId(), dataPlecare, dataSosire);
+		List<LatLng> coordonateOpriri = getCoordOpririDelegatie(conn, delegatie.getId(), dataPlecare, dataSosire);
 		coordonateOpriri.add(0, coordonatePlecare);
 		coordonateOpriri.add(coordonateSosire);
 
@@ -327,9 +327,10 @@ public class OperatiiTraseu {
 
 	}
 
-	public List<LatLng> getCoordOpriri(Connection conn, String idDelegatie, String dataStart, String dataStop) {
+	public List<LatLng> getCoordOpririDelegatie(Connection conn, String idDelegatie, String dataStart, String dataStop) {
 
 		List<LatLng> listCoords = new ArrayList<>();
+		Date lastStop = new Date();
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri());) {
 
@@ -350,12 +351,16 @@ public class OperatiiTraseu {
 				if (lastLat != 0) {
 					distPuncte = MapUtils.distanceXtoY(rs.getDouble("lat"), rs.getDouble("lon"), lastLat, lastLon, "K");
 
-					if (distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
+					int durataOprire = DateUtils.dateDiffMin(lastStop, DateUtils.getDate(rs.getString("gtime")));
+
+					if (durataOprire > 3 || distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
 						listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
 				}
 
 				lastLat = rs.getDouble("lat");
 				lastLon = rs.getDouble("lon");
+
+				lastStop = DateUtils.getDate(rs.getString("gtime"));
 
 			}
 
@@ -367,6 +372,86 @@ public class OperatiiTraseu {
 		}
 
 		return listCoords;
+	}
+
+	public Traseu getTraseuAngajat(Connection conn, String codAngajat, String dataStart, String dataStop) {
+
+		Traseu traseu = new Traseu();
+
+		List<LatLng> listCoords = new ArrayList<>();
+
+		String codDisp = new OperatiiMasina().getCodGps(codAngajat, dataStart);
+
+		String codesQs = Utils.generateQs(codDisp);
+
+		int kmStart = 0;
+		int kmStop = 0;
+		String dispGpsTraseu = "";
+
+		double lastLat = 0;
+		double lastLon = 0;
+		double distPuncte = 0;
+		Date lastStop = new Date();
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordonateOpriri(codesQs));) {
+
+			int pos = 1;
+
+			String[] codes = codDisp.split(",");
+
+			for (int ii = 0; ii < codes.length; ii++)
+				stmt.setString(pos++, codes[ii]);
+
+			stmt.setString(pos++, dataStart);
+			stmt.setString(pos++, dataStop);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			int crt = 0;
+
+			while (rs.next()) {
+
+				if (crt == 0)
+					kmStart = rs.getInt("km");
+
+				if (lastLat != 0) {
+					distPuncte = MapUtils.distanceXtoY(rs.getDouble("lat"), rs.getDouble("lon"), lastLat, lastLon, "K");
+
+					int durataOprire = DateUtils.dateDiffMin(lastStop, DateUtils.getDate(rs.getString("gtime")));
+
+					if (durataOprire > 3 || distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
+						listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
+				}
+
+				lastLat = rs.getDouble("lat");
+				lastLon = rs.getDouble("lon");
+
+				lastStop = DateUtils.getDate(rs.getString("gtime"));
+
+				kmStop = rs.getInt("km");
+
+				dispGpsTraseu = rs.getString("vcode");
+
+				crt++;
+
+			}
+
+			rs.close();
+
+		} catch (SQLException ex) {
+			logger.error(Utils.getStackTrace(ex));
+			MailOperations.sendMail(ex.toString());
+		}
+
+		listCoords.add(new LatLng(lastLat, lastLon));
+
+		traseu.setNrAuto(new OperatiiMasina().getNrAutoCodGps(conn, dispGpsTraseu));
+		traseu.setCoordonate(listCoords);
+		traseu.setDistanta(kmStop - kmStart);
+
+		return traseu;
 	}
 
 	public Traseu getTraseu(String codAngajat, String dataStart, String dataStop, String nrMasina) {

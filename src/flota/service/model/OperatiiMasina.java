@@ -26,10 +26,6 @@ public class OperatiiMasina {
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodDispGps(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			// String nrAuto = getNrAuto(nrDelegatie).replace("-", "").replace("
-			// ", "");
-
-			// stmt.setString(1, nrAuto);
 			stmt.setString(1, nrDelegatie);
 
 			stmt.executeQuery();
@@ -37,7 +33,7 @@ public class OperatiiMasina {
 
 			while (rs.next()) {
 				codDisp = rs.getString("vcode");
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -142,6 +138,67 @@ public class OperatiiMasina {
 
 			while (rs.next()) {
 				nrAuto.add(rs.getString("ktext"));
+			}
+
+		}
+
+		catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
+		}
+
+		return nrAuto;
+
+	}
+
+	public String getCodGps(String codAngajat, String dataStart) {
+
+		StringBuilder codes = new StringBuilder();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getMasiniAlocateData());) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				if (codes.toString().isEmpty())
+					codes.append(rs.getString("vcode"));
+				else {
+					codes.append(rs.getString(","));
+					codes.append(rs.getString("vcode"));
+				}
+
+			}
+
+		}
+
+		catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
+		}
+
+		return codes.toString();
+
+	}
+	
+	public String getNrAutoCodGps(Connection conn, String codDispGps) {
+
+		String nrAuto = " ";
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getNrAutoCodGps());) {
+
+			stmt.setString(1, codDispGps);
+			stmt.executeQuery();
+			
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				nrAuto = rs.getString("car_number");
+
 			}
 
 		}

@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import flota.service.beans.DelegatieNoua;
 import flota.service.queries.SqlQueries;
+import flota.service.utils.DateUtils;
 import flota.service.utils.MailOperations;
 import flota.service.utils.Utils;
 
@@ -31,6 +33,73 @@ public class HelperAprobare {
 
 	}
 
+	public static String getCodAprobare(Connection conn, DelegatieNoua delegatie) {
+
+		String codAprobare;
+
+		if (delegatie.getTipAngajat().toUpperCase().startsWith("KA"))
+			codAprobare = getCodAprobareKA(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
+		else if (delegatie.getTipAngajat().toUpperCase().startsWith("CAG") || delegatie.getTipAngajat().toUpperCase().startsWith("CONS"))
+			codAprobare = getCodAprobareConsilieri(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
+		else
+			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
+
+		String codAprobareWeekend = getCodAprobareWeekend(conn, delegatie);
+
+		if (codAprobareWeekend != null)
+			codAprobare = codAprobareWeekend;
+
+		return codAprobare;
+
+	}
+	
+	
+	private static String getCodAprobareWeekend(Connection conn, DelegatieNoua delegatie) {
+
+		String codAprobareWeekend = null;
+
+		boolean hasWeekend = DateUtils.hasWeekend(delegatie.getDataP(), delegatie.getDataS());
+
+		if (hasWeekend && !isUlCentral(delegatie)) {
+			codAprobareWeekend = getCodAprobareDZ(conn);
+		}
+
+		return codAprobareWeekend;
+	}
+	
+	private static boolean isUlCentral(DelegatieNoua delegatie) {
+		return delegatie.getUnitLog().equals("BU90") || delegatie.getUnitLog().equals("GL90") || delegatie.getUnitLog().equals("BV90");
+
+	}
+
+	public static String getCodAprobareDZ(Connection conn) {
+		String codAprobare = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareDZ());) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				codAprobare = rs.getString("fid");
+
+			}
+
+			rs.close();
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(Utils.getStackTrace(e));
+
+		}
+
+		return codAprobare;
+	}
+
+	
+	
+	
 	public static String getCodAprobareGeneral(Connection conn, String codAngajat) {
 
 		String codAprobare = "-1";
@@ -66,8 +135,14 @@ public class HelperAprobare {
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareConsilieri());) {
 
+			
+			String tipCons = tipConsilier;
+			
+			if (tipConsilier.equals("CONS_GED"))
+				tipCons = "CONS-GED";
+			
 			stmt.setString(1, codConsilier);
-			stmt.setString(2, tipConsilier);
+			stmt.setString(2, tipCons);
 
 			stmt.executeQuery();
 

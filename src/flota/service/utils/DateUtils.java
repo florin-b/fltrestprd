@@ -50,6 +50,50 @@ public class DateUtils {
 
 	}
 
+	public static int dateDiffMin(Date dateStart, Date dateStop) {
+
+		long diffMinutes = 0;
+
+		if (dateStart == null || dateStop == null)
+			return 0;
+
+		try {
+
+			long diff = dateStop.getTime() - dateStart.getTime();
+
+			diffMinutes = diff / (60 * 1000) % 60;
+
+		} catch (Exception e) {
+			MailOperations.sendMail(e.toString());
+		}
+
+		return (int) diffMinutes;
+
+	}
+
+	public static boolean hasWeekend(String startInterval, String stopInterval) {
+
+		Date dateStart = DateUtils.getShortDate(startInterval);
+		Date dateStop = DateUtils.getShortDate(stopInterval);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dateStart);
+
+		if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+			return true;
+		else
+			while (cal.getTime().before(dateStop)) {
+				cal.add(Calendar.DATE, 1);
+
+				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+					return true;
+
+			}
+
+		return false;
+
+	}
+
 	public static String formatDateSap(String strDate) {
 
 		String formatted = "";
@@ -161,7 +205,7 @@ public class DateUtils {
 		String[] weekdays = new DateFormatSymbols(Locale.ENGLISH).getWeekdays();
 
 		List<Date> datesInRange = new ArrayList<>();
-		
+
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(intervalDelegatie.getStartDate());
 
@@ -184,6 +228,19 @@ public class DateUtils {
 		}
 
 		return false;
+	}
+
+	public static Date getShortDate(String stringDate) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+
+		try {
+			date = dateFormat.parse(stringDate);
+		} catch (ParseException e) {
+			MailOperations.sendMail(e.toString());
+		}
+
+		return date;
 	}
 
 }

@@ -240,6 +240,7 @@ public class MapUtils {
 						judet = EnumJudete.getNumeJudet(judet);
 
 						if (!judet.isEmpty() && i > 0 && i < coords.size() - 1) {
+
 							setAdrese.add(localitate + " / " + judet);
 
 						}
@@ -262,18 +263,21 @@ public class MapUtils {
 			}
 		}
 
-		List<String> arr = new ArrayList<>();
+		List<String> listAdrese = new ArrayList<>();
 
-		arr.addAll(setAdrese);
+		listAdrese.addAll(setAdrese);
 
-		if (!adresaStart.isEmpty())
-			arr.add(0, adresaStart);
+		if (!adresaStart.isEmpty()) {
+			if (listAdrese.isEmpty())
+				listAdrese.add(0, adresaStart);
+			else if (!listAdrese.get(0).equals(adresaStart))
+				listAdrese.add(0, adresaStart);
+		}
 
-		if (!adresaStop.isEmpty())
-			arr.add(arr.size(), adresaStop);
+		if (!adresaStop.isEmpty() && !listAdrese.get(listAdrese.size() - 1).equals(adresaStop))
+			listAdrese.add(listAdrese.size(), adresaStop);
 
-		return arr;
-
+		return listAdrese;
 	}
 
 	private static String getAdresaCoordonate(double lat, double lng) {

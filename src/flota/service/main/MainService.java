@@ -24,8 +24,10 @@ import com.google.gson.GsonBuilder;
 
 import flota.service.beans.Angajat;
 import flota.service.beans.BeanDelegatieAprobare;
+import flota.service.beans.BeanDelegatieGenerata;
 import flota.service.beans.DelegatieModifAntet;
 import flota.service.beans.DelegatieModifDetalii;
+import flota.service.beans.DelegatieNoua;
 import flota.service.beans.TestBean;
 import flota.service.beans.TestObject;
 import flota.service.beans.Traseu;
@@ -67,16 +69,30 @@ public class MainService {
 
 	}
 
-	@Path("adaugaDelegatie")
+	@Path("adaugaDelegatieText")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String adaugaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
+	public String adaugaDelegatieText(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
 			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
-			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto) {
+			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto,
+			@FormParam("distreal") String distReal) {
 
 		synchronized (MainService.class) {
 
-			boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
+			boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto,
+					distReal);
+			return success ? "1" : "0";
+		}
+	}
+
+	@Path("adaugaDelegatie")
+	@POST
+	@Produces(MediaType.TEXT_PLAIN)
+	public String adaugaDelegatie(@BeanParam DelegatieNoua delegatie) {
+
+		synchronized (MainService.class) {
+
+			boolean success = new OperatiiDelegatii().adaugaDelegatie(delegatie);
 			return success ? "1" : "0";
 		}
 	}
@@ -84,15 +100,14 @@ public class MainService {
 	@Path("modificaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public String modificaDelegatie(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
-			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
-			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto,
-			@FormParam("idDelegatie") String idDelegatie) {
+	public String modificaDelegatie(@BeanParam DelegatieNoua delegatie) {
+
+		System.out.println(delegatie);
 
 		OperatiiDelegatii opDelegatii = new OperatiiDelegatii();
-		opDelegatii.respingeDelegatie(idDelegatie, tipAngajat, codAngajat);
+		opDelegatii.respingeDelegatie(delegatie.getId(), delegatie.getTipAngajat(), delegatie.getCodAngajat());
 
-		boolean success = opDelegatii.adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto);
+		boolean success = opDelegatii.adaugaDelegatie(delegatie);
 		return success ? "1" : "0";
 	}
 
@@ -209,8 +224,34 @@ public class MainService {
 	@Path("calculeazaDelegatii")
 	@GET
 	public String calculeazaDelegatii() {
+
+		MailOperations.sendMail("Flota JOB", "Start");
+
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
+
+		MailOperations.sendMail("Flota JOB", "Stop");
+
 		return "Done!";
+
+	}
+
+	@Path("genereazaDelegatie")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public BeanDelegatieGenerata getDelegatieGenerata(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart,
+			@QueryParam("dataStop") String dataStop) {
+
+		return new OperatiiDelegatii().genereazaDelegatie(codAngajat, dataStart, dataStop);
+
+	}
+
+	@Path("getDelegatiiSuprapuse")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getDelegatieSuprapuse(@QueryParam("codAngajat") String codAngajat, @QueryParam("dataStart") String dataStart,
+			@QueryParam("dataStop") String dataStop) {
+
+		return new OperatiiDelegatii().getDelegatiiSuprapuse(codAngajat, dataStart, dataStop);
 
 	}
 

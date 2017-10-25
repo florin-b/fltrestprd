@@ -847,3 +847,16 @@
 22-Sep-2017 11:10:25 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused: connect
+25-Oct-2017 12:45:54 [main] ERROR flota.service.model.OperatiiTraseu - java.sql.SQLException: Invalid column name
+	at oracle.jdbc.driver.OracleStatement.getColumnIndex(OracleStatement.java:3724)
+	at oracle.jdbc.driver.OracleResultSetImpl.findColumn(OracleResultSetImpl.java:2799)
+	at oracle.jdbc.driver.OracleResultSet.getString(OracleResultSet.java:498)
+	at flota.service.model.OperatiiTraseu.getCoordOpririDelegatie(OperatiiTraseu.java:363)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:268)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:241)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:183)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+
+25-Oct-2017 12:45:55 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect

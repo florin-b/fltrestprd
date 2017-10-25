@@ -14,10 +14,13 @@ import com.google.maps.model.LatLng;
 
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.BeanDelegatieCauta;
+import flota.service.beans.BeanDelegatieGenerata;
 import flota.service.beans.DelegatieModifAntet;
 import flota.service.beans.DelegatieModifDetalii;
+import flota.service.beans.DelegatieNoua;
 import flota.service.beans.PunctTraseu;
 import flota.service.beans.PunctTraseuLite;
+import flota.service.beans.Traseu;
 import flota.service.database.DBManager;
 import flota.service.helpers.HelperAprobare;
 import flota.service.helpers.HelperDelegatie;
@@ -33,7 +36,7 @@ public class OperatiiDelegatii {
 	private static final Logger logger = LogManager.getLogger(OperatiiDelegatii.class);
 
 	public synchronized boolean adaugaDelegatie(String codAngajat, String tipAngajat, String dataPlecare, String oraPlecare, String distanta, String opriri,
-			String dataSosire, String nrAuto) {
+			String dataSosire, String nrAuto, String distRealizat) {
 
 		boolean success = true;
 
@@ -57,14 +60,21 @@ public class OperatiiDelegatii {
 			stmt.setString(6, oraPlecare);
 			stmt.setDouble(7, (int) Double.parseDouble(distanta));
 			stmt.setString(8, HelperAprobare.getCodAprobare(conn, codAngajat, tipAngajat));
+
 			stmt.setString(9, DateUtils.formatDateSap(dataSosire));
 			stmt.setString(10, nrAuto);
+			stmt.setDouble(11, (int) Double.parseDouble(distRealizat));
 
 			stmt.executeQuery();
 
 			String[] arrayOpriri = opriri.split(",");
 
 			int ord = 0;
+
+			String punctVizitat = "0";
+
+			if (Double.parseDouble(distRealizat) > 0)
+				punctVizitat = "1";
 
 			try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie())) {
 
@@ -80,7 +90,7 @@ public class OperatiiDelegatii {
 					stmt1.setString(2, String.valueOf(ord));
 					stmt1.setString(3, arrayAdresa[1].trim());
 					stmt1.setString(4, arrayAdresa[0].trim());
-					stmt1.setString(5, "0");
+					stmt1.setString(5, punctVizitat);
 					stmt1.setString(6, "1");
 
 					stmt1.executeQuery();
@@ -99,6 +109,80 @@ public class OperatiiDelegatii {
 
 	}
 
+	
+	public synchronized boolean adaugaDelegatie(DelegatieNoua delegatie) {
+
+		boolean success = true;
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.adaugaAntetDelegatie())) {
+
+			List<String> listAuto = new OperatiiMasina().getMasiniAngajat(conn, delegatie.getCodAngajat());
+
+			if (listAuto.isEmpty() || !listAuto.contains(delegatie.getNrAuto())) {
+				return false;
+			}
+
+			String idDelegatieNoua = Utils.getId();
+
+			stmt.clearParameters();
+			stmt.setString(1, idDelegatieNoua);
+			stmt.setString(2, delegatie.getCodAngajat());
+			stmt.setString(3, DateUtils.getCurrentDate());
+			stmt.setString(4, DateUtils.getCurrentTime());
+			stmt.setString(5, DateUtils.formatDateSap(delegatie.getDataP()));
+			stmt.setString(6, delegatie.getOraP());
+			stmt.setDouble(7, (int) Double.parseDouble(delegatie.getDistcalc()));
+			stmt.setString(8, HelperAprobare.getCodAprobare(conn, delegatie));
+			stmt.setString(9, DateUtils.formatDateSap(delegatie.getDataS()));
+			stmt.setString(10, delegatie.getNrAuto());
+			stmt.setDouble(11, (int) Double.parseDouble(delegatie.getDistreal()));
+
+			stmt.executeQuery();
+
+			String[] arrayOpriri = delegatie.getStops().split(",");
+
+			int ord = 0;
+
+			String punctVizitat = "0";
+
+			if (Double.parseDouble(delegatie.getDistreal()) > 0)
+				punctVizitat = "1";
+
+			try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie())) {
+
+				for (int i = 0; i < arrayOpriri.length; i++) {
+
+					String[] arrayAdresa = arrayOpriri[i].trim().split("/");
+
+					stmt1.clearParameters();
+					stmt1.setString(1, idDelegatieNoua);
+
+					ord++;
+
+					stmt1.setString(2, String.valueOf(ord));
+					stmt1.setString(3, arrayAdresa[1].trim());
+					stmt1.setString(4, arrayAdresa[0].trim());
+					stmt1.setString(5, punctVizitat);
+					stmt1.setString(6, "1");
+
+					stmt1.executeQuery();
+
+				}
+			}
+
+		} catch (SQLException e) {
+			logger.error("Opriri: " + delegatie.getStops() + Utils.getStackTrace(e));
+			MailOperations.sendMail(Utils.getStackTrace(e));
+			success = false;
+
+		}
+
+		return success;
+
+	}
+	
+	
 	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog, String codDepart) {
 
 		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
@@ -192,6 +276,7 @@ public class OperatiiDelegatii {
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 
 				delegatie.setMsgAtentionare(HelperDelegatie.getAtentionare(delegatie));
+				delegatie.setWeekend(rs.getString("codAprob").equals("WKND"));
 				listDelegatii.add(delegatie);
 			}
 
@@ -460,7 +545,7 @@ public class OperatiiDelegatii {
 
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
-				delegatie.setStatusCode(rs.getString("status"));
+				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
 				listDelegatii.add(delegatie);
 			}
 
@@ -665,7 +750,7 @@ public class OperatiiDelegatii {
 			OperatiiTraseu opTraseu = new OperatiiTraseu();
 
 			int nrDel = 0;
-			
+
 			while (rs.next()) {
 				opTraseu.determinaSfarsitDelegatie(conn, rs.getString("id"));
 				nrDel++;
@@ -673,7 +758,7 @@ public class OperatiiDelegatii {
 			}
 
 			MailOperations.sendMail("Delegatii Service", " Au fost verificate " + nrDel);
-			
+
 			rs.close();
 
 		} catch (SQLException e) {
@@ -809,5 +894,89 @@ public class OperatiiDelegatii {
 		return delegatie;
 
 	}
+
+	public BeanDelegatieGenerata genereazaDelegatie(String codAngajat, String dataStart, String dataStop) {
+
+		BeanDelegatieGenerata delegatie = new BeanDelegatieGenerata();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();) {
+
+			Traseu traseu = new OperatiiTraseu().getTraseuAngajat(conn, codAngajat, dataStart, dataStop);
+
+			List<String> adreseOpriri = MapUtils.getAdreseCoordonate(traseu.getCoordonate());
+			
+			
+
+			List<PunctTraseuLite> listPuncte = new ArrayList<>();
+
+			for (String adresa : adreseOpriri) {
+				PunctTraseuLite punct = new PunctTraseuLite();
+				punct.setAdresa(adresa.split("/")[1] + " / " + adresa.split("/")[0].toUpperCase());
+				punct.setInit(true);
+				punct.setVizitat(true);
+				listPuncte.add(punct);
+
+			}
+
+			int kmCota = new OperatiiAngajat().getKmCota(conn, codAngajat, dataStart, dataStop);
+
+			int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
+
+			delegatie.setDataPlecare(dataStart);
+			delegatie.setDataSosire(dataStop);
+			delegatie.setListOpriri(listPuncte);
+			delegatie.setDistantaCalculata(distantaTeoretica);
+			delegatie.setDistantaEfectuata(traseu.getDistanta());
+			delegatie.setNrAuto(traseu.getNrAuto());
+			delegatie.setKmCota(kmCota);
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return delegatie;
+
+	}
+	
+	
+	
+	public String getDelegatiiSuprapuse(String codAngajat, String dataStart, String dataStop) {
+
+		StringBuilder idDelegatie = new StringBuilder();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.delegatiiSuprapuse())) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+			stmt.setString(3, DateUtils.formatDateSap(dataStop));
+			stmt.setString(4, DateUtils.formatDateSap(dataStart));
+			stmt.setString(5, DateUtils.formatDateSap(dataStop));
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				if (idDelegatie.toString().isEmpty())
+					idDelegatie.append(rs.getString("id"));
+				else {
+					idDelegatie.append(", ");
+					idDelegatie.append(rs.getString("id"));
+				}
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return idDelegatie.toString();
+
+	}
+
+	
+	
 
 }
