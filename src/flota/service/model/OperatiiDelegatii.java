@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.maps.model.LatLng;
 
+import flota.service.beans.AdresaOprire;
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.BeanDelegatieCauta;
 import flota.service.beans.BeanDelegatieGenerata;
@@ -109,7 +110,6 @@ public class OperatiiDelegatii {
 
 	}
 
-	
 	public synchronized boolean adaugaDelegatie(DelegatieNoua delegatie) {
 
 		boolean success = true;
@@ -119,7 +119,7 @@ public class OperatiiDelegatii {
 
 			List<String> listAuto = new OperatiiMasina().getMasiniAngajat(conn, delegatie.getCodAngajat());
 
-			if (listAuto.isEmpty() || !listAuto.contains(delegatie.getNrAuto())) {
+			if (listAuto.isEmpty() || !listAuto.contains(delegatie.getNrAuto().replace("-", "").replace(" ", ""))) {
 				return false;
 			}
 
@@ -181,8 +181,7 @@ public class OperatiiDelegatii {
 		return success;
 
 	}
-	
-	
+
 	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog, String codDepart) {
 
 		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
@@ -324,8 +323,6 @@ public class OperatiiDelegatii {
 			MailOperations.sendMail(Utils.getStackTrace(ex) + " id: " + idDelegatie + " , tipAng = " + tipAngajat + " , codAprob=" + getCodAprobare(tipAprobare)
 					+ " , conAng =" + codAngajat);
 		}
-
-		new AlertaMail().verificaAlertWeekend(idDelegatie);
 
 	}
 
@@ -903,15 +900,13 @@ public class OperatiiDelegatii {
 
 			Traseu traseu = new OperatiiTraseu().getTraseuAngajat(conn, codAngajat, dataStart, dataStop);
 
-			List<String> adreseOpriri = MapUtils.getAdreseCoordonate(traseu.getCoordonate());
-			
-			
+			List<AdresaOprire> adreseOpriri = MapUtils.getAdreseCoordonate(traseu.getCoordonate());
 
 			List<PunctTraseuLite> listPuncte = new ArrayList<>();
 
-			for (String adresa : adreseOpriri) {
+			for (AdresaOprire adresa : adreseOpriri) {
 				PunctTraseuLite punct = new PunctTraseuLite();
-				punct.setAdresa(adresa.split("/")[1] + " / " + adresa.split("/")[0].toUpperCase());
+				punct.setAdresa(adresa.getAdresa().split("/")[1] + " / " + adresa.getAdresa().split("/")[0].toUpperCase());
 				punct.setInit(true);
 				punct.setVizitat(true);
 				listPuncte.add(punct);
@@ -920,7 +915,7 @@ public class OperatiiDelegatii {
 
 			int kmCota = new OperatiiAngajat().getKmCota(conn, codAngajat, dataStart, dataStop);
 
-			int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
+			int distantaTeoretica = MapUtils.getDistantaTraseuCoordonate(adreseOpriri);
 
 			delegatie.setDataPlecare(dataStart);
 			delegatie.setDataSosire(dataStop);
@@ -938,9 +933,7 @@ public class OperatiiDelegatii {
 		return delegatie;
 
 	}
-	
-	
-	
+
 	public String getDelegatiiSuprapuse(String codAngajat, String dataStart, String dataStop) {
 
 		StringBuilder idDelegatie = new StringBuilder();
@@ -975,8 +968,5 @@ public class OperatiiDelegatii {
 		return idDelegatie.toString();
 
 	}
-
-	
-	
 
 }

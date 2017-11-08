@@ -381,7 +381,7 @@ public class SqlQueries {
 
 		sqlString.append(" select cod, nume from personal where functie in ");
 		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and filiala in ");
+		sqlString.append(" and tip <> '0' and filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and substr(departament,0,2) in ");
 		sqlString.append(departQs);
@@ -395,7 +395,7 @@ public class SqlQueries {
 
 		sqlString.append(" select cod, nume from personal where functie in ");
 		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
-		sqlString.append(" and filiala in ");
+		sqlString.append(" and tip <> '0' and filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" order by nume");
 
@@ -468,7 +468,7 @@ public class SqlQueries {
 
 		sqlString.append(" select distinct f.fid, f.aprobat from personal p, functii_non_vanzari f ");
 		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
-		sqlString.append(" and p.functie in ('SM','SDCVA','DZ') and p.functie = f.aprobat and f.cod=? ");
+		sqlString.append(" and p.functie in ('SMG','SDCVA','DZ') and p.functie = f.aprobat and f.cod=? ");
 
 		return sqlString.toString();
 	}

@@ -141,6 +141,8 @@ public class HelperAprobare {
 			if (tipConsilier.equals("CONS_GED"))
 				tipCons = "CONS-GED";
 			
+			
+			
 			stmt.setString(1, codConsilier);
 			stmt.setString(2, tipCons);
 
@@ -150,7 +152,7 @@ public class HelperAprobare {
 
 			while (rs.next()) {
 
-				if (rs.getString("aprobat").equalsIgnoreCase("SM"))
+				if (rs.getString("aprobat").equalsIgnoreCase("SMG"))
 					codSM = rs.getString("fid");
 				else if (rs.getString("aprobat").equalsIgnoreCase("SDCVA"))
 					codSDCVA = rs.getString("fid");

@@ -21,7 +21,7 @@ public class TestClass {
 		// OperatiiDelegatii().getDelegatiiAprobari("DIT", "BU90, GL90", "00"));
 
 		 new OperatiiTraseu().determinaSfarsitDelegatie(new
-		 DBManager().getProdDataSource().getConnection(), "25623473353");
+		 DBManager().getProdDataSource().getConnection(), "25692580152");
 
 		// new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 

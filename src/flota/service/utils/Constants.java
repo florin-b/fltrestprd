@@ -16,7 +16,7 @@ public class Constants {
 	public static final String GOOGLE_MAPS_API_KEY_03 = "AIzaSyCkVfLuGZov2PnzIT02py2vofRcQICI60M";
 	public static final String GOOGLE_MAPS_API_KEY_04 = "AIzaSyAazDvInrObsk18vDpTdX5JTugec5W-b_w";
 
-	//developer.arabesque@gmail.com
+	// developer.arabesque@gmail.com
 	// My Project
 	public static final String GOOGLE_MAPS_API_KEY_05 = "AIzaSyB-SxXkLoDy6uSPB5Ggyw1H_jfqm2uQ7UA";
 	public static final String GOOGLE_MAPS_API_KEY_06 = "AIzaSyBViKC1PR-lui4vcqOqvC8zybMRMtoHh_Q";
@@ -46,5 +46,45 @@ public class Constants {
 	public static final String GOOGLE_MAPS_API_KEY_22 = "AIzaSyAdtjynpCErmXTbhxS6wddIlTvRUjBvfqQ";
 	public static final String GOOGLE_MAPS_API_KEY_23 = "AIzaSyAObeB8DDkyDdFkmm4qjqBY6gaVMka6peM";
 	public static final String GOOGLE_MAPS_API_KEY_24 = "AIzaSyD-F3hBYye1SbhIA0KwipG0p2QlFUn_nos";
+
+	// developer2.arabesque@gmail.com/1DeveLo@er2
+	// My Project
+	public static final String GOOGLE_MAPS_API_KEY_25 = "AIzaSyD-AIzaSyDZ317tIFFv96-sA-I_a3U4M-wpwq5_J-I";
+	public static final String GOOGLE_MAPS_API_KEY_26 = "AIzaSyBxnsyMU37I1tVCohTaS7YilbsYKGVD9Mw";
+	public static final String GOOGLE_MAPS_API_KEY_27 = "AIzaSyA1ZlXY69jiEUXHTShcbBpIQul6hSfuQ4o";
+	public static final String GOOGLE_MAPS_API_KEY_28 = "AIzaSyCBSZqliPu6WZRCuONVYbWCVw9wjeFI3Qo";
+	public static final String GOOGLE_MAPS_API_KEY_29 = "AIzaSyCLuSiGsAfi1mja70a2lq3Vw2B4Kq7nYqg";
+	public static final String GOOGLE_MAPS_API_KEY_30 = "AIzaSyAO1DXqQIxvpV9MFzl8dlkqiNot-qC8uRA";
+	public static final String GOOGLE_MAPS_API_KEY_31 = "AIzaSyCXIEPW9brkJJkk_Oyo9HW4y3D7WWsRygg";
+
+	// My Project1
+	public static final String GOOGLE_MAPS_API_KEY_32 = "AIzaSyDrMbIN2otn81AF4MeKJs4t9_mQ1Pt0De8";
+
+	// My Project2
+	public static final String GOOGLE_MAPS_API_KEY_33 = "AIzaSyAvE7mQiUa2sF9m72KJrbFi9cxN4G-Jlik";
+
+	// My Project3
+	public static final String GOOGLE_MAPS_API_KEY_34 = "AIzaSyAvO9TF25SSoCrKLouTIMcpmSF3h97hPcY";
+
+	// My Project4
+	public static final String GOOGLE_MAPS_API_KEY_35 = "AIzaSyC6y2nxTtl1tj7CXH6ERx7PHOEmY1CgNYs";
+
+	// My Project5
+	public static final String GOOGLE_MAPS_API_KEY_36 = "AIzaSyAlD4g5bPeDNbq2vD3Qo5BAt0dtPwCtum8";
+
+	// My Project6
+	public static final String GOOGLE_MAPS_API_KEY_37 = "AIzaSyC6CPKkxRjMqMA2slS0PXVVXEaLJWZRHuY";
+
+	// My Project7
+	public static final String GOOGLE_MAPS_API_KEY_38 = "AIzaSyCcpeMkdCDiB-_LIP6GsgfGru1iIBcYOZk";
+
+	// My Project8
+	public static final String GOOGLE_MAPS_API_KEY_39 = "AIzaSyDQWRw5cRIBmxqWrD-0lTv7GW55kVnzuOw";
+
+	// My Project9
+	public static final String GOOGLE_MAPS_API_KEY_40 = "AIzaSyARXvjw2HlYGgCWRWpmfsM09DYd40G61e4";
+
+	// My Project10
+	public static final String GOOGLE_MAPS_API_KEY_41 = "AIzaSyDRuuzjh_DBa7u5LZyacRt23dYRhDtP6z0";
 
 }

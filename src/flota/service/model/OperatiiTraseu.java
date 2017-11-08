@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.maps.model.LatLng;
 
+import flota.service.beans.AdresaOprire;
 import flota.service.beans.BeanDelegatieCauta;
 import flota.service.beans.Oprire;
 import flota.service.beans.PozitieGps;
@@ -31,7 +32,7 @@ public class OperatiiTraseu {
 	private static final Logger logger = LogManager.getLogger(OperatiiTraseu.class);
 
 	private static final double razaKmSosire = 5;
-	private static final int DIST_MIN_STOPS_KM = 3;
+	private static final int DIST_MIN_STOPS_KM = 4;
 
 	private LatLng coordonatePlecare;
 	private LatLng coordonateSosire;
@@ -269,9 +270,9 @@ public class OperatiiTraseu {
 		coordonateOpriri.add(0, coordonatePlecare);
 		coordonateOpriri.add(coordonateSosire);
 
-		List<String> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
+		List<AdresaOprire> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
 
-		int distantaTeoretica = MapUtils.getDistantaTraseuAdrese(adreseOpriri);
+		int distantaTeoretica = MapUtils.getDistantaTraseuCoordonate(adreseOpriri);
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.updateDistantaRecalculata());) {
 
@@ -286,12 +287,12 @@ public class OperatiiTraseu {
 
 				try (PreparedStatement stmt1 = conn.prepareStatement(SqlQueries.adaugaOpririDelegatie())) {
 
-					for (String adresa : adreseOpriri) {
+					for (AdresaOprire adresa : adreseOpriri) {
 
-						if (punctExista(adresa, puncte))
+						if (punctExista(adresa.getAdresa(), puncte))
 							continue;
 
-						String[] arrayAdresa = adresa.trim().split("/");
+						String[] arrayAdresa = adresa.getAdresa().trim().split("/");
 
 						if (arrayAdresa.length == 2) {
 							stmt1.setString(1, delegatie.getId());
@@ -312,8 +313,9 @@ public class OperatiiTraseu {
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));
-			MailOperations.sendMail(Utils.getStackTrace(ex));
+			MailOperations.sendMail(Utils.getStackTrace(ex) + " , " + delegatie + " , " + puncte);
 		}
+
 
 	}
 
@@ -353,7 +355,7 @@ public class OperatiiTraseu {
 
 					int durataOprire = DateUtils.dateDiffMin(lastStop, DateUtils.getDate(rs.getString("gtime")));
 
-					if (durataOprire > 3 || distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
+					if (durataOprire > 4 || distPuncte > DIST_MIN_STOPS_KM || listCoords.isEmpty())
 						listCoords.add(new LatLng(rs.getDouble("lat"), rs.getDouble("lon")));
 				}
 
@@ -382,6 +384,8 @@ public class OperatiiTraseu {
 
 		String codDisp = new OperatiiMasina().getCodGps(codAngajat, dataStart);
 
+	
+		
 		String codesQs = Utils.generateQs(codDisp);
 
 		int kmStart = 0;
@@ -462,6 +466,10 @@ public class OperatiiTraseu {
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta());) {
+			
+			
+			
+			System.out.println(SqlQueries.getCoordRuta() + " , " + nrMasina + " , " + dataStart + " , " + dataStop);
 
 			stmt.setString(1, nrMasina);
 			stmt.setString(2, dataStart);

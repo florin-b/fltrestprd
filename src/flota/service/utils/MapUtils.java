@@ -1,10 +1,8 @@
 package flota.service.utils;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +17,7 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
+import flota.service.beans.AdresaOprire;
 import flota.service.beans.GoogleContext;
 import flota.service.beans.StandardAddress;
 import flota.service.enums.EnumJudete;
@@ -26,7 +25,7 @@ import flota.service.enums.EnumJudete;
 public class MapUtils {
 
 	private static final Logger logger = LogManager.getLogger(MapUtils.class);
-	private static final int MAX_KEYS = 24;
+	private static final int MAX_KEYS = 41;
 
 	public static double distanceXtoY(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;
@@ -196,14 +195,60 @@ public class MapUtils {
 
 	}
 
-	public static List<String> getAdreseCoordonate(List<LatLng> coords) {
+	public static int getDistantaTraseuCoordonate(List<AdresaOprire> listAdrese) {
 
-		Set<String> setAdrese = new LinkedHashSet<>();
+		int distanta = 0;
+		DirectionsRoute[] routes = null;
+
+		try {
+
+			List<String> strList = new ArrayList<>();
+
+			for (AdresaOprire adresa : listAdrese) {
+				// TODO - verificare duplicate
+				strList.add(adresa.getCoordonate().toString());
+			}
+
+			String[] arrayPoints = strList.toArray(new String[strList.size()]);
+
+			Random rand = new Random();
+			int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
+
+			GeoApiContext context = GoogleContext.getContext(value);
+
+			LatLng start = listAdrese.get(0).getCoordonate();
+
+			LatLng stop = listAdrese.get(listAdrese.size() - 1).getCoordonate();
+
+			routes = DirectionsApi.newRequest(context).mode(TravelMode.DRIVING).origin(start).destination(stop).waypoints(arrayPoints).mode(TravelMode.DRIVING)
+					.optimizeWaypoints(false).await();
+
+			for (int i = 0; i < routes[0].legs.length; i++) {
+				distanta += routes[0].legs[i].distance.inMeters;
+
+			}
+
+		} catch (OverQueryLimitException q) {
+			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(q));
+			MailOperations.sendMail(q.toString());
+		} catch (Exception ex) {
+			MailOperations.sendMail(ex.toString());
+			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(ex));
+		}
+
+		return distanta / 1000;
+
+	}
+
+	public static List<AdresaOprire> getAdreseCoordonate(List<LatLng> coords) {
+
+		List<AdresaOprire> adrese = new ArrayList<>();
 
 		Random rand = new Random();
 		int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 		GeoApiContext context = GoogleContext.getContext(value);
+
 		String adresaStart = "";
 		String adresaStop = "";
 
@@ -239,9 +284,16 @@ public class MapUtils {
 
 						judet = EnumJudete.getNumeJudet(judet);
 
+						String tempAdr = localitate + " / " + judet;
+
 						if (!judet.isEmpty() && i > 0 && i < coords.size() - 1) {
 
-							setAdrese.add(localitate + " / " + judet);
+							if (adrese.isEmpty() || !adrese.get(adrese.size() - 1).getAdresa().equals(tempAdr)) {
+								AdresaOprire adresa = new AdresaOprire();
+								adresa.setAdresa(localitate + " / " + judet);
+								adresa.setCoordonate(coords.get(i));
+								adrese.add(adresa);
+							}
 
 						}
 
@@ -263,19 +315,26 @@ public class MapUtils {
 			}
 		}
 
-		List<String> listAdrese = new ArrayList<>();
+		List<AdresaOprire> listAdrese = new ArrayList<>();
 
-		listAdrese.addAll(setAdrese);
+		listAdrese.addAll(adrese);
 
 		if (!adresaStart.isEmpty()) {
-			if (listAdrese.isEmpty())
-				listAdrese.add(0, adresaStart);
-			else if (!listAdrese.get(0).equals(adresaStart))
-				listAdrese.add(0, adresaStart);
+			if (listAdrese.isEmpty() || !listAdrese.get(0).getAdresa().equals(adresaStart)) {
+				AdresaOprire adresa = new AdresaOprire();
+				adresa.setAdresa(adresaStart);
+				adresa.setCoordonate(coords.get(0));
+				listAdrese.add(0, adresa);
+			}
+
 		}
 
-		if (!adresaStop.isEmpty() && !listAdrese.get(listAdrese.size() - 1).equals(adresaStop))
-			listAdrese.add(listAdrese.size(), adresaStop);
+		if (!adresaStop.isEmpty() && !listAdrese.get(listAdrese.size() - 1).getAdresa().equals(adresaStop)) {
+			AdresaOprire adresa = new AdresaOprire();
+			adresa.setAdresa(adresaStop);
+			adresa.setCoordonate(coords.get(coords.size() - 1));
+			listAdrese.add(listAdrese.size(), adresa);
+		}
 
 		return listAdrese;
 	}

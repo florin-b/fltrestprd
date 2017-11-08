@@ -137,7 +137,7 @@ public class OperatiiMasina {
 			ResultSet rs = stmt.getResultSet();
 
 			while (rs.next()) {
-				nrAuto.add(rs.getString("ktext"));
+				nrAuto.add(rs.getString("ktext").replace("-", "").replace(" ", ""));
 			}
 
 		}
