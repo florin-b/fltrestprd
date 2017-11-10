@@ -52,7 +52,12 @@ public class MapUtils {
 	public static LatLng geocodeAddress(StandardAddress address) {
 		LatLng coordonateGps = new LatLng(0, 0);
 
+		Random rand = new Random(System.currentTimeMillis());
+		int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
+
 		try {
+
+			Thread.sleep(200);
 
 			StringBuilder strAddress = new StringBuilder();
 
@@ -78,9 +83,6 @@ public class MapUtils {
 
 			strAddress.append(address.getCountry());
 
-			Random rand = new Random();
-			int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
-
 			GeoApiContext context = GoogleContext.getContext(value);
 
 			GeocodingResult[] results;
@@ -98,6 +100,11 @@ public class MapUtils {
 			coordonateGps.lat = latitude;
 			coordonateGps.lng = longitude;
 
+		} catch (OverQueryLimitException q) {
+			logger.error("geocodeAddress -> " + q.toString() + " , key =" + value);
+			MailOperations.sendMail("geocodeAddress -> " + q.toString() + " , key =" + value);
+
+			geocodeAddress(address);
 		} catch (Exception e) {
 			logger.error("geocodeAddress -> " + Utils.getStackTrace(e));
 			MailOperations.sendMail(e.toString() + " , " + address.toString());
@@ -113,6 +120,8 @@ public class MapUtils {
 		DirectionsRoute[] routes = null;
 
 		try {
+			
+			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
 
@@ -121,7 +130,7 @@ public class MapUtils {
 
 			String[] arrayPoints = strList.toArray(new String[strList.size()]);
 
-			Random rand = new Random();
+			Random rand = new Random(System.currentTimeMillis());
 			int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 			GeoApiContext context = GoogleContext.getContext(value);
@@ -141,6 +150,7 @@ public class MapUtils {
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseu -> " + Utils.getStackTrace(q));
 			MailOperations.sendMail("getDistantaTraseu -> " + q.toString());
+			getDistantaTraseu(listCoords);
 		} catch (Exception ex) {
 			MailOperations.sendMail("getDistantaTraseu -> " + ex.toString());
 			logger.error(Utils.getStackTrace(ex));
@@ -156,6 +166,8 @@ public class MapUtils {
 		DirectionsRoute[] routes = null;
 
 		try {
+			
+			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
 
@@ -166,7 +178,7 @@ public class MapUtils {
 
 			String[] arrayPoints = strList.toArray(new String[strList.size()]);
 
-			Random rand = new Random();
+			Random rand = new Random(System.currentTimeMillis());
 			int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 			GeoApiContext context = GoogleContext.getContext(value);
@@ -200,7 +212,12 @@ public class MapUtils {
 		int distanta = 0;
 		DirectionsRoute[] routes = null;
 
+		Random rand = new Random(System.currentTimeMillis());
+		int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
+
 		try {
+			
+			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
 
@@ -210,9 +227,6 @@ public class MapUtils {
 			}
 
 			String[] arrayPoints = strList.toArray(new String[strList.size()]);
-
-			Random rand = new Random();
-			int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 			GeoApiContext context = GoogleContext.getContext(value);
 
@@ -229,11 +243,12 @@ public class MapUtils {
 			}
 
 		} catch (OverQueryLimitException q) {
-			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(q));
+			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(q) + " key = " + value);
 			MailOperations.sendMail(q.toString());
+			getDistantaTraseuCoordonate(listAdrese);
 		} catch (Exception ex) {
 			MailOperations.sendMail(ex.toString());
-			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(ex));
+			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(ex));
 		}
 
 		return distanta / 1000;
@@ -244,7 +259,7 @@ public class MapUtils {
 
 		List<AdresaOprire> adrese = new ArrayList<>();
 
-		Random rand = new Random();
+		Random rand = new Random(System.currentTimeMillis());
 		int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 		GeoApiContext context = GoogleContext.getContext(value);
@@ -258,6 +273,9 @@ public class MapUtils {
 		for (int i = 0; i < coords.size(); i++) {
 
 			try {
+				
+				Thread.sleep(200);
+				
 				GeocodingResult[] results = GeocodingApi.reverseGeocode(context, coords.get(i)).await();
 
 				localitate = "";
@@ -309,8 +327,12 @@ public class MapUtils {
 
 				}
 
+			} catch (OverQueryLimitException q) {
+				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
+				MailOperations.sendMail("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
+				getAdreseCoordonate(coords);
 			} catch (Exception e) {
-				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(e));
+				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(e) + " , key = " + value);
 				MailOperations.sendMail("getAdreseCoordonate -> " + e.toString());
 			}
 		}

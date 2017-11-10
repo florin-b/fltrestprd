@@ -49,7 +49,7 @@ public class Constants {
 
 	// developer2.arabesque@gmail.com/1DeveLo@er2
 	// My Project
-	public static final String GOOGLE_MAPS_API_KEY_25 = "AIzaSyD-AIzaSyDZ317tIFFv96-sA-I_a3U4M-wpwq5_J-I";
+	public static final String GOOGLE_MAPS_API_KEY_25 = "AIzaSyBxnsyMU37I1tVCohTaS7YilbsYKGVD9Mw";
 	public static final String GOOGLE_MAPS_API_KEY_26 = "AIzaSyBxnsyMU37I1tVCohTaS7YilbsYKGVD9Mw";
 	public static final String GOOGLE_MAPS_API_KEY_27 = "AIzaSyA1ZlXY69jiEUXHTShcbBpIQul6hSfuQ4o";
 	public static final String GOOGLE_MAPS_API_KEY_28 = "AIzaSyCBSZqliPu6WZRCuONVYbWCVw9wjeFI3Qo";
