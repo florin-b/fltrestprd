@@ -20,13 +20,13 @@ public class TestClass {
 		// System.out.println(new
 		// OperatiiDelegatii().getDelegatiiAprobari("DIT", "BU90, GL90", "00"));
 
-		 new OperatiiTraseu().determinaSfarsitDelegatie(new
-		 DBManager().getProdDataSource().getConnection(), "27000359462");
+		new OperatiiTraseu().determinaSfarsitDelegatie(new DBManager().getProdDataSource().getConnection(), "24396485714");
 
 		// new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 
-		// System.out.println(new OperatiiDelegatii().getDelegatiiAprobari("SD",
-		// "NT10", "04"));
+		// System.out.println(new
+		// OperatiiDelegatii().getDelegatiiAprobari("SMG",
+		// "PH10", "11"));
 
 		// System.out.println(new
 		// OperatiiDelegatii().afiseazaDelegatiiProprii("00002415",
@@ -55,7 +55,9 @@ public class TestClass {
 		// System.out.println(new OperatiiTraseu().getTraseu("00083315",
 		// "27-09-2017", "27-09-2017", "B-68-VIZ"));
 
-		//System.out.println(new OperatiiDelegatii().afiseazaDelegatiiSubord("01-10-2017", "17-10-2017", "DZ", "GL10", "02"));
+		// System.out.println(new
+		// OperatiiDelegatii().afiseazaDelegatiiSubord("01-10-2017",
+		// "17-10-2017", "DZ", "GL10", "02"));
 
 		// System.out.println(HelperAprobare.getCodAprobare(new
 		// DBManager().getProdDataSource().getConnection(),"00086230", "KA1"));
@@ -68,8 +70,9 @@ public class TestClass {
 		// System.out.println(HelperAprobare.getCodAprobare(new
 		// DBManager().getProdDataSource().getConnection(), "00077313",
 		// "CONS_GED"));
-		
-		//new OperatiiDelegatii().genereazaDelegatie("00083306", "17-10-2017", "17-10-2017");
+
+		// new OperatiiDelegatii().genereazaDelegatie("00083306", "17-10-2017",
+		// "17-10-2017");
 
 	}
 

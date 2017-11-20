@@ -14,7 +14,7 @@ public enum EnumJudete {
 													"ILFOV", "23", "IF"), MARAMURES("MARAMURES", "24", "MM"), MEHEDINTI("MEHEDINTI", "25", "MH"), MURES("MURES",
 															"26", "MS"), NEAMT("NEAMT", "27", "NT"), OLT("OLT", "28", "OT"), PRAHOVA("PRAHOVA", "29",
 																	"PH"), SALAJ("SALAJ", "31", "SJ"), SATU_MARE("SATU-MARE", "30", "SM"), SIBIU("SIBIU", "32",
-																			"SM"), SUCEAVA("SUCEAVA", "33", "SV"), TELEORMAN("TELEORMAN", "34", "TR"), TIMIS(
+																			"SB"), SUCEAVA("SUCEAVA", "33", "SV"), TELEORMAN("TELEORMAN", "34", "TR"), TIMIS(
 																					"TIMIS", "35", "TM"), TULCEA("TULCEA", "36", "TL"), VALCEA("VALCEA", "38",
 																							"VL"), VASLUI("VASLUI", "37", "VS"), VRANCEA("VRANCEA", "39", "VN");
 

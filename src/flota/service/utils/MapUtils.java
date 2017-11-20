@@ -25,7 +25,7 @@ import flota.service.enums.EnumJudete;
 public class MapUtils {
 
 	private static final Logger logger = LogManager.getLogger(MapUtils.class);
-	private static final int MAX_KEYS = 41;
+	private static final int MAX_KEYS = 51;
 
 	public static double distanceXtoY(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;
@@ -104,7 +104,7 @@ public class MapUtils {
 			logger.error("geocodeAddress -> " + q.toString() + " , key =" + value);
 			MailOperations.sendMail("geocodeAddress -> " + q.toString() + " , key =" + value);
 
-			geocodeAddress(address);
+			
 		} catch (Exception e) {
 			logger.error("geocodeAddress -> " + Utils.getStackTrace(e));
 			MailOperations.sendMail(e.toString() + " , " + address.toString());
@@ -120,7 +120,7 @@ public class MapUtils {
 		DirectionsRoute[] routes = null;
 
 		try {
-			
+
 			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
@@ -150,7 +150,7 @@ public class MapUtils {
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseu -> " + Utils.getStackTrace(q));
 			MailOperations.sendMail("getDistantaTraseu -> " + q.toString());
-			getDistantaTraseu(listCoords);
+			
 		} catch (Exception ex) {
 			MailOperations.sendMail("getDistantaTraseu -> " + ex.toString());
 			logger.error(Utils.getStackTrace(ex));
@@ -166,7 +166,7 @@ public class MapUtils {
 		DirectionsRoute[] routes = null;
 
 		try {
-			
+
 			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
@@ -216,7 +216,7 @@ public class MapUtils {
 		int value = rand.nextInt((MAX_KEYS - 1) + 1) + 1;
 
 		try {
-			
+
 			Thread.sleep(200);
 
 			List<String> strList = new ArrayList<>();
@@ -245,7 +245,7 @@ public class MapUtils {
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(q) + " key = " + value);
 			MailOperations.sendMail(q.toString());
-			getDistantaTraseuCoordonate(listAdrese);
+			
 		} catch (Exception ex) {
 			MailOperations.sendMail(ex.toString());
 			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(ex));
@@ -273,9 +273,8 @@ public class MapUtils {
 		for (int i = 0; i < coords.size(); i++) {
 
 			try {
-				
+
 				Thread.sleep(200);
-				
 				GeocodingResult[] results = GeocodingApi.reverseGeocode(context, coords.get(i)).await();
 
 				localitate = "";
@@ -330,7 +329,7 @@ public class MapUtils {
 			} catch (OverQueryLimitException q) {
 				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
 				MailOperations.sendMail("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
-				getAdreseCoordonate(coords);
+				
 			} catch (Exception e) {
 				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(e) + " , key = " + value);
 				MailOperations.sendMail("getAdreseCoordonate -> " + e.toString());

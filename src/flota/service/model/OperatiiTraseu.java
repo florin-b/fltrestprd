@@ -89,6 +89,8 @@ public class OperatiiTraseu {
 		double lastLat = 0;
 		double lastLon = 0;
 
+		System.out.println("Se determina sfarsit delegatie...");
+
 		List<PunctTraseu> objPuncte = null;
 		BeanDelegatieCauta delegatie = null;
 
@@ -172,21 +174,25 @@ public class OperatiiTraseu {
 			MailOperations.sendMail(e.toString());
 		}
 
-		if (stopKm == 0) {
-			stopKm = lastRecKm;
-			oraSosire = lastRecOra;
-			coordonateSosire = new LatLng(lastLat, lastLon);
+		System.out.println("last rec: " + lastRecOra);
 
-		}
+		stopKm = lastRecKm;
+		oraSosire = lastRecOra;
+		coordonateSosire = new LatLng(lastLat, lastLon);
 
 		if ((stopKm - startKm) > 0) {
 			try {
 				actualizeazaSfarsitDelegatie(conn, delegatie, oraSosire, stopKm - startKm, objPuncte);
 			} catch (SQLException e) {
 				MailOperations.sendMail(Utils.getStackTrace(e));
+				System.out.println("Eroare determinare sfarsit delegatie.");
 			}
-		} else
+
+			System.out.println("S-a determinat sfarsit delegatie.");
+		} else {
 			HelperDelegatie.setDelegatieNeterm(delegatie.getId());
+			System.out.println("Nu s-a determinat sfarsit delegatie.");
+		}
 
 		return " ";
 	}
@@ -213,6 +219,8 @@ public class OperatiiTraseu {
 	public void actualizeazaSfarsitDelegatie(Connection conn, BeanDelegatieCauta delegatie, String oraSosire, double distReal, List<PunctTraseu> puncte)
 			throws SQLException {
 
+		System.out.println("Se actualizeaza sfarsit delegatie.");
+
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.setSfarsitDelegatie());) {
 
 			stmt.setString(1, oraSosire);
@@ -233,6 +241,8 @@ public class OperatiiTraseu {
 
 				}
 			}
+
+			System.out.println("S-a actualizat sfarsit delegatie.");
 
 			int kmCota = new OperatiiAngajat().getKmCota(conn, delegatie.getAngajatId(), delegatie.getDataPlecare(), delegatie.getDataSosire());
 
@@ -269,6 +279,8 @@ public class OperatiiTraseu {
 		List<LatLng> coordonateOpriri = getCoordOpririDelegatie(conn, delegatie.getId(), dataPlecare, dataSosire);
 		coordonateOpriri.add(0, coordonatePlecare);
 		coordonateOpriri.add(coordonateSosire);
+
+		System.out.println("Se recalculeaza traseu teoretic.");
 
 		List<AdresaOprire> adreseOpriri = MapUtils.getAdreseCoordonate(coordonateOpriri);
 
@@ -315,7 +327,6 @@ public class OperatiiTraseu {
 			logger.error(Utils.getStackTrace(ex));
 			MailOperations.sendMail(Utils.getStackTrace(ex) + " , " + delegatie + " , " + puncte);
 		}
-
 
 	}
 
@@ -384,8 +395,6 @@ public class OperatiiTraseu {
 
 		String codDisp = new OperatiiMasina().getCodGps(codAngajat, dataStart);
 
-	
-		
 		String codesQs = Utils.generateQs(codDisp);
 
 		int kmStart = 0;
@@ -466,9 +475,7 @@ public class OperatiiTraseu {
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta());) {
-			
-			
-			
+
 			System.out.println(SqlQueries.getCoordRuta() + " , " + nrMasina + " , " + dataStart + " , " + dataStop);
 
 			stmt.setString(1, nrMasina);

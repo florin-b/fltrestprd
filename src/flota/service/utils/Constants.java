@@ -87,4 +87,35 @@ public class Constants {
 	// My Project10
 	public static final String GOOGLE_MAPS_API_KEY_41 = "AIzaSyDRuuzjh_DBa7u5LZyacRt23dYRhDtP6z0";
 
+	// developer3.arabesque@gmail.com/1DeveLo@er2
+	// My Project
+	public static final String GOOGLE_MAPS_API_KEY_42 = "AIzaSyC_h4aqgyT73lpPPoeugSfwFMdf6dDSCos";
+
+	// My Project1
+	public static final String GOOGLE_MAPS_API_KEY_43 = "AIzaSyCy2Azhg_uq02inODPj7fqk3GkkbUmiECc";
+
+	// My Project2
+	public static final String GOOGLE_MAPS_API_KEY_44 = "AIzaSyCypYZHfQ8Mkra-imhx1xRvIHGSEtO7sLo";
+
+	// My Project3
+	public static final String GOOGLE_MAPS_API_KEY_45 = "AIzaSyCWFJCyC-04vadzYIa7RdvKaPu1T0SpHVI";
+
+	// My Project4
+	public static final String GOOGLE_MAPS_API_KEY_46 = "AIzaSyBYrsYdU1FdqXIY8gepYYKL1Jo-4033cVw";
+
+	// My Project5
+	public static final String GOOGLE_MAPS_API_KEY_47 = "AIzaSyDqQ3G6W3dHXtvuXcHKjweOSRNGXNpZXHg";
+
+	// My Project6
+	public static final String GOOGLE_MAPS_API_KEY_48 = "AIzaSyBoYqlRn0h9eT3eAb9bWoRdiar129wqNZo";
+
+	// My Project7
+	public static final String GOOGLE_MAPS_API_KEY_49 = "AIzaSyAgADG_qpXTBiOPvRTXUHAB9GoG8yaZlLM";
+
+	// My Project8
+	public static final String GOOGLE_MAPS_API_KEY_50 = "AIzaSyBjcyQR7mFBtbGCOX2ncy1rBvTfMTJwAGU";
+
+	// My Project9
+	public static final String GOOGLE_MAPS_API_KEY_51 = "AIzaSyB7a9G1amLRUslYyGyMtVFMEh-9x-Wsprs";
+
 }

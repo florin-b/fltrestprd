@@ -219,6 +219,8 @@ public class OperatiiDelegatii {
 
 				for (int ii = 0; ii < departs.length; ii++)
 					stmt.setString(pos++, departs[ii]);
+			} else {
+				stmt.setString(pos++, tipAngajat);
 			}
 
 			stmt.executeQuery();

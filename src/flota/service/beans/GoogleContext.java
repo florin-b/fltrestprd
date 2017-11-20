@@ -56,6 +56,17 @@ public class GoogleContext {
 	private static GeoApiContext instance40;
 	private static GeoApiContext instance41;
 
+	private static GeoApiContext instance42;
+	private static GeoApiContext instance43;
+	private static GeoApiContext instance44;
+	private static GeoApiContext instance45;
+	private static GeoApiContext instance46;
+	private static GeoApiContext instance47;
+	private static GeoApiContext instance48;
+	private static GeoApiContext instance49;
+	private static GeoApiContext instance50;
+	private static GeoApiContext instance51;
+
 	private GoogleContext() {
 
 	}
@@ -161,7 +172,28 @@ public class GoogleContext {
 			return getContext39();
 		case 40:
 			return getContext40();
-
+		case 41:
+			return getContext41();
+		case 42:
+			return getContext42();
+		case 43:
+			return getContext43();
+		case 44:
+			return getContext44();
+		case 45:
+			return getContext45();
+		case 46:
+			return getContext46();
+		case 47:
+			return getContext47();
+		case 48:
+			return getContext48();
+		case 49:
+			return getContext49();
+		case 50:
+			return getContext50();
+		case 51:
+			return getContext51();
 		default:
 			return getContext1();
 		}
@@ -698,6 +730,137 @@ public class GoogleContext {
 		}
 
 		return instance41;
+	}
+
+	public static GeoApiContext getContext42() {
+
+		if (instance42 == null) {
+			instance42 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_42);
+			instance42.setQueryRateLimit(2);
+			instance42.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance42.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance42;
+	}
+
+	public static GeoApiContext getContext43() {
+
+		if (instance43 == null) {
+			instance43 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_43);
+			instance43.setQueryRateLimit(2);
+			instance43.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance43.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance43;
+	}
+
+	public static GeoApiContext getContext44() {
+
+		if (instance44 == null) {
+			instance44 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_44);
+			instance44.setQueryRateLimit(2);
+			instance44.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance44.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance44;
+	}
+
+	public static GeoApiContext getContext45() {
+
+		if (instance45 == null) {
+			instance45 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_45);
+			instance45.setQueryRateLimit(2);
+			instance45.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance45.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance45;
+	}
+
+	public static GeoApiContext getContext46() {
+
+		if (instance46 == null) {
+			instance46 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_46);
+			instance46.setQueryRateLimit(2);
+			instance46.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance46.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance46;
+	}
+	
+	public static GeoApiContext getContext47() {
+
+		if (instance47 == null) {
+			instance47 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_47);
+			instance47.setQueryRateLimit(2);
+			instance47.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance47.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance47;
+	}
+	
+	public static GeoApiContext getContext48() {
+
+		if (instance48 == null) {
+			instance48 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_48);
+			instance48.setQueryRateLimit(2);
+			instance48.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance48.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance48;
+	}
+	
+	public static GeoApiContext getContext49() {
+
+		if (instance49 == null) {
+			instance49 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_49);
+			instance49.setQueryRateLimit(2);
+			instance49.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance49.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance49;
+	}
+	
+	
+	public static GeoApiContext getContext50() {
+
+		if (instance50 == null) {
+			instance50 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_50);
+			instance50.setQueryRateLimit(2);
+			instance50.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance50.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance50;
+	}
+	
+	public static GeoApiContext getContext51() {
+
+		if (instance51 == null) {
+			instance51 = new GeoApiContext().setApiKey(Constants.GOOGLE_MAPS_API_KEY_51);
+			instance51.setQueryRateLimit(2);
+			instance51.setRetryTimeout(0, TimeUnit.SECONDS);
+			instance51.setConnectTimeout(1, TimeUnit.SECONDS);
+
+		}
+
+		return instance51;
 	}
 
 }

@@ -66,6 +66,7 @@ public class SqlQueries {
 		sqlString.append(" and ag.filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where aprobat =? ) ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -77,7 +78,7 @@ public class SqlQueries {
 
 		sqlString.append(" select h.id ");
 		sqlString.append(" from sapprd.zdelegatiehead h, agenti ag where h.mandt='900' and ");
-		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
 		sqlString.append(" and ag.filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and substr(ag.divizie,0,2)=? and h.codangajat = ag.cod ");
@@ -95,7 +96,7 @@ public class SqlQueries {
 
 		sqlString.append(" select h.id ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and  ");
-		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
 		sqlString.append(" and ag.filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and h.codangajat = ag.cod ");
