@@ -78,6 +78,9 @@ public class OperatiiTraseu {
 
 	}
 
+	
+	
+	
 	public String determinaSfarsitDelegatie(Connection conn, String idDelegatie) {
 
 		double startKm = 0;

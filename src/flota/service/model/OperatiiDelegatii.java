@@ -971,4 +971,44 @@ public class OperatiiDelegatii {
 
 	}
 
+	public void recalculeazaDelegatie(String idDelegatie) throws SQLException {
+
+		Connection conn = new DBManager().getProdDataSource().getConnection();
+
+		stergeLocalitatiAdaugate(conn, idDelegatie);
+		new OperatiiTraseu().determinaSfarsitDelegatie(conn, idDelegatie);
+		actualizeazaStareFaz(conn, idDelegatie);
+
+		conn.close();
+
+	}
+
+	private void stergeLocalitatiAdaugate(Connection conn, String idDelegatie) {
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.stergeLocalitatiAdaugate())) {
+
+			stmt.setString(1, idDelegatie);
+			stmt.executeQuery();
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+	}
+
+	private void actualizeazaStareFaz(Connection conn, String idDelegatie) {
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.actualizeazaStareFaz())) {
+
+			stmt.setString(1, idDelegatie);
+			stmt.executeQuery();
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+	}
+
 }

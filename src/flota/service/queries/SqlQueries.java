@@ -43,6 +43,7 @@ public class SqlQueries {
 		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
 		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc, f.cod codAprob  ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag, functii_non_vanzari f  where h.mandt='900' and ");
+		sqlString.append(" to_date(data_sosire,'yyyymmdd')>= to_date(sysdate - 45) and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
 		sqlString.append(" and h.idaprob = f.fid ");
 		sqlString.append(" and ag.filiala in ");
@@ -61,12 +62,13 @@ public class SqlQueries {
 		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
 		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc, f.cod codAprob ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag, functii_non_vanzari f  where h.mandt='900' and ");
+		sqlString.append(" to_date(data_sosire,'yyyymmdd')>= to_date(sysdate - 45) and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
 		sqlString.append(" and h.idaprob = f.fid ");
 		sqlString.append(" and ag.filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and h.codangajat = ag.cod ");
-		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where aprobat =? ) ");
+		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where (aprobat =? or f.cod = 'WKND') ) ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -377,6 +379,25 @@ public class SqlQueries {
 
 	}
 
+	public static String stergeLocalitatiAdaugate() {
+
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" delete from sapprd.zdelegatieruta where  id =? and init ='0' ");
+
+		return sqlString.toString();
+
+	}
+
+	public static String actualizeazaStareFaz() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" update sapprd.zdelegturisme set preluat = ' ' where id=? ");
+
+		return sqlString.toString();
+
+	}
+
 	public static String getSubordVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
@@ -557,6 +578,16 @@ public class SqlQueries {
 	public static String getCodAprobareDZ() {
 		StringBuilder sqlString = new StringBuilder();
 		sqlString.append(" select fid from functii_non_vanzari  where cod ='WKND' and aprobat = 'DZ' ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareJuridic() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select decode (p.filiala,'GL90',(select fid from functii_non_vanzari where cod=? and aprobat = 'DJ'), ");
+		sqlString.append(" (select fid from functii_non_vanzari where cod=? and aprobat != 'DJ' )) fid, ");
+		sqlString.append(" p.filiala from personal p where p.cod =? ");
 
 		return sqlString.toString();
 	}

@@ -118,4 +118,20 @@ public class Constants {
 	// My Project9
 	public static final String GOOGLE_MAPS_API_KEY_51 = "AIzaSyB7a9G1amLRUslYyGyMtVFMEh-9x-Wsprs";
 
+	// developer4.arabesque@gmail.com/1DeveLo@er2
+	// My Project
+	public static final String GOOGLE_MAPS_API_KEY_52 = "AIzaSyAJjR0usNzaJWkVY5EVYGRb20qsTCshQzM";
+
+	// My Project1
+	public static final String GOOGLE_MAPS_API_KEY_53 = "AIzaSyDvX93Itcpo0zfxKAtq2cFsWOXJOHa241U";
+
+	// My Project2
+	public static final String GOOGLE_MAPS_API_KEY_54 = "AIzaSyDyU60LZD3O38pBAft3OcavTaDIYU_kAPM";
+
+	// My Project3
+	public static final String GOOGLE_MAPS_API_KEY_55 = "AIzaSyDoOBeJz2IqApkzTNzR43QUowrNUEOR174";
+
+	// My Project4
+	public static final String GOOGLE_MAPS_API_KEY_56 = "AIzaSyBniE6qEjXl0_eH7AmaYxtrG_lYv_61ow8";
+
 }

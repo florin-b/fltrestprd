@@ -1,328 +1,541 @@
-10-Nov-2017 15:41:24 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+03-Dec-2017 18:39:28 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:41:24 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> java.lang.IllegalStateException: Invalid API key.
-	at com.google.maps.GeoApiContext.checkContext(GeoApiContext.java:150)
-	at com.google.maps.GeoApiContext.getWithPath(GeoApiContext.java:105)
-	at com.google.maps.GeoApiContext.get(GeoApiContext.java:74)
-	at com.google.maps.PendingResultBase.makeRequest(PendingResultBase.java:79)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:55)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 43
-10-Nov-2017 15:41:25 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:41:25 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> java.lang.IllegalStateException: Invalid API key.
-	at com.google.maps.GeoApiContext.checkContext(GeoApiContext.java:150)
-	at com.google.maps.GeoApiContext.getWithPath(GeoApiContext.java:105)
-	at com.google.maps.GeoApiContext.get(GeoApiContext.java:74)
-	at com.google.maps.PendingResultBase.makeRequest(PendingResultBase.java:79)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:55)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 43
-10-Nov-2017 15:47:48 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 45
-10-Nov-2017 15:47:49 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:47:49 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 45
-10-Nov-2017 15:47:50 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:47:51 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 45
-10-Nov-2017 15:47:52 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:47:52 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 45
-10-Nov-2017 15:52:07 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:52:08 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:52:08 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:52:09 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:52:10 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:52:11 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:52:11 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:52:12 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:52:12 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:52:13 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:52:14 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:285)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 46
-10-Nov-2017 15:58:58 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:58:59 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:58:59 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:00 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:00 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: The provided API key is expired.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:01 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:37 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:38 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:38 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:39 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:39 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:40 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:41 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-10-Nov-2017 15:59:42 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-10-Nov-2017 15:59:42 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.RequestDeniedException: This API project was not found. This API project may have been deleted.
-	at com.google.maps.errors.ApiException.from(ApiException.java:50)
-	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:284)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:273)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:242)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:184)
-	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 48
-15-Nov-2017 13:46:10 [main] ERROR flota.service.model.OperatiiTraseu - java.sql.SQLIntegrityConstraintViolationException: ORA-00001: restricþia unicã (UNKNOWN.obj#=1003484) nu este respectatã
-
-	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
-	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:396)
-	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:951)
-	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:513)
-	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:227)
-	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:531)
-	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:208)
-	at oracle.jdbc.driver.T4CPreparedStatement.executeForRows(T4CPreparedStatement.java:1046)
-	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1336)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3613)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3657)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1495)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:325)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:260)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:192)
-	at flota.service.test.TestClass.main(TestClass.java:23)
-
-15-Nov-2017 13:46:11 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-17-Nov-2017 14:04:31 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.UnknownErrorException
-	at com.google.maps.errors.ApiException.from(ApiException.java:52)
+03-Dec-2017 18:39:29 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
 	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
 	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
 	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
 	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
 	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:285)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:252)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:185)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
 	at flota.service.test.TestClass.main(TestClass.java:23)
- , key = 14
-17-Nov-2017 14:04:34 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+ , key = 30
+03-Dec-2017 18:39:30 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:30 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:31 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:31 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:32 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:33 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:34 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:34 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:35 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:35 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:36 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:37 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:38 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:38 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:39 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:39 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:40 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:40 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:41 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:42 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:43 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:43 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:44 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:44 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:45 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:46 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:47 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:47 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:48 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:48 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:49 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:50 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:51 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:51 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:52 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:52 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:53 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:54 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:55 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:55 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:56 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:56 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:57 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:58 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:39:59 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:39:59 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:00 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:00 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:01 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:02 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:03 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:03 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:04 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:04 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:05 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:05 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API.
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:278)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:288)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+ , key = 30
+03-Dec-2017 18:40:06 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:08 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+03-Dec-2017 18:40:08 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
+	at java.util.ArrayList.get(ArrayList.java:429)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:233)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:290)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:979)
+	at flota.service.test.TestClass.recalculeazaDelegatii(TestClass.java:44)
+	at flota.service.test.TestClass.main(TestClass.java:23)
+
+12-Dec-2017 15:09:40 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+12-Dec-2017 15:09:40 [main] ERROR flota.service.helpers.HelperAprobare - java.sql.SQLException: Invalid column name
+	at oracle.jdbc.driver.OracleStatement.getColumnIndex(OracleStatement.java:3724)
+	at oracle.jdbc.driver.OracleResultSetImpl.findColumn(OracleResultSetImpl.java:2799)
+	at oracle.jdbc.driver.OracleResultSet.getString(OracleResultSet.java:498)
+	at flota.service.helpers.HelperAprobare.getCodAprobareJuridic(HelperAprobare.java:264)
+	at flota.service.test.TestClass.main(TestClass.java:27)
+
+12-Dec-2017 16:17:17 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+12-Dec-2017 16:17:17 [main] ERROR flota.service.helpers.HelperAprobare - java.sql.SQLException: Missing IN or OUT parameter at index:: 3
+	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1844)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3608)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3657)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1495)
+	at flota.service.helpers.HelperAprobare.getCodAprobareJuridic(HelperAprobare.java:255)
+	at flota.service.test.TestClass.main(TestClass.java:27)
+
+12-Dec-2017 16:17:35 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect
+12-Dec-2017 16:17:35 [main] ERROR flota.service.helpers.HelperAprobare - java.sql.SQLException: Invalid column name
+	at oracle.jdbc.driver.OracleStatement.getColumnIndex(OracleStatement.java:3724)
+	at oracle.jdbc.driver.OracleResultSetImpl.findColumn(OracleResultSetImpl.java:2799)
+	at oracle.jdbc.driver.OracleResultSet.getString(OracleResultSet.java:498)
+	at flota.service.helpers.HelperAprobare.getCodAprobareJuridic(HelperAprobare.java:260)
+	at flota.service.test.TestClass.main(TestClass.java:27)
+

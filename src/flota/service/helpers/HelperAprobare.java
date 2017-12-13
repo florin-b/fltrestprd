@@ -26,6 +26,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareKA(conn, codAngajat, tipAngajat);
 		else if (tipAngajat.toUpperCase().startsWith("CAG") || tipAngajat.toUpperCase().startsWith("CONS"))
 			codAprobare = getCodAprobareConsilieri(conn, codAngajat, tipAngajat);
+		else if (tipAngajat.trim().equalsIgnoreCase("CJ"))
+			codAprobare = getCodAprobareJuridic(conn, codAngajat, tipAngajat.trim());
 		else
 			codAprobare = getCodAprobareGeneral(conn, codAngajat);
 
@@ -41,6 +43,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareKA(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
 		else if (delegatie.getTipAngajat().toUpperCase().startsWith("CAG") || delegatie.getTipAngajat().toUpperCase().startsWith("CONS"))
 			codAprobare = getCodAprobareConsilieri(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
+		if (delegatie.getTipAngajat().trim().equalsIgnoreCase("CJ"))
+			codAprobare = getCodAprobareJuridic(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
 		else
 			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
 
@@ -52,8 +56,7 @@ public class HelperAprobare {
 		return codAprobare;
 
 	}
-	
-	
+
 	private static String getCodAprobareWeekend(Connection conn, DelegatieNoua delegatie) {
 
 		String codAprobareWeekend = null;
@@ -66,7 +69,7 @@ public class HelperAprobare {
 
 		return codAprobareWeekend;
 	}
-	
+
 	private static boolean isUlCentral(DelegatieNoua delegatie) {
 		return delegatie.getUnitLog().equals("BU90") || delegatie.getUnitLog().equals("GL90") || delegatie.getUnitLog().equals("BV90");
 
@@ -97,9 +100,6 @@ public class HelperAprobare {
 		return codAprobare;
 	}
 
-	
-	
-	
 	public static String getCodAprobareGeneral(Connection conn, String codAngajat) {
 
 		String codAprobare = "-1";
@@ -135,14 +135,11 @@ public class HelperAprobare {
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareConsilieri());) {
 
-			
 			String tipCons = tipConsilier;
-			
+
 			if (tipConsilier.equals("CONS_GED"))
 				tipCons = "CONS-GED";
-			
-			
-			
+
 			stmt.setString(1, codConsilier);
 			stmt.setString(2, tipCons);
 
@@ -229,6 +226,34 @@ public class HelperAprobare {
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareKA08());) {
 
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				codAprobare = rs.getString("fid");
+
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+
+	}
+
+	public static String getCodAprobareJuridic(Connection conn, String codAngajat, String tipAngajat) {
+
+		String codAprobare = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareJuridic());) {
+
+			stmt.setString(1, tipAngajat);
+			stmt.setString(2, tipAngajat);
+			stmt.setString(3, codAngajat);
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();

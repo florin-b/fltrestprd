@@ -25,7 +25,7 @@ import flota.service.enums.EnumJudete;
 public class MapUtils {
 
 	private static final Logger logger = LogManager.getLogger(MapUtils.class);
-	private static final int MAX_KEYS = 51;
+	private static final int MAX_KEYS = 56;
 
 	public static double distanceXtoY(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;
