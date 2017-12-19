@@ -545,6 +545,7 @@ public class OperatiiDelegatii {
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
+				delegatie.setDistantaRecalculata((int) rs.getDouble("distrecalc"));
 				listDelegatii.add(delegatie);
 			}
 
@@ -625,6 +626,7 @@ public class OperatiiDelegatii {
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
+				delegatie.setDistantaRecalculata((int) rs.getDouble("distrecalc"));
 
 				listDelegatii.add(delegatie);
 			}

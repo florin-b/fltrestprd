@@ -127,7 +127,7 @@ public class SqlQueries {
 	public static String afiseazaDelegatiiProprii() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, h.distcalc, h.distrespins, h.data_sosire, h.distreal, ");
+		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc, ");
 		sqlString.append(" nvl((select status from sapprd.zdelstataprob where iddelegatie = h.id and rownum=1),'-1') status ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod and ");
 		sqlString.append(" h.codangajat = ? and h.datac between ? and ? ");
@@ -139,7 +139,8 @@ public class SqlQueries {
 	public static String afiseazaDelegatiiSubordVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
+		sqlString.append(
+				" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod  and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?) ");
 		sqlString.append(" and ag.filiala in ");
@@ -155,7 +156,8 @@ public class SqlQueries {
 	public static String afiseazaDelegatiiSubordNONVanzari(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal ");
+		sqlString.append(
+				" select h.id,  h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, h.distrespins, h.data_sosire, h.distreal, h.distrecalc ");
 		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and h.codangajat = ag.cod and ");
 		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=?)  and ag.filiala in ");
 		sqlString.append(unitLogQs);
@@ -501,6 +503,19 @@ public class SqlQueries {
 		sqlString.append(" select distinct f.fid, f.aprobat from personal p, functii_non_vanzari f ");
 		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
 		sqlString.append(" and p.functie in ('SDKA','DZ') and p.functie = f.aprobat and f.cod=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareAV() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select  f.fid, f.aprobat from personal p, functii_non_vanzari f ");
+		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
+		sqlString.append(" and p.departament =(select departament from personal where cod=?) ");
+		sqlString.append(" and p.functie = 'SD' and p.functie = f.aprobat and f.cod='AV' ");
+		sqlString.append(" union ");
+		sqlString.append(" select  f.fid, f.aprobat from functii_non_vanzari f  where f.cod='AV' and f.aprobat ='DZ'");
 
 		return sqlString.toString();
 	}

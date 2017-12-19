@@ -19,12 +19,12 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		//new OperatiiDelegatii().recalculeazaDelegatie("29271417230");
+		//new OperatiiDelegatii().recalculeazaDelegatie("29493360422");
 		
 		
 		
 		
-		System.out.println(HelperAprobare.getCodAprobare(new DBManager().getProdDataSource().getConnection(), "00140312"," CJ "));
+		System.out.println(HelperAprobare.getCodAprobareAV(new DBManager().getProdDataSource().getConnection(), "00098560"));
 		
 		
 		

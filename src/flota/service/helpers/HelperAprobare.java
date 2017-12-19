@@ -28,6 +28,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareConsilieri(conn, codAngajat, tipAngajat);
 		else if (tipAngajat.trim().equalsIgnoreCase("CJ"))
 			codAprobare = getCodAprobareJuridic(conn, codAngajat, tipAngajat.trim());
+		else if (tipAngajat.trim().equalsIgnoreCase("AV"))
+			codAprobare = getCodAprobareAV(conn, codAngajat);
 		else
 			codAprobare = getCodAprobareGeneral(conn, codAngajat);
 
@@ -45,6 +47,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareConsilieri(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
 		if (delegatie.getTipAngajat().trim().equalsIgnoreCase("CJ"))
 			codAprobare = getCodAprobareJuridic(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
+		if (delegatie.getTipAngajat().trim().equalsIgnoreCase("AV"))
+			codAprobare = getCodAprobareAV(conn, delegatie.getCodAngajat());
 		else
 			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
 
@@ -288,6 +292,44 @@ public class HelperAprobare {
 				codAprobare = rs.getString("fid");
 
 			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+
+	}
+
+	public static String getCodAprobareAV(Connection conn, String codAngajat) {
+
+		String codAprobare = null;
+		String codSD = null;
+		String codDZ = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareAV());) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, codAngajat);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				if (rs.getString("aprobat").equalsIgnoreCase("SD"))
+					codSD = rs.getString("fid");
+
+				if (rs.getString("aprobat").equalsIgnoreCase("DZ"))
+					codDZ = rs.getString("fid");
+
+			}
+
+			if (codSD != null)
+				codAprobare = codSD;
+			else
+				codAprobare = codDZ;
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
