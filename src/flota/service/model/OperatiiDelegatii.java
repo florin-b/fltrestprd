@@ -138,6 +138,7 @@ public class OperatiiDelegatii {
 			stmt.setString(10, delegatie.getNrAuto());
 			stmt.setDouble(11, (int) Double.parseDouble(delegatie.getDistreal()));
 
+			
 			stmt.executeQuery();
 
 			String[] arrayOpriri = delegatie.getStops().split(",");

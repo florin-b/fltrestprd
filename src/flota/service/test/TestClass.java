@@ -24,7 +24,7 @@ public class TestClass {
 		
 		
 		
-		System.out.println(HelperAprobare.getCodAprobareAV(new DBManager().getProdDataSource().getConnection(), "00098560"));
+		System.out.println(HelperAprobare.getCodAprobareConsilieri(new DBManager().getProdDataSource().getConnection(), "00074439","CAG2"));
 		
 		
 		

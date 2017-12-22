@@ -45,9 +45,9 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareKA(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
 		else if (delegatie.getTipAngajat().toUpperCase().startsWith("CAG") || delegatie.getTipAngajat().toUpperCase().startsWith("CONS"))
 			codAprobare = getCodAprobareConsilieri(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
-		if (delegatie.getTipAngajat().trim().equalsIgnoreCase("CJ"))
+		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("CJ"))
 			codAprobare = getCodAprobareJuridic(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
-		if (delegatie.getTipAngajat().trim().equalsIgnoreCase("AV"))
+		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("AV"))
 			codAprobare = getCodAprobareAV(conn, delegatie.getCodAngajat());
 		else
 			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
