@@ -43,4 +43,11 @@ public class Traseu {
 		this.nrAuto = nrAuto;
 	}
 
+	@Override
+	public String toString() {
+		return "Traseu [coordonate=" + coordonate + ", opriri=" + opriri + ", distanta=" + distanta + ", nrAuto=" + nrAuto + "]";
+	}
+
+	
+	
 }

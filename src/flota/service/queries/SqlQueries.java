@@ -68,7 +68,7 @@ public class SqlQueries {
 		sqlString.append(" and ag.filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and h.codangajat = ag.cod ");
-		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where (aprobat =? or f.cod = 'WKND') ) ");
+		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where aprobat =? ) ");
 		sqlString.append(" order by h.id ");
 
 		return sqlString.toString();
@@ -605,6 +605,21 @@ public class SqlQueries {
 		sqlString.append(" p.filiala from personal p where p.cod =? ");
 
 		return sqlString.toString();
+	}
+
+	public static String getDelegatiiSfarsitLuna() {
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append(
+				" select id, codangajat, nrauto, data_plecare from sapprd.zdelegatiehead where data_plecare >=? and data_plecare <=? and data_sosire>? and distcalcluna = 0 ");
+
+		return sqlString.toString();
+	}
+
+	public static String setKmSfarsitLuna() {
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append("update sapprd.zdelegatiehead set distcalcluna=? where id=? ");
+		return sqlString.toString();
+
 	}
 
 }

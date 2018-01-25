@@ -75,7 +75,7 @@ public class HelperAprobare {
 	}
 
 	private static boolean isUlCentral(DelegatieNoua delegatie) {
-		return delegatie.getUnitLog().equals("BU90") || delegatie.getUnitLog().equals("GL90") || delegatie.getUnitLog().equals("BV90");
+		return delegatie.getUnitLog().contains("BU90") || delegatie.getUnitLog().contains("GL90") || delegatie.getUnitLog().contains("BV90");
 
 	}
 

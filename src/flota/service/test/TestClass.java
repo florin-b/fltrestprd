@@ -9,9 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
-import flota.service.helpers.HelperAprobare;
 import flota.service.model.OperatiiDelegatii;
-import flota.service.queries.SqlQueries;
+import flota.service.model.ServiceDelegatii;
 
 public class TestClass {
 
@@ -19,24 +18,17 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		//new OperatiiDelegatii().recalculeazaDelegatie("29493360422");
-		
-		
-		
-		
-		System.out.println(HelperAprobare.getCodAprobareConsilieri(new DBManager().getProdDataSource().getConnection(), "00074439","CAG2"));
-		
-		
-		
-		
+		 //new OperatiiDelegatii().recalculeazaDelegatie("32606182666");
+
+		new ServiceDelegatii().calculeazaKmSfarsitLuna();
 
 	}
 
-	private static  void recalculeazaDelegatii() {
+	private static void recalculeazaDelegatii() {
 
-		String sqlString = "select id, distcalc, distreal, distreal/distcalc from sapprd.zdelegatiehead " + 
-          " where data_sosire >= '20171120' and data_sosire < '20171128' and distcalc > 0 and distreal/distcalc >=0.7 and " +
-          " distreal/distcalc <=0.9 and rownum<300 ";
+		String sqlString = "select id, distcalc, distreal, distreal/distcalc from sapprd.zdelegatiehead "
+				+ " where data_sosire >= '20171120' and data_sosire < '20171128' and distcalc > 0 and distreal/distcalc >=0.7 and "
+				+ " distreal/distcalc <=0.9 and rownum<300 ";
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlString)) {
 
@@ -48,7 +40,7 @@ public class TestClass {
 
 			while (rs.next()) {
 				System.out.println("Calculare delegatie " + rs.getString("id"));
-				
+
 				opDelegatii.recalculeazaDelegatie(rs.getString("id"));
 			}
 

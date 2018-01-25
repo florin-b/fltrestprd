@@ -224,6 +224,7 @@ public class OperatiiDelegatii {
 				stmt.setString(pos++, tipAngajat);
 			}
 
+			
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();

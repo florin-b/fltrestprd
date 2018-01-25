@@ -1,6 +1,7 @@
 package flota.service.main;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -36,6 +37,7 @@ import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiMasina;
 import flota.service.model.OperatiiTraseu;
+import flota.service.model.ServiceDelegatii;
 import flota.service.utils.MailOperations;
 
 @Path("delegatii")
@@ -252,6 +254,15 @@ public class MainService {
 			@QueryParam("dataStop") String dataStop) {
 
 		return new OperatiiDelegatii().getDelegatiiSuprapuse(codAngajat, dataStart, dataStop);
+
+	}
+
+	@Path("getKmSfarsitLuna")
+	@GET
+	public void getKmSfarsitLuna() {
+
+		if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1)
+			new ServiceDelegatii().calculeazaKmSfarsitLuna();
 
 	}
 

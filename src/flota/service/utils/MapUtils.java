@@ -25,7 +25,7 @@ import flota.service.enums.EnumJudete;
 public class MapUtils {
 
 	private static final Logger logger = LogManager.getLogger(MapUtils.class);
-	private static final int MAX_KEYS = 56;
+	private static final int MAX_KEYS = 62;
 
 	public static double distanceXtoY(double lat1, double lon1, double lat2, double lon2, String unit) {
 		double theta = lon1 - lon2;
@@ -102,12 +102,12 @@ public class MapUtils {
 
 		} catch (OverQueryLimitException q) {
 			logger.error("geocodeAddress -> " + q.toString() + " , key =" + value);
-			MailOperations.sendMail("geocodeAddress -> " + q.toString() + " , key =" + value);
+			//MailOperations.sendMail("geocodeAddress -> " + q.toString() + " , key =" + value);
 
 			
 		} catch (Exception e) {
 			logger.error("geocodeAddress -> " + Utils.getStackTrace(e));
-			MailOperations.sendMail(e.toString() + " , " + address.toString());
+			//MailOperations.sendMail(e.toString() + " , " + address.toString());
 
 		}
 
@@ -149,10 +149,10 @@ public class MapUtils {
 
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseu -> " + Utils.getStackTrace(q));
-			MailOperations.sendMail("getDistantaTraseu -> " + q.toString());
+			//MailOperations.sendMail("getDistantaTraseu -> " + q.toString());
 			
 		} catch (Exception ex) {
-			MailOperations.sendMail("getDistantaTraseu -> " + ex.toString());
+			//MailOperations.sendMail("getDistantaTraseu -> " + ex.toString());
 			logger.error(Utils.getStackTrace(ex));
 		}
 
@@ -197,9 +197,9 @@ public class MapUtils {
 
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(q));
-			MailOperations.sendMail(q.toString());
+			//MailOperations.sendMail(q.toString());
 		} catch (Exception ex) {
-			MailOperations.sendMail(ex.toString());
+			//MailOperations.sendMail(ex.toString());
 			logger.error("getDistantaTraseuAdrese -> " + Utils.getStackTrace(ex));
 		}
 
@@ -244,14 +244,16 @@ public class MapUtils {
 
 		} catch (OverQueryLimitException q) {
 			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(q) + " key = " + value);
-			MailOperations.sendMail(q.toString());
+			distanta = -1;
+			//MailOperations.sendMail(q.toString());
 			
 		} catch (Exception ex) {
-			MailOperations.sendMail(ex.toString());
+			//MailOperations.sendMail(ex.toString());
 			logger.error("getDistantaTraseuCoordonate -> " + Utils.getStackTrace(ex));
+			distanta = -1;
 		}
 
-		return distanta / 1000;
+		return distanta > 0 ? distanta / 1000 : distanta;
 
 	}
 
@@ -328,11 +330,11 @@ public class MapUtils {
 
 			} catch (OverQueryLimitException q) {
 				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
-				MailOperations.sendMail("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
+				//MailOperations.sendMail("getAdreseCoordonate -> " + Utils.getStackTrace(q) + " , key = " + value);
 				
 			} catch (Exception e) {
 				logger.error("getAdreseCoordonate -> " + Utils.getStackTrace(e) + " , key = " + value);
-				MailOperations.sendMail("getAdreseCoordonate -> " + e.toString());
+				//MailOperations.sendMail("getAdreseCoordonate -> " + e.toString());
 			}
 		}
 
@@ -382,7 +384,7 @@ public class MapUtils {
 
 		} catch (Exception e) {
 			logger.error("getAdresaCoordonate -> " + Utils.getStackTrace(e));
-			MailOperations.sendMail(e.toString());
+			//MailOperations.sendMail(e.toString());
 		}
 
 		return adresa;

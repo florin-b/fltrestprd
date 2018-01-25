@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import flota.service.beans.IntervalData;
 import flota.service.beans.IntervalDelegatie;
 
 public class DateUtils {
@@ -241,6 +242,22 @@ public class DateUtils {
 		}
 
 		return date;
+	}
+
+	public static IntervalData getLastMonth() {
+
+		IntervalData interval = new IntervalData();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MONTH, -1);
+
+		int lastDay = calendar.getActualMaximum(Calendar.DATE);
+
+		interval.setDataStart(Integer.toString(calendar.get(Calendar.YEAR)) + String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "01");
+
+		interval.setDataStop(Integer.toString(calendar.get(Calendar.YEAR)) + String.format("%02d", calendar.get(Calendar.MONTH) + 1) + lastDay);
+
+		return interval;
 	}
 
 }
