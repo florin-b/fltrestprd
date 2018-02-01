@@ -49,6 +49,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareJuridic(conn, delegatie.getCodAngajat(), delegatie.getTipAngajat());
 		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("AV"))
 			codAprobare = getCodAprobareAV(conn, delegatie.getCodAngajat());
+		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("ATR"))
+			codAprobare = getCodAprobareATR(conn, delegatie);
 		else
 			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
 
@@ -338,6 +340,32 @@ public class HelperAprobare {
 
 		return codAprobare;
 
+	}
+
+	private static String getCodAprobareATR(Connection conn, DelegatieNoua delegatie) {
+		String codAprobare = null;
+
+		if (delegatie.getUnitLog().equals("GL90")) {
+			codAprobare = "1";
+			return codAprobare;
+		}
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareATRFiliale())) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				codAprobare = rs.getString(1);
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
 	}
 
 }

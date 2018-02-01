@@ -88,7 +88,7 @@ public class ServiceDelegatii {
 				
 				System.out.println(delegatie.getIdDelegatie() + " , " + distantaTeoretica);
 				
-				break;
+				
 
 			}
 

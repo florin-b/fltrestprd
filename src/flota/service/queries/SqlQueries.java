@@ -622,4 +622,11 @@ public class SqlQueries {
 
 	}
 
+	public static String getCodAprobareATRFiliale() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select fid from functii_non_vanzari where cod = 'ATR' and aprobat !='DAG' ");
+		return sqlString.toString();
+	}
+
 }

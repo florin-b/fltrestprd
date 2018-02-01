@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import flota.service.beans.DelegatieNoua;
 import flota.service.database.DBManager;
+import flota.service.helpers.HelperAprobare;
 import flota.service.model.OperatiiDelegatii;
-import flota.service.model.ServiceDelegatii;
 
 public class TestClass {
 
@@ -18,9 +19,20 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		 //new OperatiiDelegatii().recalculeazaDelegatie("32606182666");
+		 //new OperatiiDelegatii().recalculeazaDelegatie("32531892839");
 
-		new ServiceDelegatii().calculeazaKmSfarsitLuna();
+		//new ServiceDelegatii().calculeazaKmSfarsitLuna();
+		 
+		 
+		 DelegatieNoua del = new DelegatieNoua();
+		 del.setTipAngajat("AV");
+		 del.setId("33680529270");
+		 del.setCodAngajat("00083427");
+		 
+		 //HelperAprobare.getCodAprobare(new DBManager().getProdDataSource().getConnection(), del);
+		 
+		 
+		System.out.println(HelperAprobare.getCodAprobareGeneral(new DBManager().getProdDataSource().getConnection(), "00002217"));
 
 	}
 
