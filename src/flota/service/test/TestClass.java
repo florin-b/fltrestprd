@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import flota.service.beans.DelegatieNoua;
 import flota.service.database.DBManager;
 import flota.service.helpers.HelperAprobare;
 import flota.service.model.OperatiiDelegatii;
+import flota.service.model.ServiceDelegatii;
 
 public class TestClass {
 
@@ -24,15 +24,10 @@ public class TestClass {
 		//new ServiceDelegatii().calculeazaKmSfarsitLuna();
 		 
 		 
-		 DelegatieNoua del = new DelegatieNoua();
-		 del.setTipAngajat("AV");
-		 del.setId("33680529270");
-		 del.setCodAngajat("00083427");
-		 
-		 //HelperAprobare.getCodAprobare(new DBManager().getProdDataSource().getConnection(), del);
+		new OperatiiDelegatii().getDelegatiiAprobari("DZ", "AG10", "11");
 		 
 		 
-		System.out.println(HelperAprobare.getCodAprobareGeneral(new DBManager().getProdDataSource().getConnection(), "00002217"));
+		
 
 	}
 

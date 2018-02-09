@@ -249,7 +249,7 @@ public class DateUtils {
 		IntervalData interval = new IntervalData();
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.MONTH, -1);
+		calendar.add(Calendar.MONTH, -1);
 
 		int lastDay = calendar.getActualMaximum(Calendar.DATE);
 

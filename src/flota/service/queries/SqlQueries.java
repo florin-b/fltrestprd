@@ -73,6 +73,24 @@ public class SqlQueries {
 
 		return sqlString.toString();
 	}
+	
+	
+	public static String getDelegatiiAprobareHeaderNONVanzari_DZ(String unitLogQs) {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select h.id, h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
+		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc, f.cod codAprob ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag, functii_non_vanzari f  where h.mandt='900' and ");
+		sqlString.append(" to_date(data_sosire,'yyyymmdd')>= to_date(sysdate - 45) and ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
+		sqlString.append(" and h.idaprob = f.fid ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
+		sqlString.append(" order by h.id ");
+
+		return sqlString.toString();
+	}
 
 	public static String getDelegatiiTerminateVanzari(String unitLogQs) {
 

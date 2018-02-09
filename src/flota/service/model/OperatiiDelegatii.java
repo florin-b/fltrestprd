@@ -138,7 +138,6 @@ public class OperatiiDelegatii {
 			stmt.setString(10, delegatie.getNrAuto());
 			stmt.setDouble(11, (int) Double.parseDouble(delegatie.getDistreal()));
 
-			
 			stmt.executeQuery();
 
 			String[] arrayOpriri = delegatie.getStops().split(",");
@@ -199,8 +198,12 @@ public class OperatiiDelegatii {
 
 		if (isPersVanzari)
 			sqlString = SqlQueries.getDelegatiiAprobareHeaderVanzari(unitLogQs, departQs);
-		else
-			sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari(unitLogQs);
+		else {
+			if (tipAngajat.equals("DZ"))
+				sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari_DZ(unitLogQs);
+			else
+				sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari(unitLogQs);
+		}
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
@@ -221,10 +224,11 @@ public class OperatiiDelegatii {
 				for (int ii = 0; ii < departs.length; ii++)
 					stmt.setString(pos++, departs[ii]);
 			} else {
-				stmt.setString(pos++, tipAngajat);
+
+				if (!tipAngajat.equals("DZ"))
+					stmt.setString(pos++, tipAngajat);
 			}
 
-			
 			stmt.executeQuery();
 
 			ResultSet rs = stmt.getResultSet();
