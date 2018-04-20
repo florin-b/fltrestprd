@@ -318,27 +318,6 @@ public class MainService {
 
 	}
 
-	@Path("locs")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public void locs(@QueryParam("codJudet") String codJudet, @Suspended final AsyncResponse asyncResponse) {
-
-		new Thread() {
-			@Override
-			public void run() {
-
-				String listLocs = new OperatiiAdresa().getLocalitatiJudet(codJudet).toString();
-
-				Response resp = Response.status(200).header("Access-Control-Allow-Origin", "*")
-						.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-						.header("Access-Control-Allow-Credentials", "true").header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-						.header("Access-Control-Max-Age", "1209600").entity(listLocs).build();
-
-				asyncResponse.resume(resp);
-
-			}
-		}.start();
-
-	}
+	
 
 }

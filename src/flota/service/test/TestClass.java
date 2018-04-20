@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
 import flota.service.helpers.HelperAprobare;
+import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.ServiceDelegatii;
 
@@ -19,14 +20,16 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		 //new OperatiiDelegatii().recalculeazaDelegatie("32531892839");
+		 new OperatiiDelegatii().recalculeazaDelegatie("39526194887");
 
 		//new ServiceDelegatii().calculeazaKmSfarsitLuna();
 		 
 		 
-		new OperatiiDelegatii().getDelegatiiAprobari("DZ", "AG10", "11");
+		//new OperatiiDelegatii().getDelegatiiAprobari("DZ", "AG10", "11");
 		 
+		 int kmcota = new OperatiiAngajat().getKmCota(new DBManager().getProdDataSource().getConnection(), "00002143", "04-04-2018", "04-04-2018");
 		 
+		 System.out.println("km cota : " + kmcota);
 		
 
 	}

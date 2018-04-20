@@ -545,13 +545,14 @@ public class OperatiiDelegatii {
 				delegatie.setListOpriri(getOpriri(conn, delegatie.getId()));
 
 				int kmCota = opAngajat.getKmCota(conn, rs.getString("codAngajat"), delegatie.getDataPlecare(), delegatie.getDataSosire());
+				
 
 				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc") + kmCota);
 
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
-				delegatie.setDistantaRecalculata((int) rs.getDouble("distrecalc"));
+				delegatie.setDistantaRecalculata((int) rs.getDouble("distrecalc") + kmCota);
 				listDelegatii.add(delegatie);
 			}
 
