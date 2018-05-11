@@ -12,8 +12,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,19 +22,24 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import flota.service.beans.Angajat;
+import flota.service.beans.AngajatCategorie;
 import flota.service.beans.BeanDelegatieAprobare;
 import flota.service.beans.BeanDelegatieGenerata;
+import flota.service.beans.CategorieAngajat;
 import flota.service.beans.DelegatieModifAntet;
 import flota.service.beans.DelegatieModifDetalii;
 import flota.service.beans.DelegatieNoua;
+import flota.service.beans.PozitieAngajat;
 import flota.service.beans.TestBean;
 import flota.service.beans.TestObject;
 import flota.service.beans.Traseu;
+import flota.service.model.NotificareAprobare;
 import flota.service.model.OperatiiAdresa;
 import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiMasina;
 import flota.service.model.OperatiiTraseu;
+import flota.service.model.PozitieMasina;
 import flota.service.model.ServiceDelegatii;
 import flota.service.utils.MailOperations;
 
@@ -201,8 +204,8 @@ public class MainService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Angajat> getAngajati(@QueryParam("tipAngajat") String tipAngajat, @QueryParam("unitLog") String unitLog,
-			@QueryParam("codDepart") String codDepart) {
-		return new OperatiiAngajat().getAngajati(tipAngajat, unitLog, codDepart);
+			@QueryParam("codDepart") String codDepart, @QueryParam("codAng") String codAngajat) {
+		return new OperatiiAngajat().getAngajati(tipAngajat, unitLog, codDepart, codAngajat);
 	}
 
 	@Path("getTraseu")
@@ -232,6 +235,12 @@ public class MainService {
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 
 		MailOperations.sendMail("Flota JOB", "Stop");
+
+		MailOperations.sendMail("Flota Notificari", "Start");
+
+		new NotificareAprobare().getNotificariAprobari();
+
+		MailOperations.sendMail("Flota Notificari", "Stop");
 
 		return "Done!";
 
@@ -263,6 +272,35 @@ public class MainService {
 
 		if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1)
 			new ServiceDelegatii().calculeazaKmSfarsitLuna();
+
+	}
+
+	@Path("getCategoriiSubord")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CategorieAngajat> getCategoriiSubord(@QueryParam("tipAngajat") String tipAngajat) {
+		return new OperatiiAngajat().getCategSubord(tipAngajat);
+	}
+
+	@Path("getAngajatiCategorie")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<AngajatCategorie> getAngajatCategorie(@QueryParam("filiala") String filiala, @QueryParam("tipAngajat") String tipAngajat,
+			@QueryParam("departament") String departament) {
+
+		return new OperatiiAngajat().getAngajatCategorie(filiala.trim(), tipAngajat.trim(), departament.trim());
+
+	}
+
+	@Path("getPozitieAngajat")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PozitieAngajat> getPozitieAngajat(@QueryParam("codAngajat") String codAngajat) {
+
+		return new PozitieMasina().getPozitieAngajat(codAngajat);
 
 	}
 
@@ -317,7 +355,5 @@ public class MainService {
 				.build();
 
 	}
-
-	
 
 }

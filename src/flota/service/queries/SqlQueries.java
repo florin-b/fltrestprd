@@ -1,7 +1,5 @@
 package flota.service.queries;
 
-import flota.service.utils.Utils;
-
 public class SqlQueries {
 	public static String getLocalitatiJudet() {
 		StringBuilder sqlString = new StringBuilder();
@@ -73,8 +71,7 @@ public class SqlQueries {
 
 		return sqlString.toString();
 	}
-	
-	
+
 	public static String getDelegatiiAprobareHeaderNONVanzari_DZ(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
@@ -421,8 +418,8 @@ public class SqlQueries {
 	public static String getSubordVanzari(String unitLogQs, String departQs) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select cod, nume from personal where functie in ");
-		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" select cod, nume from personal where (functie in ");
+		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) or cod = ?) ");
 		sqlString.append(" and tip <> '0' and filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" and substr(departament,0,2) in ");
@@ -435,8 +432,8 @@ public class SqlQueries {
 	public static String getSubordNonVanzari(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select cod, nume from personal where functie in ");
-		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) ");
+		sqlString.append(" select cod, nume from personal where (functie in ");
+		sqlString.append(" (select cod from functii_non_vanzari where aprobat=?) or cod = ? )");
 		sqlString.append(" and tip <> '0' and filiala in ");
 		sqlString.append(unitLogQs);
 		sqlString.append(" order by nume");
@@ -644,6 +641,68 @@ public class SqlQueries {
 		StringBuilder sqlString = new StringBuilder();
 
 		sqlString.append(" select fid from functii_non_vanzari where cod = 'ATR' and aprobat !='DAG' ");
+		return sqlString.toString();
+	}
+
+	public static String getFunctiiConducere() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select distinct nume, filiala, functie, departament, mail from personal where ");
+		sqlString.append(" functie in (select distinct aprobat from functii_non_vanzari) order by filiala, functie, departament ");
+
+		return sqlString.toString();
+	}
+
+	public static String getCategoriiSubordonati() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select cod, descriere from functii_non_vanzari where aprobat = ? and cod != 'WKND' ");
+		sqlString.append(" union ");
+		sqlString.append(" select cod, descriere from functii_non_vanzari where aprobat in ");
+		sqlString.append(" (select cod from functii_non_vanzari where aprobat = ? ) and cod != 'WKND' ");
+
+		return sqlString.toString();
+	}
+
+	public static String getAngajatiCategorieVanzari(String unitLogs, String tipuri) {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select cod, nume, functie from personal where filiala in " );
+		sqlString.append(unitLogs);
+		sqlString.append(" and functie in ");
+		sqlString.append(tipuri);
+		sqlString.append(" and departament =?  order by nume ");
+
+		return sqlString.toString();
+	}
+
+	public static String getAngajatiCategorieNonVanzari(String unitLogs, String tipuri) {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select cod, nume, functie from personal where filiala in ");
+		sqlString.append(unitLogs);
+		sqlString.append(" and functie in ");
+		sqlString.append(tipuri);
+		sqlString.append(" order by nume ");
+
+		return sqlString.toString();
+	}
+
+	public static String getPozitieMasina() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select lat, lon, to_char(gtime,'dd Mon hh24:mi') data from nexus_gps_data where gtime = ");
+		sqlString.append(" (select max(gtime) from nexus_gps_data where vcode=? ) ");
+		sqlString.append("	and vcode=? ");
+
+		return sqlString.toString();
+	}
+
+	public static String getNumeAngajat() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select nume from personal where cod = ?");
+
 		return sqlString.toString();
 	}
 

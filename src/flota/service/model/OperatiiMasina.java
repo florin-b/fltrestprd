@@ -184,7 +184,38 @@ public class OperatiiMasina {
 		return codes.toString();
 
 	}
-	
+
+	public String getCodGps(Connection connection, String codAngajat, String dataStart) {
+
+		StringBuilder codes = new StringBuilder();
+
+		try (PreparedStatement stmt = connection.prepareStatement(SqlQueries.getMasiniAlocateData());) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, DateUtils.formatDateSap(dataStart));
+
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				if (codes.toString().isEmpty()) {
+					codes.append(rs.getString("vcode"));
+					break;
+				}
+
+			}
+
+		}
+
+		catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+			MailOperations.sendMail(e.toString());
+		}
+
+		return codes.toString();
+
+	}
+
 	public String getNrAutoCodGps(Connection conn, String codDispGps) {
 
 		String nrAuto = " ";
@@ -193,7 +224,7 @@ public class OperatiiMasina {
 
 			stmt.setString(1, codDispGps);
 			stmt.executeQuery();
-			
+
 			ResultSet rs = stmt.getResultSet();
 
 			while (rs.next()) {

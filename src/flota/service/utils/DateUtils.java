@@ -260,4 +260,9 @@ public class DateUtils {
 		return interval;
 	}
 
+	public static String getFormattedCurrentDate() {
+		
+		return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
+	}
+
 }

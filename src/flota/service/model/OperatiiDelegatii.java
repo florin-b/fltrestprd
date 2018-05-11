@@ -270,6 +270,9 @@ public class OperatiiDelegatii {
 				int distCalc = kmCalc + kmCota;
 				int distRecalc = kmRecalc + kmCota;
 
+				if (distRecalc == -1)
+					distRecalc = 0;
+
 				if (kmCalc == 0)
 					distCalc = 0;
 
@@ -545,7 +548,6 @@ public class OperatiiDelegatii {
 				delegatie.setListOpriri(getOpriri(conn, delegatie.getId()));
 
 				int kmCota = opAngajat.getKmCota(conn, rs.getString("codAngajat"), delegatie.getDataPlecare(), delegatie.getDataSosire());
-				
 
 				delegatie.setDistantaCalculata((int) rs.getDouble("distcalc") + kmCota);
 

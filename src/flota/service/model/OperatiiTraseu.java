@@ -479,8 +479,6 @@ public class OperatiiTraseu {
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCoordRuta());) {
 
-			System.out.println(SqlQueries.getCoordRuta() + " , " + nrMasina + " , " + dataStart + " , " + dataStop);
-
 			stmt.setString(1, nrMasina);
 			stmt.setString(2, dataStart);
 			stmt.setString(3, dataStop);

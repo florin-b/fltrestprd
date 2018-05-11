@@ -14,6 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.beans.Angajat;
+import flota.service.beans.AngajatCategorie;
+import flota.service.beans.CategorieAngajat;
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
@@ -73,7 +75,7 @@ public class OperatiiAngajat {
 
 	}
 
-	public List<Angajat> getAngajati(String tipAngajat, String unitLog, String codDepart) {
+	public List<Angajat> getAngajati(String tipAngajat, String unitLog, String codDepart, String codAngajat) {
 
 		List<Angajat> listAngajati = new ArrayList<>();
 
@@ -92,11 +94,12 @@ public class OperatiiAngajat {
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
-			int pos = 2;
+			int pos = 3;
 			String[] unitLogs = unitLog.split(",");
 			String[] departs = codDepart.split(",");
 
 			stmt.setString(1, tipAngajat);
+			stmt.setString(2, codAngajat);
 
 			for (int ii = 0; ii < unitLogs.length; ii++)
 				stmt.setString(pos++, unitLogs[ii]);
@@ -126,6 +129,115 @@ public class OperatiiAngajat {
 		}
 
 		return listAngajati;
+	}
+
+	public List<CategorieAngajat> getCategSubord(String tipAngajat) {
+		List<CategorieAngajat> categorii = new ArrayList<>();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCategoriiSubordonati())) {
+
+			stmt.setString(1, tipAngajat);
+			stmt.setString(2, tipAngajat);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				CategorieAngajat categorie = new CategorieAngajat();
+				categorie.setTip(rs.getString("cod"));
+				categorie.setDescriere(rs.getString("descriere"));
+				categorii.add(categorie);
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return categorii;
+	}
+
+	public List<AngajatCategorie> getAngajatCategorie(String filiala, String tipAngajat, String departament) {
+		List<AngajatCategorie> listAngajati = new ArrayList<>();
+
+		String tipAngajati = Utils.generateQs(tipAngajat.replace(';', ','));
+
+		String unitLogQs = Utils.generateQs(filiala);
+
+		String sqlString = "";
+
+		boolean isCategorieVanzari;
+
+		if (departament == null || departament.isEmpty() || tipAngajat.equals("DZ"))
+			isCategorieVanzari = false;
+		else
+			isCategorieVanzari = Integer.parseInt(departament) >= 1 && Integer.parseInt(departament) <= 11;
+
+		if (isCategorieVanzari)
+			sqlString = SqlQueries.getAngajatiCategorieVanzari(unitLogQs, tipAngajati);
+		else
+			sqlString = SqlQueries.getAngajatiCategorieNonVanzari(unitLogQs, tipAngajati);
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlString)) {
+
+			String[] tipAng = tipAngajat.replace(';', ',').split(",");
+			String[] unitLogs = filiala.split(",");
+
+			int pos = 1;
+
+			for (int ii = 0; ii < unitLogs.length; ii++)
+				stmt.setString(pos++, unitLogs[ii]);
+
+			for (int ii = 0; ii < tipAng.length; ii++)
+				stmt.setString(pos++, tipAng[ii]);
+
+			if (isCategorieVanzari)
+				stmt.setString(pos++, departament);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+
+				AngajatCategorie angajat = new AngajatCategorie();
+
+				angajat.setCod(rs.getString("cod"));
+				angajat.setNume(rs.getString("nume"));
+				angajat.setCategorie(rs.getString("functie"));
+				listAngajati.add(angajat);
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return listAngajati;
+	}
+
+	public String getNumeAngajat(Connection conn, String codAngajat) {
+
+		String numeAngajat = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getNumeAngajat())) {
+
+			stmt.setString(1, codAngajat);
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				numeAngajat = rs.getString("nume");
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return numeAngajat;
 	}
 
 }
