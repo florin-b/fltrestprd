@@ -107,7 +107,7 @@ public class OperatiiAngajat {
 			if (isPersVanzari) {
 
 				for (int ii = 0; ii < departs.length; ii++)
-					stmt.setString(pos++, departs[ii]);
+					stmt.setString(pos++, departs[ii].substring(0, 2));
 			}
 
 			stmt.executeQuery();
@@ -193,7 +193,7 @@ public class OperatiiAngajat {
 				stmt.setString(pos++, tipAng[ii]);
 
 			if (isCategorieVanzari)
-				stmt.setString(pos++, departament);
+				stmt.setString(pos++, departament.substring(0, 2));
 
 			stmt.executeQuery();
 

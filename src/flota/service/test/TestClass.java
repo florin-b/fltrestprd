@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import flota.service.beans.FunctieConducere;
 import flota.service.database.DBManager;
+import flota.service.helpers.HelperAprobare;
 import flota.service.model.NotificareAprobare;
 import flota.service.model.OperatiiDelegatii;
 
@@ -21,13 +22,11 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		
-
-		
-		new NotificareAprobare().getNotificariAprobari();
+		//new OperatiiDelegatii().recalculeazaDelegatie("41363295812");
 		
 		
 		
+		new OperatiiDelegatii().getDelegatiiAprobari("SD", "BZ10", "041");
 		
 
 	}

@@ -18,24 +18,28 @@ public class HelperAprobare {
 
 	private static final Logger logger = LogManager.getLogger(HelperAprobare.class);
 
-	public static String getCodAprobare(Connection conn, String codAngajat, String tipAngajat) {
-
-		String codAprobare;
-
-		if (tipAngajat.toUpperCase().startsWith("KA"))
-			codAprobare = getCodAprobareKA(conn, codAngajat, tipAngajat);
-		else if (tipAngajat.toUpperCase().startsWith("CAG") || tipAngajat.toUpperCase().startsWith("CONS"))
-			codAprobare = getCodAprobareConsilieri(conn, codAngajat, tipAngajat);
-		else if (tipAngajat.trim().equalsIgnoreCase("CJ"))
-			codAprobare = getCodAprobareJuridic(conn, codAngajat, tipAngajat.trim());
-		else if (tipAngajat.trim().equalsIgnoreCase("AV"))
-			codAprobare = getCodAprobareAV(conn, codAngajat);
-		else
-			codAprobare = getCodAprobareGeneral(conn, codAngajat);
-
-		return codAprobare;
-
-	}
+	/*
+	 * public static String getCodAprobare(Connection conn, String codAngajat,
+	 * String tipAngajat) {
+	 * 
+	 * String codAprobare;
+	 * 
+	 * if (tipAngajat.toUpperCase().startsWith("KA")) codAprobare =
+	 * getCodAprobareKA(conn, codAngajat, tipAngajat); else if
+	 * (tipAngajat.toUpperCase().startsWith("CAG") ||
+	 * tipAngajat.toUpperCase().startsWith("CONS")) codAprobare =
+	 * getCodAprobareConsilieri(conn, codAngajat, tipAngajat); else if
+	 * (tipAngajat.trim().equalsIgnoreCase("CJ")) codAprobare =
+	 * getCodAprobareJuridic(conn, codAngajat, tipAngajat.trim()); else if
+	 * (tipAngajat.trim().equalsIgnoreCase("AV")) codAprobare =
+	 * getCodAprobareAV(conn, codAngajat); else codAprobare =
+	 * getCodAprobareGeneral(conn, codAngajat);
+	 * 
+	 * return codAprobare;
+	 * 
+	 * }
+	 * 
+	 */
 
 	public static String getCodAprobare(Connection conn, DelegatieNoua delegatie) {
 
@@ -51,6 +55,8 @@ public class HelperAprobare {
 			codAprobare = getCodAprobareAV(conn, delegatie.getCodAngajat());
 		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("ATR"))
 			codAprobare = getCodAprobareATR(conn, delegatie);
+		else if (delegatie.getTipAngajat().trim().equalsIgnoreCase("SBL"))
+			codAprobare = getCodAprobareSBA(conn, delegatie);
 		else
 			codAprobare = getCodAprobareGeneral(conn, delegatie.getCodAngajat());
 
@@ -216,6 +222,10 @@ public class HelperAprobare {
 				codAprobare = codSDKA;
 			else
 				codAprobare = codDZ;
+			
+			if (codAprobare == null && tipKA.equals("KA"))
+					codAprobare = "27";
+				
 
 		} catch (SQLException e) {
 			MailOperations.sendMail(e.toString());
@@ -351,6 +361,34 @@ public class HelperAprobare {
 		}
 
 		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getCodAprobareATRFiliale())) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				codAprobare = rs.getString(1);
+			}
+
+		} catch (SQLException e) {
+			MailOperations.sendMail(e.toString());
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAprobare;
+	}
+
+	private static String getCodAprobareSBA(Connection conn, DelegatieNoua delegatie) {
+		String codAprobare = null;
+
+		String sqlString = "";
+
+		if (delegatie.getUnitLog().equals("GL90")) {
+			sqlString = SqlQueries.getCodAprobareSBAGLCentral();
+		} else
+			sqlString = SqlQueries.getCodAprobareSBAFiliale();
+
+		try (PreparedStatement stmt = conn.prepareStatement(sqlString)) {
 
 			stmt.executeQuery();
 

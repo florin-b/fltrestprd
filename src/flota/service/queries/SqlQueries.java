@@ -522,6 +522,17 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String getCodAprobareKA1() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select distinct f.fid, f.aprobat from personal p, functii_non_vanzari f ");
+		sqlString.append(" where p.filiala =(select filiala from personal where cod=?) ");
+		sqlString.append(" and p.functie in ('SDKA','DZ') and p.functie = f.aprobat and f.cod=? ");
+		sqlString.append(" union select  f.fid, f.aprobat from functii_non_vanzari f  where upper(f.cod) = 'KA1' and f.aprobat ='DZ'");
+
+		return sqlString.toString();
+	}
+
 	public static String getCodAprobareAV() {
 		StringBuilder sqlString = new StringBuilder();
 
@@ -644,6 +655,20 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String getCodAprobareSBAFiliale() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select fid from functii_non_vanzari where cod = 'SBA' and aprobat ='DADMIN' ");
+		return sqlString.toString();
+	}
+
+	public static String getCodAprobareSBAGLCentral() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select fid from functii_non_vanzari where cod = 'SBA' and aprobat ='SSLO' ");
+		return sqlString.toString();
+	}
+
 	public static String getFunctiiConducere() {
 		StringBuilder sqlString = new StringBuilder();
 
@@ -667,7 +692,7 @@ public class SqlQueries {
 	public static String getAngajatiCategorieVanzari(String unitLogs, String tipuri) {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select cod, nume, functie from personal where filiala in " );
+		sqlString.append(" select cod, nume, functie from personal where filiala in ");
 		sqlString.append(unitLogs);
 		sqlString.append(" and functie in ");
 		sqlString.append(tipuri);

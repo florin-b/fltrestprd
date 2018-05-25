@@ -36,6 +36,8 @@ public class OperatiiDelegatii {
 
 	private static final Logger logger = LogManager.getLogger(OperatiiDelegatii.class);
 
+	
+	/*
 	public synchronized boolean adaugaDelegatie(String codAngajat, String tipAngajat, String dataPlecare, String oraPlecare, String distanta, String opriri,
 			String dataSosire, String nrAuto, String distRealizat) {
 
@@ -110,6 +112,7 @@ public class OperatiiDelegatii {
 
 	}
 
+*/
 	public synchronized boolean adaugaDelegatie(DelegatieNoua delegatie) {
 
 		boolean success = true;
@@ -222,7 +225,7 @@ public class OperatiiDelegatii {
 			if (isPersVanzari) {
 
 				for (int ii = 0; ii < departs.length; ii++)
-					stmt.setString(pos++, departs[ii]);
+					stmt.setString(pos++, departs[ii].substring(0, 2));
 			} else {
 
 				if (!tipAngajat.equals("DZ"))
@@ -554,7 +557,14 @@ public class OperatiiDelegatii {
 				delegatie.setDistantaRespinsa((int) rs.getDouble("distrespins"));
 				delegatie.setDistantaEfectuata((int) rs.getDouble("distreal"));
 				delegatie.setStatusCode(HelperDelegatie.getStatusDelegatie(conn, delegatie.getId()));
+				
+				int distRecalc = 0; 
+				if (rs.getDouble("distrecalc") > 0)
+					distRecalc = (int)rs.getDouble("distrecalc") + kmCota;
+				
 				delegatie.setDistantaRecalculata((int) rs.getDouble("distrecalc") + kmCota);
+				delegatie.setDistantaRecalculata(distRecalc);
+				
 				listDelegatii.add(delegatie);
 			}
 
@@ -600,7 +610,7 @@ public class OperatiiDelegatii {
 					stmt.setString(pos++, unitLogs[ii]);
 
 				for (int ii = 0; ii < departs.length; ii++)
-					stmt.setString(pos++, departs[ii]);
+					stmt.setString(pos++, departs[ii].substring(0, 2));
 
 				stmt.setString(pos++, DateUtils.formatDateSap(dataStart));
 				stmt.setString(pos++, DateUtils.formatDateSap(dataStop));

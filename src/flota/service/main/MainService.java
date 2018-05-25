@@ -74,22 +74,6 @@ public class MainService {
 
 	}
 
-	@Path("adaugaDelegatieText")
-	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String adaugaDelegatieText(@FormParam("codAngajat") String codAngajat, @FormParam("tipAngajat") String tipAngajat,
-			@FormParam("dataP") String dataPlecare, @FormParam("oraP") String oraPlecare, @FormParam("dataS") String dataSosire,
-			@FormParam("distcalc") String distCalc, @FormParam("stops") String stops, @FormParam("nrAuto") String nrAuto,
-			@FormParam("distreal") String distReal) {
-
-		synchronized (MainService.class) {
-
-			boolean success = new OperatiiDelegatii().adaugaDelegatie(codAngajat, tipAngajat, dataPlecare, oraPlecare, distCalc, stops, dataSosire, nrAuto,
-					distReal);
-			return success ? "1" : "0";
-		}
-	}
-
 	@Path("adaugaDelegatie")
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
