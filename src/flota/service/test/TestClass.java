@@ -15,6 +15,7 @@ import flota.service.database.DBManager;
 import flota.service.helpers.HelperAprobare;
 import flota.service.model.NotificareAprobare;
 import flota.service.model.OperatiiDelegatii;
+import flota.service.utils.MailOperations;
 
 public class TestClass {
 
@@ -26,7 +27,16 @@ public class TestClass {
 		
 		
 		
-		new OperatiiDelegatii().getDelegatiiAprobari("SD", "BZ10", "041");
+		//new OperatiiDelegatii().getDelegatiiAprobari("SD", "BZ10", "041");
+		
+		
+		
+		MailOperations.sendMail("Flota Notificari", "Start");
+
+		new NotificareAprobare().getNotificariAprobari();
+
+		MailOperations.sendMail("Flota Notificari", "Stop");
+		
 		
 
 	}

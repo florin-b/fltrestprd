@@ -38,21 +38,8 @@ public class NotificareAprobare {
 					functie.getDepartament() == null ? " " : functie.getDepartament())).size();
 
 			if (nrDelegatiiAprobare > 0 && functie.getMail() != null) {
-				strMail.append(" La data de ");
-				strMail.append(DateUtils.getFormattedCurrentDate());
-				strMail.append(" existau pentru aprobare ");
-				strMail.append(nrDelegatiiAprobare);
-				strMail.append(" delegatii. ");
-				strMail.append("\n");
-				strMail.append(functie.getMail());
-
-				strMail.setLength(0);
 
 				strMail.append("Exista delegatii care asteapta aprobarea dumneavoastra.");
-
-				strMail.append("\n");
-				strMail.append("\n");
-				strMail.append(functie.getMail());
 
 				strMail.append("\n");
 				strMail.append("\n");
@@ -60,7 +47,7 @@ public class NotificareAprobare {
 				strMail.append("\n");
 				strMail.append("https://delegatii.arabesque.ro");
 
-				MailOperations.sendMail(strMail.toString());
+				MailOperations.sendMailNotificare(functie.getMail(), strMail.toString());
 
 				strMail.setLength(0);
 

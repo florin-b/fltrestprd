@@ -44,9 +44,7 @@ public class MailOperations {
 		}
 
 	}
-	
-	
-	
+
 	public static void sendMailName(String mailMessage) {
 
 		String to = "florin.brasoveanu@arabesque.ro";
@@ -76,7 +74,6 @@ public class MailOperations {
 		}
 
 	}
-	
 
 	public static void sendMail(String subject, String mailMessage) {
 
@@ -97,6 +94,36 @@ public class MailOperations {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 			message.setSubject(subject);
+
+			message.setText(mailMessage);
+
+			Transport.send(message, message.getAllRecipients());
+
+		} catch (Exception mex) {
+			logger.error(mex.toString());
+		}
+
+	}
+
+	public static void sendMailNotificare(String mailAddress, String mailMessage) {
+
+		String to = mailAddress;
+		String from = "Delegatii";
+		String host = "localhost";
+
+		Properties properties = System.getProperties();
+		properties.setProperty("mail.smtp.host", host);
+
+		Session session = Session.getDefaultInstance(properties);
+
+		try {
+			MimeMessage message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress(from));
+
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+			message.setSubject("Delegatii");
 
 			message.setText(mailMessage);
 
