@@ -43,9 +43,15 @@ public class NotificareAprobare {
 
 				strMail.append("\n");
 				strMail.append("\n");
-				strMail.append("Puteti accesa aplicatia de aici:");
+				strMail.append("Daca sunteti conectat la reteaua Arabesque accesati aplicatia de aici:");
 				strMail.append("\n");
 				strMail.append("https://delegatii.arabesque.ro");
+				
+				strMail.append("\n");
+				strMail.append("\n");
+				strMail.append("Daca sunteti conectat la alta retea accesati aplicatia de aici:");
+				strMail.append("\n");
+				strMail.append("https://delegatii.arabesque.ro:8443");
 
 				MailOperations.sendMailNotificare(functie.getMail(), strMail.toString());
 

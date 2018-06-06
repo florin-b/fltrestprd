@@ -23,7 +23,7 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		//new OperatiiDelegatii().recalculeazaDelegatie("41363295812");
+		new OperatiiDelegatii().recalculeazaDelegatie("42883042689");
 		
 		
 		
@@ -31,11 +31,7 @@ public class TestClass {
 		
 		
 		
-		MailOperations.sendMail("Flota Notificari", "Start");
-
-		new NotificareAprobare().getNotificariAprobari();
-
-		MailOperations.sendMail("Flota Notificari", "Stop");
+		
 		
 		
 

@@ -215,19 +215,19 @@ public class MainService {
 	public String calculeazaDelegatii() {
 
 		MailOperations.sendMail("Flota JOB", "Start");
-
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
-
 		MailOperations.sendMail("Flota JOB", "Stop");
-
-		MailOperations.sendMail("Flota Notificari", "Start");
-
-		new NotificareAprobare().getNotificariAprobari();
-
-		MailOperations.sendMail("Flota Notificari", "Stop");
 
 		return "Done!";
 
+	}
+
+	@Path("trimiteNotificari")
+	@GET
+	public void sendNotificariDelegatii() {
+		MailOperations.sendMail("Flota Notificari", "Start");
+		new NotificareAprobare().getNotificariAprobari();
+		MailOperations.sendMail("Flota Notificari", "Stop");
 	}
 
 	@Path("genereazaDelegatie")
