@@ -4,18 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import flota.service.beans.FunctieConducere;
 import flota.service.database.DBManager;
-import flota.service.helpers.HelperAprobare;
-import flota.service.model.NotificareAprobare;
+import flota.service.model.AlertaMail;
 import flota.service.model.OperatiiDelegatii;
-import flota.service.utils.MailOperations;
 
 public class TestClass {
 
@@ -23,17 +18,9 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		new OperatiiDelegatii().recalculeazaDelegatie("42883042689");
-		
-		
-		
-		//new OperatiiDelegatii().getDelegatiiAprobari("SD", "BZ10", "041");
-		
-		
-		
-		
-		
-		
+		// new OperatiiDelegatii().recalculeazaDelegatie("43778403522");
+
+		new AlertaMail().trimiteAlerteCreareDelegatii();
 
 	}
 

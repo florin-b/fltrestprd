@@ -731,4 +731,59 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String getAngajatiCuDelegatii() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select codangajat from sapprd.zdelegatiehead where ");
+		sqlString.append(" to_date(?,'yyyymmdd') between to_date(data_plecare,'yyyymmdd') and to_date(data_sosire,'yyyymmdd') ");
+		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = id and status = '6') ");
+
+		return sqlString.toString();
+	}
+
+	public static String getKmEfectuati() {
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append(" select max(km) - min(km) from nexus_gps_data where trunc(gtime) = ? and vcode = ?  ");
+		return sqlString.toString();
+	}
+
+	public static String getKmPrag() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select cast (cotakm as int) + cast (cotakm as int) * 0.5 km_prag from sapprd.pa9001 where mandt='900' ");
+		sqlString.append(" and pernr =? and to_date(begda,'yyyymmdd') <=to_date(?,'yyyymmdd') ");
+		sqlString.append(" and to_date(endda,'yyyymmdd') >=to_date(?,'yyyymmdd') ");
+
+		return sqlString.toString();
+	}
+
+	public static String getDistante() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select vcode, max(km) - min(km)  from nexus_gps_data where trunc(gtime) =? group by vcode ");
+		sqlString.append(" having  max(km) - min(km) > 20   ");
+
+		return sqlString.toString();
+	}
+
+	public static String getAngajatGps() {
+		StringBuilder sqlString = new StringBuilder();
+		sqlString.append(" select distinct a.pernr ");
+		sqlString.append(" from sapprd.anlz a join sapprd.anla b on b.anln1 = a.anln1 and b.anln2 = a.anln2 and b.mandt=a.mandt ");
+		sqlString.append(" join sapprd.aufk c on c.aufnr = a.caufn and c.mandt=a.mandt ");
+		sqlString.append(" where a.adatu<=? and a.bdatu >=? and b.deakt = '00000000' and a.mandt='900' ");
+		sqlString.append(" and trim(regexp_replace(c.ktext,'-| ','')) in (select distinct trim(regexp_replace(n.car_number,'-| ','')) ");
+		sqlString.append(" from websap.our_vehicles n where vcode =? ) ");
+
+		return sqlString.toString();
+	}
+
+	public static String getAdresaMailAngajat() {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select mail from personal where cod = ? ");
+
+		return sqlString.toString();
+	}
+
 }

@@ -33,6 +33,7 @@ import flota.service.beans.PozitieAngajat;
 import flota.service.beans.TestBean;
 import flota.service.beans.TestObject;
 import flota.service.beans.Traseu;
+import flota.service.model.AlertaMail;
 import flota.service.model.NotificareAprobare;
 import flota.service.model.OperatiiAdresa;
 import flota.service.model.OperatiiAngajat;
@@ -217,7 +218,11 @@ public class MainService {
 		MailOperations.sendMail("Flota JOB", "Start");
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 		MailOperations.sendMail("Flota JOB", "Stop");
-
+		
+		MailOperations.sendMail("Flota JOB", "Start notificari delegatii neefectuate");
+		new AlertaMail().trimiteAlerteCreareDelegatii();
+		MailOperations.sendMail("Flota JOB", "Stop notificari delegatii neefectuate");
+		
 		return "Done!";
 
 	}

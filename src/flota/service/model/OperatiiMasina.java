@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import flota.service.beans.Distanta;
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
@@ -241,6 +242,31 @@ public class OperatiiMasina {
 
 		return nrAuto;
 
+	}
+
+	public List<Distanta> getDistante(String data) {
+		List<Distanta> listDistante = new ArrayList<>();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDistante())) {
+
+			stmt.setString(1, data);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				Distanta dist = new Distanta();
+				dist.setCodDisp(rs.getString(1));
+				dist.setDistanta((int) rs.getDouble(2));
+				listDistante.add(dist);
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return listDistante;
 	}
 
 }

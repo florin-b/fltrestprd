@@ -261,8 +261,26 @@ public class DateUtils {
 	}
 
 	public static String getFormattedCurrentDate() {
-		
+
 		return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
+	}
+
+	public static String getYesterday() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		return dateFormat.format(calendar.getTime());
+
+	}
+	
+	public static String getYesterdayFormat() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		return dateFormat.format(calendar.getTime());
+
 	}
 
 }

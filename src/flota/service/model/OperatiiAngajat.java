@@ -8,6 +8,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import flota.service.beans.Angajat;
 import flota.service.beans.AngajatCategorie;
 import flota.service.beans.CategorieAngajat;
+import flota.service.beans.Distanta;
 import flota.service.database.DBManager;
 import flota.service.queries.SqlQueries;
 import flota.service.utils.DateUtils;
@@ -238,6 +240,163 @@ public class OperatiiAngajat {
 		}
 
 		return numeAngajat;
+	}
+
+	public List<String> getAngajatiCuDelegatii(String data) {
+		List<String> listAngajati = new ArrayList<>();
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getAngajatiCuDelegatii())) {
+
+			stmt.setString(1, data);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				listAngajati.add(rs.getString("codangajat"));
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return listAngajati;
+	}
+
+	public static String getAngajatGps(Connection conn, String data, String codGps) {
+
+		String codAngajat = null;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getAngajatGps())) {
+
+			stmt.setString(1, data);
+			stmt.setString(2, data);
+			stmt.setString(3, codGps);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				codAngajat = rs.getString("pernr");
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return codAngajat;
+	}
+
+	public int getKmPrag(Connection conn, String codAngajat, String data) {
+		int kmPrag = 0;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getKmPrag())) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, data);
+			stmt.setString(3, data);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				kmPrag = rs.getInt("km_prag");
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return kmPrag;
+	}
+
+	public void getAngajatiFaraDelegatii(List<String> angajatiCuDelegatii, List<Distanta> distanteParcurse) {
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();) {
+
+			Iterator<Distanta> iterator = distanteParcurse.iterator();
+
+			String codAngajat;
+			while (iterator.hasNext()) {
+				Distanta dist = iterator.next();
+
+				codAngajat = getAngajatGps(conn, DateUtils.getYesterday(), dist.getCodDisp());
+				dist.setCodAngajat(codAngajat);
+
+				if (angajatiCuDelegatii.contains(codAngajat))
+					iterator.remove();
+
+			}
+
+			int kmPrag = 0;
+			iterator = distanteParcurse.iterator();
+			while (iterator.hasNext()) {
+				Distanta dist = iterator.next();
+
+				kmPrag = getKmPrag(conn, dist.getCodAngajat(), DateUtils.getYesterday());
+
+				if (dist.getDistanta() < kmPrag)
+					iterator.remove();
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+	}
+
+	public static String getAdresaMailAngajat(Connection conn, String codAngajat) {
+
+		String adresaMail = "";
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.getAdresaMailAngajat())) {
+
+			stmt.setString(1, codAngajat);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				adresaMail = rs.getString("mail");
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return adresaMail;
+	}
+
+	public void sendMailAlerts(List<Distanta> listDistante, String data) {
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection()) {
+
+			String adresaMail = "";
+			String textMail = "";
+			for (Distanta distanta : listDistante) {
+
+				adresaMail = getAdresaMailAngajat(conn, distanta.getCodAngajat());
+
+				textMail = "In data de " + data + " ati efectuat " + distanta.getDistanta() + " km fara delegatie.";
+
+				textMail += " Cod angajat = " + distanta.getCodAngajat() + " , cod gps = " + distanta.getCodDisp();
+
+				textMail += " Adresa = " + adresaMail;
+
+				MailOperations.sendMailName(textMail);
+
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
 	}
 
 }

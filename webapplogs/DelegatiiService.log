@@ -54,3 +54,85 @@
 25-May-2018 12:42:33 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused: connect
+13-Jun-2018 14:12:49 [main] ERROR flota.service.model.OperatiiMasina - java.sql.SQLException: Invalid column index
+	at oracle.jdbc.driver.OracleResultSetImpl.getString(OracleResultSetImpl.java:1277)
+	at flota.service.model.OperatiiMasina.getDistante(OperatiiMasina.java:259)
+	at flota.service.test.TestClass.main(TestClass.java:33)
+
+13-Jun-2018 15:14:43 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (96). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:15:41 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (36). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:18:30 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (28). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:21:40 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (49). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:24:06 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (35). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:27:58 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (65). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
+13-Jun-2018 15:30:17 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (30). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:41)
+
