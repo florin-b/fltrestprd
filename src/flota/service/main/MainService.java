@@ -218,11 +218,7 @@ public class MainService {
 		MailOperations.sendMail("Flota JOB", "Start");
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 		MailOperations.sendMail("Flota JOB", "Stop");
-		
-		MailOperations.sendMail("Flota JOB", "Start notificari delegatii neefectuate");
-		new AlertaMail().trimiteAlerteCreareDelegatii();
-		MailOperations.sendMail("Flota JOB", "Stop notificari delegatii neefectuate");
-		
+
 		return "Done!";
 
 	}
@@ -233,6 +229,14 @@ public class MainService {
 		MailOperations.sendMail("Flota Notificari", "Start");
 		new NotificareAprobare().getNotificariAprobari();
 		MailOperations.sendMail("Flota Notificari", "Stop");
+	}
+
+	@Path("notificariDelegatiiNeefectuate")
+	@GET
+	public void sendNotificariDelegatiiNeefectuate() {
+		MailOperations.sendMail("Flota JOB", "Start notificari delegatii neefectuate");
+		new AlertaMail().trimiteAlerteCreareDelegatii();
+		MailOperations.sendMail("Flota JOB", "Stop notificari delegatii neefectuate");
 	}
 
 	@Path("genereazaDelegatie")

@@ -28,9 +28,8 @@ public class AlertaMail {
 	public void trimiteAlerteCreareDelegatii() {
 
 		List<String> angajatiDelegatii = new OperatiiAngajat().getAngajatiCuDelegatii(DateUtils.getYesterday());
-
 		List<Distanta> listDistante = new OperatiiMasina().getDistante(DateUtils.getYesterdayFormat());
-
+		
 		new OperatiiAngajat().getAngajatiFaraDelegatii(angajatiDelegatii, listDistante);
 
 		new OperatiiAngajat().sendMailAlerts(listDistante, DateUtils.getYesterdayFormat());

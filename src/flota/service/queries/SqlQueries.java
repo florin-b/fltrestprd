@@ -760,7 +760,7 @@ public class SqlQueries {
 	public static String getDistante() {
 		StringBuilder sqlString = new StringBuilder();
 
-		sqlString.append(" select vcode, max(km) - min(km)  from nexus_gps_data where trunc(gtime) =? group by vcode ");
+		sqlString.append(" select vcode, max(km) - min(km)  from nexus_gps_data where trunc(gtime) = to_date(?,'dd-mm-yyyy') group by vcode ");
 		sqlString.append(" having  max(km) - min(km) > 20   ");
 
 		return sqlString.toString();

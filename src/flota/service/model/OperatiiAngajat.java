@@ -383,14 +383,18 @@ public class OperatiiAngajat {
 
 				adresaMail = getAdresaMailAngajat(conn, distanta.getCodAngajat());
 
-				textMail = "In data de " + data + " ati efectuat " + distanta.getDistanta() + " km fara delegatie.";
+				textMail = "In data de " + data + " ati efectuat " + distanta.getDistanta() + " km si nu aveti delegatie creata in sistem. ";
+				
+				textMail += "Daca trebuia sa o intocmiti si nu ati facut-o va rog sa o creati in cel mai scurt timp.";
 
 				textMail += " Cod angajat = " + distanta.getCodAngajat() + " , cod gps = " + distanta.getCodDisp();
 
 				textMail += " Adresa = " + adresaMail;
 
-				MailOperations.sendMailName(textMail);
-
+				
+				MailOperations.sendMailNotificare("florin.brasoveanu@arabesque.ro", textMail);
+				
+				MailOperations.sendMail("Flota JOB", DateUtils.getYesterday());
 			}
 
 		} catch (SQLException e) {

@@ -18,7 +18,7 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		// new OperatiiDelegatii().recalculeazaDelegatie("43778403522");
+		// new OperatiiDelegatii().recalculeazaDelegatie("45744643701");
 
 		new AlertaMail().trimiteAlerteCreareDelegatii();
 
