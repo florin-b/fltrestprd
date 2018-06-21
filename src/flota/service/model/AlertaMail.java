@@ -27,12 +27,13 @@ public class AlertaMail {
 
 	public void trimiteAlerteCreareDelegatii() {
 
-		List<String> angajatiDelegatii = new OperatiiAngajat().getAngajatiCuDelegatii(DateUtils.getYesterday());
-		List<Distanta> listDistante = new OperatiiMasina().getDistante(DateUtils.getYesterdayFormat());
-		
-		new OperatiiAngajat().getAngajatiFaraDelegatii(angajatiDelegatii, listDistante);
+		OperatiiAngajat opAngajat = new OperatiiAngajat();
 
-		new OperatiiAngajat().sendMailAlerts(listDistante, DateUtils.getYesterdayFormat());
+		List<String> angajatiDelegatii = opAngajat.getAngajatiCuDelegatii(DateUtils.getYesterday());
+		List<Distanta> listDistante = new OperatiiMasina().getDistante(DateUtils.getYesterdayFormat());
+
+		opAngajat.getAngajatiFaraDelegatii(angajatiDelegatii, listDistante);
+		opAngajat.sendMailAlerts(listDistante, DateUtils.getYesterdayFormat());
 
 	}
 
