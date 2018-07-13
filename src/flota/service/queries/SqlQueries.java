@@ -778,6 +778,17 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String isAngajatLiberKm(){
+		StringBuilder sqlString = new StringBuilder();
+		
+		sqlString.append(" select liber  from sapprd.pa9001 where mandt='900'  ");
+		sqlString.append(" and pernr =? and to_date(begda,'yyyymmdd') <=to_date(?,'yyyymmdd')  ");
+		sqlString.append(" and to_date(endda,'yyyymmdd') >=to_date(?,'yyyymmdd')  ");
+		
+		return sqlString.toString();
+	}
+	
+	
 	public static String getAdresaMailAngajat() {
 		StringBuilder sqlString = new StringBuilder();
 

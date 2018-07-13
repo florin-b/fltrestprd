@@ -161,6 +161,8 @@ public class OperatiiAngajat {
 	}
 
 	public List<AngajatCategorie> getAngajatCategorie(String filiala, String tipAngajat, String departament) {
+		
+		
 		List<AngajatCategorie> listAngajati = new ArrayList<>();
 
 		String tipAngajati = Utils.generateQs(tipAngajat.replace(';', ','));
@@ -290,6 +292,31 @@ public class OperatiiAngajat {
 		return codAngajat;
 	}
 
+	
+	public static boolean isAngajatLiberKm(Connection conn, String data, String codAngajat) {
+
+		boolean isLiber = false;
+
+		try (PreparedStatement stmt = conn.prepareStatement(SqlQueries.isAngajatLiberKm())) {
+
+			stmt.setString(1, codAngajat);
+			stmt.setString(2, data);
+			stmt.setString(3, data);
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				isLiber  = rs.getString("liber").equalsIgnoreCase("X");
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+		}
+
+		return isLiber;
+	}	
+	
 	public int getKmPrag(Connection conn, String codAngajat, String data) {
 		int kmPrag = 0;
 
@@ -321,13 +348,16 @@ public class OperatiiAngajat {
 			Iterator<Distanta> iterator = distanteParcurse.iterator();
 
 			String codAngajat;
+			boolean isAngajatLiberKm;
 			while (iterator.hasNext()) {
 				Distanta dist = iterator.next();
 
 				codAngajat = getAngajatGps(conn, DateUtils.getYesterday(), dist.getCodDisp());
 				dist.setCodAngajat(codAngajat);
 
-				if (angajatiCuDelegatii.contains(codAngajat))
+				isAngajatLiberKm = isAngajatLiberKm(conn,  DateUtils.getYesterday(), codAngajat);
+				
+				if (angajatiCuDelegatii.contains(codAngajat) || isAngajatLiberKm)
 					iterator.remove();
 
 			}
@@ -391,8 +421,8 @@ public class OperatiiAngajat {
 				textMail += "\n\n";
 				textMail += "\n\n";
 
-
 				MailOperations.sendMailNotificare(adresaMail, textMail);
+				
 
 			}
 

@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import flota.service.database.DBManager;
-import flota.service.model.AlertaMail;
+import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
 
 public class TestClass {
@@ -20,7 +20,12 @@ public class TestClass {
 
 		// new OperatiiDelegatii().recalculeazaDelegatie("45744643701");
 
-		new AlertaMail().trimiteAlerteCreareDelegatii();
+		System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10", " ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV; ", ""));
+		
+	
+		
+		
+		
 
 	}
 
