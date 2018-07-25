@@ -284,3 +284,16 @@
 22-Jun-2018 14:56:01 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused: connect
+23-Jul-2018 13:53:21 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (31). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:290)
+	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
+	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
+	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:1000)
+	at flota.service.test.TestClass.main(TestClass.java:21)
+

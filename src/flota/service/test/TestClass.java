@@ -18,9 +18,9 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		// new OperatiiDelegatii().recalculeazaDelegatie("45744643701");
+		 new OperatiiDelegatii().recalculeazaDelegatie("48527867603");
 
-		System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10", " ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV; ", ""));
+		//System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10", " ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV; ", ""));
 		
 	
 		
