@@ -1,65 +1,356 @@
-30-Apr-2018 10:13:38 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-04-May-2018 12:32:27 [main] ERROR flota.service.model.PozitieMasina - java.sql.SQLException: Invalid column name
-	at oracle.jdbc.driver.OracleStatement.getColumnIndex(OracleStatement.java:3724)
-	at oracle.jdbc.driver.OracleResultSetImpl.findColumn(OracleResultSetImpl.java:2799)
-	at oracle.jdbc.driver.OracleResultSet.getDouble(OracleResultSet.java:426)
-	at flota.service.model.PozitieMasina.getCoordonateDisp(PozitieMasina.java:58)
-	at flota.service.test.TestClass.main(TestClass.java:24)
-
-04-May-2018 12:32:29 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-17-May-2018 12:08:55 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (30). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
+08-Oct-2018 14:50:35 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:35 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:36 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:36 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:37 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:37 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:38 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:38 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:39 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:39 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:40 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:40 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:41 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:41 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:42 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:42 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:43 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:43 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:44 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:44 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:45 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:45 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:46 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:46 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:47 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:47 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:48 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:48 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:49 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:50:49 [main] ERROR flota.service.utils.MapUtils - getAdreseCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.GeocodingApi$Response.getError(GeocodingApi.java:84)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getAdreseCoordonate(MapUtils.java:280)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:81)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ , key = 30
+08-Oct-2018 14:52:30 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
 	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
 	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
 	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
 	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
 	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:290)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
-	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:993)
-	at flota.service.test.TestClass.main(TestClass.java:25)
-
-25-May-2018 12:03:40 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:03:44 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:03:48 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:03:51 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:35:34 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:37:34 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:37:53 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:39:48 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:40:49 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-25-May-2018 12:42:33 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-13-Jun-2018 14:12:49 [main] ERROR flota.service.model.OperatiiMasina - java.sql.SQLException: Invalid column index
-	at oracle.jdbc.driver.OracleResultSetImpl.getString(OracleResultSetImpl.java:1277)
-	at flota.service.model.OperatiiMasina.getDistante(OperatiiMasina.java:259)
-	at flota.service.test.TestClass.main(TestClass.java:33)
-
-13-Jun-2018 15:14:43 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (96). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ key = 30
+08-Oct-2018 14:53:08 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.OverQueryLimitException: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account
+	at com.google.maps.errors.ApiException.from(ApiException.java:48)
+	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
+	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
+	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
+	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
+	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
+	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
+	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
+	at flota.service.test.TestClass.main(TestClass.java:29)
+ key = 28
+08-Oct-2018 14:56:47 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (77). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
 	at com.google.maps.errors.ApiException.from(ApiException.java:70)
 	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
 	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
@@ -68,232 +359,5 @@
 	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
 	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
 	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:15:41 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (36). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:18:30 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (28). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:21:40 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (49). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:24:06 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (35). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:27:58 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (65). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-13-Jun-2018 15:30:17 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (30). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.ServiceDelegatii.calculeazaKmTeoretici(ServiceDelegatii.java:84)
-	at flota.service.model.ServiceDelegatii.calculeazaKmSfarsitLuna(ServiceDelegatii.java:63)
-	at flota.service.test.TestClass.main(TestClass.java:41)
-
-20-Jun-2018 15:22:06 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:22:08 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:22:09 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:22:09 [main] ERROR flota.service.model.OperatiiMasina - java.sql.SQLException: Missing IN or OUT parameter at index:: 2
-	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1844)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3608)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3657)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1495)
-	at flota.service.model.OperatiiMasina.getDistante(OperatiiMasina.java:253)
-	at flota.service.model.AlertaMail.trimiteAlerteCreareDelegatii(AlertaMail.java:39)
-	at flota.service.test.TestClass.main(TestClass.java:23)
-
-20-Jun-2018 15:22:10 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:05 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:07 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:08 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:08 [main] ERROR flota.service.model.OperatiiMasina - java.sql.SQLException: Missing IN or OUT parameter at index:: 2
-	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1844)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3608)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3657)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1495)
-	at flota.service.model.OperatiiMasina.getDistante(OperatiiMasina.java:253)
-	at flota.service.model.AlertaMail.trimiteAlerteCreareDelegatii(AlertaMail.java:39)
-	at flota.service.test.TestClass.main(TestClass.java:23)
-
-20-Jun-2018 15:24:09 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:41 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:43 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:44 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:24:44 [main] ERROR flota.service.model.OperatiiMasina - java.sql.SQLException: Missing IN or OUT parameter at index:: 2
-	at oracle.jdbc.driver.OraclePreparedStatement.processCompletedBindRow(OraclePreparedStatement.java:1844)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3608)
-	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:3657)
-	at oracle.jdbc.driver.OraclePreparedStatementWrapper.executeQuery(OraclePreparedStatementWrapper.java:1495)
-	at flota.service.model.OperatiiMasina.getDistante(OperatiiMasina.java:253)
-	at flota.service.model.AlertaMail.trimiteAlerteCreareDelegatii(AlertaMail.java:39)
-	at flota.service.test.TestClass.main(TestClass.java:23)
-
-20-Jun-2018 15:24:45 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:14 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:16 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:17 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:37 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:39 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:40 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:25:54 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:01 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:02 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:03 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:04 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:05 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:06 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:07 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:08 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:09 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:10 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-20-Jun-2018 15:28:11 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-21-Jun-2018 12:35:39 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:47:37 [main] ERROR flota.service.model.OperatiiAngajat - java.sql.SQLException: Invalid column name
-	at oracle.jdbc.driver.OracleStatement.getColumnIndex(OracleStatement.java:3724)
-	at oracle.jdbc.driver.OracleResultSetImpl.findColumn(OracleResultSetImpl.java:2799)
-	at oracle.jdbc.driver.OracleResultSet.getString(OracleResultSet.java:498)
-	at flota.service.model.OperatiiAngajat.isAngajatLiberKm(OperatiiAngajat.java:308)
-	at flota.service.test.TestClass.main(TestClass.java:28)
-
-22-Jun-2018 14:55:55 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:55:56 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:55:57 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:55:58 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:55:59 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:56:00 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-22-Jun-2018 14:56:01 [main] ERROR flota.service.utils.MailOperations - com.sun.mail.util.MailConnectException: Couldn't connect to host, port: localhost, 25; timeout -1;
-  nested exception is:
-	java.net.ConnectException: Connection refused: connect
-23-Jul-2018 13:53:21 [main] ERROR flota.service.utils.MapUtils - getDistantaTraseuCoordonate -> com.google.maps.errors.UnknownErrorException: An unexpected error occurred. Status: MAX_WAYPOINTS_EXCEEDED, Message: Too many waypoints in the request (31). The maximum allowed waypoints for this request is 23, plus the origin, and destination.
-	at com.google.maps.errors.ApiException.from(ApiException.java:70)
-	at com.google.maps.DirectionsApi$Response.getError(DirectionsApi.java:69)
-	at com.google.maps.internal.OkHttpPendingResult.parseResponse(OkHttpPendingResult.java:236)
-	at com.google.maps.internal.OkHttpPendingResult.await(OkHttpPendingResult.java:152)
-	at com.google.maps.PendingResultBase.await(PendingResultBase.java:56)
-	at flota.service.utils.MapUtils.getDistantaTraseuCoordonate(MapUtils.java:238)
-	at flota.service.model.OperatiiTraseu.recalculeazaTraseuTeoretic(OperatiiTraseu.java:290)
-	at flota.service.model.OperatiiTraseu.actualizeazaSfarsitDelegatie(OperatiiTraseu.java:255)
-	at flota.service.model.OperatiiTraseu.determinaSfarsitDelegatie(OperatiiTraseu.java:188)
-	at flota.service.model.OperatiiDelegatii.recalculeazaDelegatie(OperatiiDelegatii.java:1000)
-	at flota.service.test.TestClass.main(TestClass.java:21)
+	at flota.service.test.TestClass.main(TestClass.java:29)
 

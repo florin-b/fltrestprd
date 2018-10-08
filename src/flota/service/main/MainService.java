@@ -219,6 +219,8 @@ public class MainService {
 		new OperatiiDelegatii().verificaDelegatiiTerminateCompanie();
 		MailOperations.sendMail("Flota JOB", "Stop");
 
+		getKmSfarsitLuna();
+
 		return "Done!";
 
 	}
@@ -263,8 +265,11 @@ public class MainService {
 	@GET
 	public void getKmSfarsitLuna() {
 
-		if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1)
+		if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == 1) {
+			MailOperations.sendMail("Flota JOB", "Start km sfarsit luna");
 			new ServiceDelegatii().calculeazaKmSfarsitLuna();
+			MailOperations.sendMail("Flota JOB", "Stop km sfarsit luna");
+		}
 
 	}
 

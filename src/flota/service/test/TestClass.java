@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import flota.service.database.DBManager;
 import flota.service.model.OperatiiAngajat;
 import flota.service.model.OperatiiDelegatii;
+import flota.service.model.ServiceDelegatii;
 
 public class TestClass {
 
@@ -18,12 +19,14 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		 new OperatiiDelegatii().recalculeazaDelegatie("48527867603");
+		// new OperatiiDelegatii().recalculeazaDelegatie("52301202641");
 
 		//System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10", " ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV; ", ""));
 		
 	
+		//new OperatiiDelegatii().getDelegatiiAprobari("DD" , "BU90" , "08");
 		
+		new ServiceDelegatii().calculeazaKmSfarsitLuna();
 		
 		
 

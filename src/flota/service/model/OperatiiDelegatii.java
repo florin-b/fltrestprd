@@ -186,6 +186,8 @@ public class OperatiiDelegatii {
 	}
 
 	public List<BeanDelegatieAprobare> getDelegatiiAprobari(String tipAngajat, String unitLog, String codDepart) {
+		
+		
 
 		boolean isPersVanzari = Utils.isAngajatVanzari(tipAngajat);
 
@@ -208,6 +210,7 @@ public class OperatiiDelegatii {
 				sqlString = SqlQueries.getDelegatiiAprobareHeaderNONVanzari(unitLogQs);
 		}
 
+		
 		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sqlString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);) {
 
@@ -271,7 +274,11 @@ public class OperatiiDelegatii {
 				int kmRecalc = (int) rs.getDouble("distrecalc");
 
 				int distCalc = kmCalc + kmCota;
-				int distRecalc = kmRecalc + kmCota;
+				
+				
+				int distRecalc = 0;
+				if (kmRecalc > 0)
+					distRecalc = kmRecalc + kmCota;
 
 				if (distRecalc == -1)
 					distRecalc = 0;
