@@ -72,6 +72,29 @@ public class SqlQueries {
 		return sqlString.toString();
 	}
 
+	public static String getDelegatiiAprobareHeaderNONVanzari_DAG(String unitLogQs) {
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select h.id , h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc, ");
+		sqlString.append(" h.distrespins, h.data_sosire, h.distreal, h.distrecalc, f.cod codAprob ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag, functii_non_vanzari f  where h.mandt='900' and ");
+		sqlString.append(" to_date(data_sosire,'yyyymmdd')>= to_date(sysdate - 45) and ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
+		sqlString.append(" and h.idaprob = f.fid ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
+		sqlString.append(" and ag.functie in ( select cod from functii_non_vanzari where aprobat =? ) ");
+		sqlString.append(" union ");	//delegatii Durlai, DP + DINV 
+		sqlString.append(" select h.id , h.distreal, h.codangajat, h.data_plecare, h.ora_plecare, ag.nume, h.distcalc,  h.distrespins, h.data_sosire, ");
+		sqlString.append(" h.distreal, h.distrecalc, 'DP' codAprob  from sapprd.zdelegatiehead h, personal ag  where h.mandt='900' and "); 
+		sqlString.append(" to_date(data_sosire,'yyyymmdd')>= to_date(sysdate - 45) and h.codangajat = '00140436' and h.codangajat = ag.cod  ");
+		
+
+		return sqlString.toString();
+	}	
+	
+	
 	public static String getDelegatiiAprobareHeaderNONVanzari_DZ(String unitLogQs) {
 		StringBuilder sqlString = new StringBuilder();
 
@@ -107,6 +130,30 @@ public class SqlQueries {
 
 	}
 
+	public static String getDelegatiiTerminateNONVanzari_DAG(String unitLogQs) {
+
+		StringBuilder sqlString = new StringBuilder();
+
+		sqlString.append(" select h.id ");
+		sqlString.append(" from sapprd.zdelegatiehead h, personal ag where h.mandt='900' and  ");
+		sqlString.append(" h.idaprob in (select fid from functii_non_vanzari where aprobat=? or cod='WKND') ");
+		sqlString.append(" and ag.filiala in ");
+		sqlString.append(unitLogQs);
+		sqlString.append(" and h.codangajat = ag.cod ");
+		sqlString.append(" and not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
+		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0   ");
+		sqlString.append(" union ");
+		sqlString.append(" select h.id from sapprd.zdelegatiehead h, personal ag where h.mandt='900' ");
+		sqlString.append(" and h.codangajat = ag.cod and h.codangajat = '00140436' and " );
+		sqlString.append(" not exists (select 1 from sapprd.zdelstataprob b where b.iddelegatie = h.id and status in ('2','6')) ");
+		sqlString.append(" and h.data_sosire < to_char(sysdate,'yyyymmdd') and distreal = 0" );
+		
+		return sqlString.toString();
+
+	}	
+	
+	
+	
 	public static String getDelegatiiTerminateNONVanzari(String unitLogQs) {
 
 		StringBuilder sqlString = new StringBuilder();

@@ -328,7 +328,7 @@ public class OperatiiTraseu {
 
 		} catch (SQLException ex) {
 			logger.error(Utils.getStackTrace(ex));
-			MailOperations.sendMail(Utils.getStackTrace(ex) + " , " + delegatie + " , " + puncte);
+			MailOperations.sendMail(Utils.getStackTrace(ex) + " , " + delegatie + " , " + puncte + " , " + dataPlecare + " , " + dataSosire + " , " + coordonatePlecare + " , " + coordonateSosire);
 		}
 
 	}

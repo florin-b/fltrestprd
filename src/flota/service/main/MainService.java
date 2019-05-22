@@ -107,7 +107,7 @@ public class MainService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<BeanDelegatieAprobare> afiseazaDelegatiiAprobare(@QueryParam("tipAngajat") String tipAngajat, @QueryParam("unitLog") String unitLog,
 			@QueryParam("codDepart") String codDepart) {
-
+		
 		return new OperatiiDelegatii().getDelegatiiAprobari(tipAngajat, unitLog, codDepart);
 
 	}

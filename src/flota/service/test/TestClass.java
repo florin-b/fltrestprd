@@ -14,9 +14,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.maps.model.LatLng;
 
+import flota.service.beans.BeanDelegatieCauta;
+import flota.service.beans.PunctTraseu;
 import flota.service.database.DBManager;
 import flota.service.model.OperatiiDelegatii;
 import flota.service.model.OperatiiTraseu;
+import flota.service.model.ServiceDelegatii;
 import flota.service.utils.MapUtils;
 
 public class TestClass {
@@ -25,22 +28,24 @@ public class TestClass {
 
 	public static void main(String[] args) throws SQLException {
 
-		// new OperatiiDelegatii().recalculeazaDelegatie("63973643174");
+		//new OperatiiDelegatii().recalculeazaDelegatie("72981644114");
 
-		//System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10",
-		//		" ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV; ",
-		//		""));
+		// System.out.println(new OperatiiAngajat().getAngajatCategorie("MS10",
+		// "
+		// ARC;ATR;AV;CAG;CAG1;CAG2;CAG3;CJ;CONS-GED;CVG;CVR;CVW;DADMIN;DZ;GD;GS;IHR;IOFR08;IOFR09;ISSM;KA;KA08;KA1;KA1;KA2;KA3;MAC;MM;MMPROD;OC;OIVPD;RGEST;SBA;SBAL;SBL;SD;SDCVA;SDKA;SHR;SM;SMG;SMR;SMW;SOF;SSFC;SSPROD;STIV;
+		// ",
+		// ""));
 
-		// new OperatiiDelegatii().getDelegatiiAprobari("DD" , "BU90" , "08");
+		 new OperatiiDelegatii().getDelegatiiAprobari("DAG" , "GL90" , "");
 
 		// new ServiceDelegatii().calculeazaKmSfarsitLuna();
-				
-		//	new TestClass().accident();
+
+		// new TestClass().accident();
+
+		// testRecalculeaza();
 		
 		
-		
-		
-				
+		 //testNrOpriri();
 
 	}
 
@@ -73,18 +78,15 @@ public class TestClass {
 
 	private void accident() {
 
-		String sqlString = "   select * from nexus_gps_data where trunc(gtime) ='06-02-2019' and " +        
-						   " vcode in (select  v.vcode " + 
-						   " from sapprd.anlz a join sapprd.anla b on b.anln1 = a.anln1 and b.anln2 = a.anln2 and b.mandt=a.mandt " +  
-						   " join sapprd.aufk c on c.aufnr = a.caufn and c.mandt=a.mandt " + 
-						   " join nexus_vehicles v on replace(replace(v.car_number,' ',''),'-','') = replace(replace(c.ktext,' ',''),'-','') " + 
-						   " where a.pernr in " +  
-						   " (select cod from personal where filiala like 'BV%') " + 
-						   " and a.bdatu >= (select to_char(sysdate-5,'YYYYMMDD') from dual) and " +  
-						   " b.deakt = '00000000' and a.mandt='900' and c.auart = '2001' ) ";
+		String sqlString = "   select * from nexus_gps_data where trunc(gtime) ='06-02-2019' and " + " vcode in (select  v.vcode "
+				+ " from sapprd.anlz a join sapprd.anla b on b.anln1 = a.anln1 and b.anln2 = a.anln2 and b.mandt=a.mandt "
+				+ " join sapprd.aufk c on c.aufnr = a.caufn and c.mandt=a.mandt "
+				+ " join nexus_vehicles v on replace(replace(v.car_number,' ',''),'-','') = replace(replace(c.ktext,' ',''),'-','') " + " where a.pernr in "
+				+ " (select cod from personal where filiala like 'BV%') " + " and a.bdatu >= (select to_char(sysdate-5,'YYYYMMDD') from dual) and "
+				+ " b.deakt = '00000000' and a.mandt='900' and c.auart = '2001' ) ";
 
-		Set<String> setCodes = new TreeSet<>();  
-		
+		Set<String> setCodes = new TreeSet<>();
+
 		List<String> vCodes = new ArrayList<>();
 
 		try (Connection conn = new DBManager().getProdDataSource().getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlString)) {
@@ -94,29 +96,91 @@ public class TestClass {
 			ResultSet rs = stmt.getResultSet();
 
 			LatLng strada = new LatLng(45.663970, 25.601354);
-			
+
 			while (rs.next()) {
-				
-				
+
 				LatLng punct = new LatLng(Double.valueOf(rs.getString("lat")), Double.valueOf(rs.getString("lon")));
-				
-				
+
 				double distStrada = MapUtils.distanceXtoY(punct.lat, punct.lng, strada.lat, strada.lng, "K");
-				
-				
+
 				if (distStrada < 0.1)
 					setCodes.add(rs.getString("vcode"));
 
-				
-				
 			}
 
-			
 			System.out.println(setCodes);
-			
+
 		} catch (SQLException e) {
 
 			System.out.println(e);
+		}
+
+	}
+
+	public static void testRecalculeaza() {
+
+		// 18-04-2019 00:00 , 18-04-2019 23:59 , 45.185560,26.797024 ,
+		// 45.185571,26.797096
+
+		List<PunctTraseu> listPuncte = new ArrayList<>();
+
+		BeanDelegatieCauta del = new BeanDelegatieCauta();
+		del.setId("72428033764");
+		del.setAngajatId("00083399");
+		del.setDataPlecare("18-04-2019");
+		del.setOraPlecare("0700");
+		del.setDataSosire("18-04-2019");
+		del.setDistantaCalculata(17);
+
+		PunctTraseu punct = new PunctTraseu();
+		punct.setPozitie(1);
+		punct.setCoordonate(new LatLng(45.187130, 26.793235));
+		punct.setAdresa(null);
+		punct.setStrAdresa("BUZAU / CAPATANESTI");
+		punct.setVizitat(false);
+		listPuncte.add(punct);
+
+		punct = new PunctTraseu();
+		punct.setPozitie(2);
+		punct.setCoordonate(new LatLng(45.137111, 26.817112));
+		punct.setAdresa(null);
+		punct.setStrAdresa("BUZAU / BUZAU");
+		punct.setVizitat(true);
+		listPuncte.add(punct);
+
+		punct = new PunctTraseu();
+		punct.setPozitie(3);
+		punct.setCoordonate(new LatLng(45.187130, 26.793235));
+		punct.setAdresa(null);
+		punct.setStrAdresa("BUZAU / CAPATANESTI");
+		punct.setVizitat(false);
+		listPuncte.add(punct);
+
+		try {
+			Connection conn = new DBManager().getProdDataSource().getConnection();
+
+			new OperatiiTraseu().recalculeazaTraseuTeoretic(conn, del, listPuncte);
+
+			conn.close();
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+		}
+
+	}
+
+	private static void testNrOpriri() {
+
+		try {
+			Connection conn = new DBManager().getProdDataSource().getConnection();
+
+			List<LatLng> coordonateOpriri = new OperatiiTraseu().getCoordOpririDelegatie(conn, "70486767680", "26.03.2019 00:00", "26.03.2019 23:59");
+			
+			System.out.println("Size= " + coordonateOpriri.size());
+			
+			
+			conn.close();
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
 		}
 
 	}
